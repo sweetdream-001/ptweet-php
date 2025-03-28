@@ -2607,15 +2607,16 @@ else if ($action == 'add_sub_categories') {
 }
 else if ($action == 'delete_posts_comments_admin'){
     $postId = $_POST['reply_id'];
-    $thread = $_POST['thread'];
+    
     
     $db = $db->where('id', $postId);
-    $qr = $db->delete(T_PUBS);
+    $qr = $db->delete(T_PUBS); 
     
-    $db = $db->where('id', $postId);
-	$up = $db->update('cl_publications', array(
-		'type' => 'text'
-	));
+//     $thread = $_POST['thread'];
+//     $db = $db->where('id', $postId);
+// 	$up = $db->update('cl_publications', array(
+// 		'type' => 'text'
+// 	));
     
     $data['data']    = [$qr];
 }
@@ -2624,6 +2625,8 @@ else if($action == 'update_posts_comments_admin'){
     
     $postId = $_POST['publication_id'];
     $text = $_POST['text'] . " " . $_POST['yt_link'];
+    
+    $current_record = $db->where('id', $postId)->getOne('cl_publications');
     
     // YT Code
     $url = $_POST['yt_link'] ?? '';
@@ -2673,7 +2676,7 @@ else if($action == 'update_posts_comments_admin'){
     $arr = array(
 		'text' => $text,
 		'og_data' => $json ?? "{}",
-		'type' => empty($imgPath) ? 'text' : 'image'
+		'type' => empty($imgPath) ? $current_record['type'] : 'image'
 	);
 	if(!empty($videoId)){
 	    $arr['link_src'] = $src;
@@ -2697,8 +2700,8 @@ else if($action == 'update_posts_comments_admin'){
 	    ];
 	    $db->insert(T_PUBMEDIA, $insert_data);
 	} else {
-	    $db = $db->where('pub_id', $postId);
-        $qr = $db->delete(T_PUBMEDIA);
+	   // $db = $db->where('pub_id', $postId);
+        // $qr = $db->delete(T_PUBMEDIA);
 	}
 	
     // $query = "UPDATE `cl_publications` SET `text` = '$text' WHERE `cl_publications`.`id` = $postId;";
@@ -2749,7 +2752,12 @@ else if ($action == 'get_sub_categories') {
 else if ($action == 'delete_post_image') {
     $data['status']    = 200;
     $thrds = $db->rawQuery("DELETE FROM cl_pubmedia where id = " . $_GET['post_id']);
-    $data['data']    = $categories;
+    
+    $thread = $_GET['thread'];
+    $db = $db->where('id', $thread);
+	$up = $db->update('cl_publications', array(
+		'type' => 'text'
+	));
 }
 else if ($action == 'get_posts_comments_admin') {
     $data['status'] = 200;
