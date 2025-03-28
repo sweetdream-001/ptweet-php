@@ -177,11 +177,12 @@ $(document).ready(function($) {
 
 			},
 			deletePostImage(comment) {
+			    
 				window.uploadedFile = '';
 				this.loading = true;
 				this.currentPage = 1;
 				const limit = this.limit;
-				$.get(`https://p-tweets.com/talk/native_api/cpanel/delete_post_image?post_id=${comment.id}`, (data) => {
+				$.get(`https://p-tweets.com/talk/native_api/cpanel/delete_post_image?post_id=${comment.id}&thread=${comment.pub_id}`, (data) => {
 					console.log(data);
 					window.uploadedFile = '';
 					this.loading = true;

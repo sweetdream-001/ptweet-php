@@ -2607,8 +2607,16 @@ else if ($action == 'add_sub_categories') {
 }
 else if ($action == 'delete_posts_comments_admin'){
     $postId = $_POST['reply_id'];
+    $thread = $_POST['thread'];
+    
     $db = $db->where('id', $postId);
     $qr = $db->delete(T_PUBS);
+    
+    $db = $db->where('id', $postId);
+	$up = $db->update('cl_publications', array(
+		'type' => 'text'
+	));
+    
     $data['data']    = [$qr];
 }
 else if($action == 'update_posts_comments_admin'){
