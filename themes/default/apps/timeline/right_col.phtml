@@ -1,0 +1,74 @@
+<div class="avatar-holder-r"><img class="lozad" data-src="<?php echo($cl['li']['owner']['avatar']); ?>"><div class="name"><span class="user-name-holder"><?php echo ($cl['li']['owner']['name']); ?><p class="<?php if ($cl['li']['owner']['verified'] == '1') {
+                        echo ('verified-badge');
+                    } ?>" style="display:inline-block; margin-left:10px;"></p></span><span class="user-name">@<?php echo ($cl['li']['owner']['username']); ?></span></div></div>
+<div class="media_right">
+    <?php if (not_empty($cl['li']['text'])) : ?>
+        <?php
+        $cl['li']['text'] = cl_rn2br($cl['li']['text']);
+        $cl['li']['text'] = cl_strip_brs($cl['li']['text']);
+        ?>
+        <div class="publication-text">
+            <p class="pub-text">
+                <?php echo ($cl['li']['text']); ?>
+            </p>
+        </div>
+    <?php elseif (not_empty($cl['li']['company'])) : ?>
+        <?php
+        $cl['li']['company'] = cl_rn2br($cl['li']['company']);
+        $cl['li']['company'] = cl_strip_brs($cl['li']['company']);
+        ?>
+        <div class="publication-text">
+            <p class="pub-text">
+                <?php echo ($cl['li']['company']); ?>
+            </p>
+        </div>
+        <?php
+        $cl['li']['description'] = cl_rn2br($cl['li']['description']);
+        $cl['li']['description'] = cl_strip_brs($cl['li']['description']);
+        ?>
+        <div class="">
+            <p class="">
+                <?php echo ($cl['li']['description']); ?>
+            </p>
+        </div>
+    <?php endif; ?>
+    <span class="posted-time">
+        <time>
+            <?php
+            if (isset($cl['li']['time_raw'])) {
+                echo cl_date("h:i A - M d, Y", $cl['li']['time_raw']); 
+            } else {
+                echo $cl['li']['time'];
+            }
+            ?>
+        </time>
+    </span>
+    <?php if (not_empty($cl['li']['target_url'])) : ?>
+        <button onclick="SMColibri.ad_conversion(this);" data-ad-id="<?php echo $cl['li']['id']; ?>" data-ad-url="<?php echo $cl['li']['target_url']; ?>" class="btn target-url-btn btn-custom main-outline lg btn-block pt-prevent-click">
+            <?php echo $cl['li']['cta']; ?>
+        </button>
+    <?php endif; ?>
+    <!-- Bottom icons -->
+    <div class="media_liked">
+        <span class="num"><?php echo $cl['li']['replys_count']; ?> <span><?php echo cl_translate('Replies'); ?></span></span>
+        <span class="num" data-an="reposts-count">
+            <?php echo $cl['li']['reposts_count']; ?>
+            <span><?php echo cl_translate('Reposts'); ?></span>
+        </span>
+        <span class="num" data-an="likes-count">
+            <?php echo $cl['li']['likes_count']; ?>
+            <span><?php echo cl_translate('Likes'); ?></span>
+        </span>
+
+    </div>
+    <!-- Post Reply -->
+    <div class="reply">
+        <iframe class="reply_frame" src="<?php echo $cl['li']['url2']; ?>" height="100%" scrolling="auto"></iframe>
+    </div>
+</div>
+
+<style>
+    body div.timeline-pubbox-container {
+    max-width: 300px!important;
+}
+    </style>

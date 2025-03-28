@@ -1,0 +1,67 @@
+
+<div v-show="(query_result == '1')" class="timeline-posts-container">
+	<div class="timeline-posts-ls" data-an="entry-list">
+		<?php if (not_empty($cl["query_result"])): ?>
+		<script>
+	        window.catIds = [];
+	    </script>
+		<div class="mainCat" style="background: rgb(225, 247, 252);/* padding: 1px; */width: 100%;font-size: 18px;overflow: overlay;height: 70vh;overflow-x: hidden;">
+			<?php foreach ($cl["query_result"] as $cl['li']): ?>
+			    <script>
+			        window.catIds.push("<? echo $cl['li']['id'] ?>");
+			    </script>
+			    <?php
+    			    if(empty($cl["is_logged"])) {
+    			        $Szlink = 'https://p-tweets.com/talk/feed';
+    			    }else{
+    			        $Szlink = 'https://p-tweets.com/talk/';
+    			    }
+			    ?>
+			    <div onclick="window.location.href='<?php echo $Szlink; ?>?cat_id=<?php echo $cl['li']['id'] ?>'" data-catid="<?php echo $cl['li']['id']?>" class="category" style="width: 100%;margin: 26px;cursor: pointer; margin-bottom: 0px;">
+				    <?php echo $cl['li']['name'] ?> 
+				    <? if (empty($cl["is_logged"])): ?>
+				        <i onclick="window.location.href='https://p-tweets.com/talk/feed?cat_id=<?php echo $cl['li']['id'] ?>'"></i>
+				    <?php endif; ?>
+				    <? if (!empty($cl["is_logged"])): ?>
+				        <i onclick="window.location.href='https://p-tweets.com/talk/?cat_id=<?php echo $cl['li']['id'] ?>'"></i>
+				    <?php endif; ?>
+				</div>
+			    <div class="subCat-<?php echo $cl['li']['id']?>" style="padding: 1px;width: 100%;margin-left: 20px;padding-bottom: 0px;">
+				    <?php foreach ($cl['li']['childs'] as $child): ?>
+				    <? if (empty($cl["is_logged"])): ?>
+				        <div onclick="window.location.href='https://p-tweets.com/talk/feed?cat_id=<?php echo $child['id'] ?>'" class="subcategory" style="width: 100%;margin: 26px;cursor: pointer;"><?php echo $child['name'] ?></div>
+		            <?php endif; ?>
+		            <? if (!empty($cl["is_logged"])): ?>
+				        <div onclick="window.location.href='https://p-tweets.com/talk/?cat_id=<?php echo $child['id'] ?>'" class="subcategory" style="width: 100%;margin: 26px;cursor: pointer;"><?php echo $child['name'] ?></div>
+		            <?php endif; ?>
+			        <?php endforeach; ?>	    
+			    </div>
+				    
+			<?php endforeach; ?>
+		</div>
+		<?php endif; ?>
+	</div>
+</div>
+<script>
+    // $(function(){
+    //     $(document).on('click', '.category', function(){
+    //         window.catIds.forEach((val) => {
+    //             $('.subCat-'+val).hide();
+    //         })
+    //         $('.subCat-'+$(this).data('catid')).toggle();
+    //     });
+    // })
+</script>
+<style>
+.szLeftCate{
+    font-weight : bold;
+}
+</style>
+<script>
+    $('.szLeftCate').css('font-weight','bold');
+    
+    $(function() {
+        $('.sidebar-v-nav-item').removeClass('active')
+    });
+    
+</script>

@@ -1,0 +1,1372 @@
+<!-- Include the Google Translate Element script -->
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'en',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+        }, 'google_translate_element');
+    }
+
+    function szChange(value) {
+        if (value == 'pp' || value == 'PP') {
+            return true;
+        }
+        window.location.href = 'https://p-tweets.com/talk/?cat_id=' + value;
+
+    }
+
+    $(document).ready(function () {
+        $('#profile-svg').on('click', function (event) {
+            event.preventDefault(); // Prevent default anchor behavior
+            $('#sidebarProfileDropdownMenu').toggle(); // Toggle visibility
+        });
+
+        $('#more-svg').on('click', function (event) {
+            event.preventDefault(); // Prevent default anchor behavior
+            $('#mobileSideMoreDropDown').toggle(); // Toggle visibility
+        });
+
+        // Optional: Hide the dropdown when clicking outside
+        $(document).on('click', function (event) {
+            if (!$(event.target).closest('#profile-svg, #sidebarProfileDropdownMenu').length) {
+                $('#sidebarProfileDropdownMenu').hide();
+            }
+
+            if (!$(event.target).closest('#more-svg, #mobileSideMoreDropDown').length) {
+                $('#mobileSideMoreDropDown').hide();
+            }
+        });
+        
+          $('#sidebarProfileDropdownMenu a').on('click', function() {
+             $('#sidebarProfileDropdownMenu').hide();
+        });
+        
+        $('#mobileSideMoreDropDown a').on('click', function() {
+             $('#mobileSideMoreDropDown').hide();
+        });
+    });
+
+
+</script>
+<script type="text/javascript"
+        src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<style>
+    #google_translate_element {
+        margin-left: 17px;
+        padding-top: 10px;
+    }
+
+    /*.iconsCellPhone {*/
+    /*    display: none !important;*/
+    /*}*/
+
+    #mobile-user-profile-menu {
+        display: none;
+    }
+
+    #mobileSideMore {
+        display: none;
+    }
+
+    /* Show iconsCellPhone only on cell phone screens */
+    @media (max-width: 768px) {
+        /*.iconsCellPhone {*/
+        /*    display: inline-block !important;*/
+        /*}*/
+        .iconsCellPhone:nth-of-type(2),
+        .iconsCellPhone:nth-of-type(3) {
+            display: none;
+        }
+
+    }
+
+    #sidebarProfileDropdownMenu {
+        position: absolute !important;
+        top: -180px !important; /* Adjusted so it appears above the button */
+        left: 121px !important;
+        transform: translateX(-50%) !important;
+        width: 180px !important; /* Keep a reasonable width for PC */
+        max-width: 90% !important;
+        z-index: 100000 !important;
+        overflow: hidden !important;
+        padding: 15px !important;
+        border-radius: 12px !important;
+        min-height: 250px !important;
+    }
+
+    /* Adjust for mobile */
+    @media (max-width: 768px) {
+        #mobileSideMore {
+            display: flex !important;
+        }
+
+        #mobile-user-profile-menu {
+            /*padding-right: 26px !important;*/
+            /*display : inline-block;*/
+            /*margin-top : 5px;*/
+            width: 100%;
+            display: flex !important;
+            flex-direction: row !important;
+            flex-wrap: nowrap !important;
+            height: 53px !important;
+            padding-left: 5px !important;
+            align-items: center !important;
+        }
+
+        #sidebarProfileDropdownMenu {
+            position: fixed !important;
+            top: 265px !important;
+            width: 164px !important;
+            left: 104px !important;
+            padding: 10px !important;
+            font-size: 14px !important;
+            z-index: 999999 !important;
+            height: 356px;
+            min-width: 181px !important;
+        }
+
+        #sidebarProfileDropdownMenu h5 {
+            font-size: 14px !important; /* Adjust heading text */
+            text-align: left !important;
+            margin-left: 20px;
+
+        }
+
+        #sidebarProfileDropdownMenu a {
+            font-size: 12px !important; /* Adjust links */
+        }
+
+        #sidebarProfileDropdownMenu .dropdown-item {
+            padding: 8px 12px !important;
+        }
+
+        #sidebarProfileDropdownMenu .account-stats {
+            font-size: 12px !important;
+        }
+
+        #sidebarProfileDropdownMenu .mobile-account-stats {
+            display: flex !important;
+            justify-content: space-evenly !important;
+            width: 70% !important;
+            padding: 3px 5px !important;
+            flex-direction: column !important;
+            height: 57px;
+            gap: 12px;
+            margin-left: -4px;
+            margin-top: 5px;
+        }
+
+        #sidebarProfileDropdownMenu .mobile-account-status-first-div .mobile-stat-holder, #sidebarProfileDropdownMenu .mobile-account-status-second-div .mobile-stat-holder {
+            flex: 1 !important; /* Ensure equal spacing */
+            text-align: center !important;
+            color: black !important;
+        }
+
+        #sidebarProfileDropdownMenu .mobile-account-status-first-div {
+            display: flex !important;
+        }
+
+        #sidebarProfileDropdownMenu .mobile-account-status-first-div .mobile-stat-holder .mobile-stat-holder-a, #sidebarProfileDropdownMenu .mobile-account-status-second-div .mobile-stat-holder .mobile-stat-holder-a {
+            display: flex;
+            gap: 14px;
+            flex-direction: column;
+            color: black !important;
+            text-decoration: none !important;
+        }
+
+        #sidebarProfileDropdownMenu .mobile-account-status-first-div .mobile-stat-holder .mobile-stat-holder-a b, #sidebarProfileDropdownMenu .mobile-account-status-second-div .mobile-stat-holder .mobile-stat-holder-a b {
+            color: var(--smc-main-text-color) !important;
+            font-size: 12px !important;
+            font-weight: 700 !important;
+        }
+
+        #sidebarProfileDropdownMenu .mobile-account-status-first-div .mobile-stat-holder .mobile-stat-holder-a span, #sidebarProfileDropdownMenu .mobile-account-status-second-div .mobile-stat-holder .mobile-stat-holder-a span {
+            font-size: 12px !important;
+            color: var(--smc-main-text-color-2) !important;
+        }
+
+        /*#profile-svg{*/
+        /*    margin-left: 10px !important;*/
+        /*}*/
+        /*for mobile side more*/
+        #mobileSideMoreDropDown {
+            position: fixed !important;
+            transform: translate3d(-82px, 74px, 0px) !important;
+            top: 72px !important;
+            left: 96px !important;
+            will-change: transform !important;
+            z-index: 100000 !important;
+            min-width: 100px;
+        }
+
+        body .dropdown div.dropdown-menu a.dropdown-item, body .dropright div.dropdown-menu a.dropdown-item, body .dropup div.dropdown-menu a.dropdown-item {
+            font-size: 12px !important;
+        }
+
+        #more-svg {
+            /*margin-left : 10px !important;*/
+            display: flex;
+            width: 24px;
+            height: 24px;
+        }
+
+        #new-post-svg {
+            width: 24px;
+            height: 24px;
+            /*margin-left : 10px !important;*/
+        }
+
+        #mobileSideMoreDropDown a.dropdown-item {
+            padding: 10px 12px !important;
+        }
+
+        /*.mobileNewPost{*/
+        /*        display: flex !important*/
+        /*        flex-direction: row !important;*/
+        /*        flex-wrap: nowrap !important;*/
+        /*}*/
+        #adminIcon, #logoutIcon {
+            display: none !important;
+        }
+    }
+
+    @media (min-width: 768px) {
+        body main.main-content-container div.main-content-container-inner div.left-sb-container div.sidebar__inner div.sidebar-v-nav-wrapper ul.sidebar-v-nav li.mobileNewPost {
+            display: none !important;
+        }
+
+        #adminIcon, #logoutIcon {
+            display: none !important;
+        }
+    }
+</style>
+
+<div class="left-sb-container sidebar" data-app="left-sidebar">
+    <div class="sidebar__inner">
+        <div class="cp h-mobile">
+            <a href="<?php echo cl_link("/"); ?>" style="margin-bottom: 10px;">
+                <img src="{%config site_logo%}" alt="Logo">
+                <h1 class="ml11">
+					<span class="text-wrapper">
+						<span class="line line1"></span>
+						<span class="letters">{%config name%}</span>
+					</span>
+                </h1>
+            </a>
+        </div>
+        <div class="user-info h-laptop">
+            <div class="left_account">
+                <h6>Account Info</h6>
+                <a href="#" onclick="SMColibri.toggleSB();" class="b_close">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"
+                         class="r-18jsvk2 r-4qtqp9 r-yyyyoo r-z80fyv r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-19wmn03">
+                        <g>
+                            <path
+                                    d="M10.59 12L4.54 5.96l1.42-1.42L12 10.59l6.04-6.05 1.42 1.42L13.41 12l6.05 6.04-1.42 1.42L12 13.41l-6.04 6.05-1.42-1.42L10.59 12z">
+                            </path>
+                        </g>
+                    </svg>
+                </a>
+            </div>
+            <div class="mobile_menu" style="display:flex;">
+                <div class="avatar">
+                    <img src="<?php echo($me['avatar']); ?>" alt="Avatar">
+                </div>
+                <div class="uname">
+                    <h5 style="margin-bottom: 0px;">
+						<span class="user-name-holder">
+							<?php echo($me['name']); ?>
+						</span>
+                        <p class="<?php if ($cl['li']['owner']['verified'] == '1') {
+                            echo('verified-badge');
+                        } ?>" style="display:inline-block;"></p>
+                    </h5>
+                    <a href="<?php echo($me['url']); ?>" data-spa="true">
+                        @<?php echo($me['username']); ?>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="account-stats h-laptop">
+            <div class="stat-holder">
+                <?php if (not_empty($me['following'])): ?>
+                    <a href="<?php echo(cl_strf('%s/following', $cl['me']['url'])); ?>" data-spa="true">
+                        <b data-an="total-following">
+                            <?php echo cl_number($me['following']); ?>
+                        </b>
+                        <span>
+							<?php echo cl_translate('Following'); ?>
+						</span>
+                    </a>
+                <?php else: ?>e
+                    <b data-an="total-following">
+                        <?php echo cl_number($me['following']); ?>
+                    </b>
+                    <span>
+						<?php echo cl_translate('Following'); ?>
+					</span>
+                <?php endif; ?>
+            </div>
+            <div class="stat-holder">
+                <?php if (not_empty($me['followers'])): ?>
+                    <a href="<?php echo(cl_strf('%s/followers', $cl['me']['url'])); ?>" data-spa="true">
+                        <b data-an="total-followers">
+                            <?php echo cl_number($me['followers']); ?>
+                        </b>
+                        <span>
+							<?php echo cl_translate('Followers'); ?>
+						</span>
+                    </a>
+                <?php else: ?>
+                    <b data-an="total-followers">
+                        <?php echo cl_number($me['followers']); ?>
+                    </b>
+                    <span>
+						<?php echo cl_translate('Followers'); ?>
+					</span>
+                <?php endif; ?>
+            </div>
+        </div>
+        <div class="sidebar-v-nav-wrapper">
+            <div id="google_translate_element"></div>
+            <ul class="sidebar-v-nav">
+                <li data-navitem="home"
+                    class="sidebar-v-nav-item <?php if ($cl['pn'] == 'home' && !isset($_GET['cat_id'])) {
+                        echo('active');
+                    } ?>">
+					<span class="icon home">
+					    <a href="<?php echo cl_link('/'); ?>">
+						<?php echo cl_ikon('home'); ?>
+						</a>
+					</span>
+                    <span class="nav-item-holder">
+						<a href="<?php echo cl_link('/'); ?>">
+							<?php echo cl_translate('Home'); ?>
+						</a>
+					</span>
+                </li>
+                <li data-navitem="explore"
+                    class="sidebar-v-nav-item <?php if ($cl['pn'] == 'explore' && $cl["page_tab"] !== 'categories') {
+                        echo('active');
+                    } ?>">
+					<span class="icon">
+					    <a href="<?php echo cl_link("explore"); ?>">
+						<?php echo cl_ikon('explore'); ?>
+						</a>
+					</span>
+                    <span class="nav-item-holder">
+						<a href="<?php echo cl_link("explore"); ?>">
+							<?php echo cl_translate('search'); ?>
+						</a>
+					</span>
+                </li>
+                <li data-navitem="explore" class="sidebar-v-nav-item">
+					<span class="icon">
+					    <a href="<?php echo cl_link("explore/categories"); ?>">
+						<svg fill="#000000" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                             xmlns:xlink="http://www.w3.org/1999/xlink"
+                             width="800px" height="800px" viewBox="0 0 36.09 36.09" xml:space="preserve"
+                        >
+                        <g>
+                        	<path d="M36.042,13.909c-0.123-0.377-0.456-0.646-0.85-0.688l-11.549-1.172L18.96,1.43c-0.16-0.36-0.519-0.596-0.915-0.596
+                        		s-0.755,0.234-0.915,0.598L12.446,12.05L0.899,13.221c-0.394,0.04-0.728,0.312-0.85,0.688c-0.123,0.377-0.011,0.791,0.285,1.055
+                        		l8.652,7.738L6.533,34.045c-0.083,0.387,0.069,0.787,0.39,1.02c0.175,0.127,0.381,0.191,0.588,0.191
+                        		c0.173,0,0.347-0.045,0.503-0.137l10.032-5.84l10.03,5.84c0.342,0.197,0.77,0.178,1.091-0.059c0.32-0.229,0.474-0.633,0.391-1.02
+                        		l-2.453-11.344l8.653-7.737C36.052,14.699,36.165,14.285,36.042,13.909z M25.336,21.598c-0.268,0.24-0.387,0.605-0.311,0.957
+                        		l2.097,9.695l-8.574-4.99c-0.311-0.182-0.695-0.182-1.006,0l-8.576,4.99l2.097-9.695c0.076-0.352-0.043-0.717-0.311-0.957
+                        		l-7.396-6.613l9.87-1.002c0.358-0.035,0.668-0.264,0.814-0.592l4.004-9.077l4.003,9.077c0.146,0.328,0.456,0.557,0.814,0.592
+                        		l9.87,1.002L25.336,21.598z"/>
+                        </g>
+                        </svg>
+						</a>
+					</span>
+                    <span class="nav-item-holder">
+
+                <select id="categorySelect" class="categorySelect szLeftCate" onchange="szChange(this.value)"
+                        style="/* padding: 10px; */overflow: scroll !important;text-align: left;margin-left: -2px;overflow: hidden;width: 11rem; <?php if (isset($_GET['cat_id']) || $cl["page_tab"] == 'categories') {
+                            echo 'font-weight: bold;';
+                        } ?>">
+                                 <option value="PP">Categories</option>
+    								<?php
+
+                                    $mysqli = new mysqli('localhost', 'tweetsp_talkus', 'Kiwm&@mkeIW212', 'tweetsp_talk');
+                                    $db = new MysqliDb($mysqli);
+
+                                    // require_once(cl_full_path('core/web_req_init.php'));
+                                    require_once(cl_full_path("core/apps/home/app_ctrl.php"));
+
+
+                                    $categories = $db->rawQuery("SELECT * FROM cl_categories WHERE parent_id IS NULL  order by sort ASC ;");
+
+                                    foreach ($categories as $k => $cat) {
+
+                                        $subcategories = $db->rawQuery("SELECT * FROM cl_categories WHERE parent_id = " . $cat['id'] . " order by sort ASC");
+
+                                        // if(count($subcategories) > 0){
+                                        //     echo '<option value="PP">'.$cat['name'].'</option>';
+                                        // }else{
+                                        //     echo '<option value="'.$cat['id'].'">'.$cat['name'].'</option>';
+                                        // }
+
+
+                                        echo '<option value="' . $cat['id'] . '">' . $cat['name'] . '</option>';
+
+
+                                        if (count($subcategories) > 0) {
+                                            foreach ($subcategories as $subcategory) {
+                                                echo '<option value="' . $subcategory['id'] . '">&nbsp;&nbsp;&nbsp;' . $subcategory['name'] . '</option>';
+                                            }
+                                        }
+
+
+                                    }
+
+
+                                    ?>
+</select>
+                        <!--<a href="<?php echo cl_link("explore"); ?>">-->
+                        <!--	<?php echo cl_translate('Categories'); ?>-->
+                        <!--</a>-->
+						<span class="nav-item-holder dropdown">
+						<!--<a href="#" class="dropdown-toggle" data-toggle="dropdown">-->
+                            <!--   	cc-->
+                            <!--</a>-->
+						<div class="dropdown-menu dropdown-icons">
+
+
+
+						</div>
+					</span>
+					</span>
+                </li>
+                <li data-navitem="notifications" class="sidebar-v-nav-item <?php if ($cl['pn'] == 'notifications') {
+                    echo('active');
+                } ?>">
+					<span class="icon">
+					    <a href="<?php echo cl_link("notifications"); ?>">
+						<?php echo cl_ikon('bell-h'); ?>
+						</a>
+					</span>
+
+                    <span class="nav-item-holder">
+						<a href="<?php echo cl_link("notifications"); ?>">
+							<span class="info-indicators" data-an="new-notifs">
+								<?php echo fetch_or_get($me['new_notifs']); ?>
+							</span>
+							<?php echo cl_translate('Notifications'); ?>
+
+						</a>
+					</span>
+                </li>
+                <li data-navitem="chat" class="sidebar-v-nav-item <?php if ($cl['pn'] == 'chat') {
+                    echo('active');
+                } ?>">
+					<span class="icon">
+					    <a href="<?php echo cl_link("chats"); ?>">
+						<?php echo cl_ikon('envelope-h'); ?>
+						</a>
+					</span>
+                    <span class="nav-item-holder">
+						<a href="<?php echo cl_link("chats"); ?>">
+							<span class="info-indicators" data-an="new-messages">
+								<?php echo fetch_or_get($me['new_messages']); ?>
+							</span>
+							<?php echo cl_translate('Messages'); ?>
+
+						</a>
+					</span>
+                </li>
+                <li data-navitem="bookmarks" class="sidebar-v-nav-item <?php if ($cl['pn'] == 'bookmarks') {
+                    echo('active');
+                } ?>">
+					<span class="icon">
+					    <a href="<?php echo cl_link("bookmarks"); ?>">
+						<?php echo cl_ikon('bookmark'); ?>
+						</a>
+					</span>
+                    <span class="nav-item-holder">
+						<a href="<?php echo cl_link("bookmarks"); ?>">
+							<?php echo cl_translate('Bookmarks'); ?>
+						</a>
+					</span>
+                </li>
+                <?php if ($cl['config']['blue_account_system_status'] == 'off'): ?>
+                    <li data-navitem="trending" class="sidebar-v-nav-item <?php if ($cl['pn'] == 'trending') {
+                        echo('active');
+                    } ?>">
+						<span class="icon">
+						    <a href="<?php echo cl_link('trending'); ?>">
+							<?php echo cl_ikon('activity'); ?>
+							</a>
+						</span>
+                        <span class="nav-item-holder">
+							<a href="<?php echo cl_link('trending'); ?>" data-spa="true">
+								<?php echo cl_translate('actual'); ?>
+							</a>
+						</span>
+                    </li>
+                <?php endif; ?>
+                <!-- Blue Account -->
+                <?php if ($cl['config']['blue_account_system_status'] == 'on'): ?>
+                    <?php if ($me["is_blue"] == 1): ?>
+                        <li data-navitem="trending" class="sidebar-v-nav-item <?php if ($cl['pn'] == 'trending') {
+                            echo('active');
+                        } ?>">
+							<span class="icon">
+							    <a href="<?php echo cl_link('trending'); ?>">
+								<?php echo cl_ikon('activity'); ?>
+								</a>
+							</span>
+                            <span class="nav-item-holder">
+								<a href="<?php echo cl_link('trending'); ?>" data-spa="true">
+									<?php echo cl_translate('actual'); ?>
+								</a>
+							</span>
+                        </li>
+                    <?php else: ?>
+                        <li data-navitem="blue_account"
+                            class="sidebar-v-nav-item <?php if ($cl['pn'] == 'blue_account') {
+                                echo('active');
+                            } ?>">
+
+							<span class="icon">
+							    <a href="<?php echo cl_link("blue_account"); ?>">
+								<svg viewBox="0 0 24 24" aria-hidden="true"
+                                     class="r-18jsvk2 r-4qtqp9 r-yyyyoo r-lwhw9o r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-cnnz9e">
+									<g>
+										<path
+                                                d="M15.704 8.99c.457-.05.891-.17 1.296-.35-.302.45-.685.84-1.125 1.15.004.1.006.19.006.29 0 2.94-2.269 6.32-6.421 6.32-1.274 0-2.46-.37-3.459-1 .177.02.357.03.539.03 1.057 0 2.03-.35 2.803-.95-.988-.02-1.821-.66-2.109-1.54.138.03.28.04.425.04.206 0 .405-.03.595-.08-1.033-.2-1.811-1.1-1.811-2.18v-.03c.305.17.652.27 1.023.28-.606-.4-1.004-1.08-1.004-1.85 0-.4.111-.78.305-1.11 1.113 1.34 2.775 2.22 4.652 2.32-.038-.17-.058-.33-.058-.51 0-1.23 1.01-2.22 2.256-2.22.649 0 1.235.27 1.647.7.514-.1.997-.28 1.433-.54-.168.52-.526.96-.992 1.23zM2 21h15c3.038 0 5.5-2.46 5.5-5.5 0-1.4-.524-2.68-1.385-3.65-.08-.09-.089-.22-.023-.32.574-.87.908-1.91.908-3.03C22 5.46 19.538 3 16.5 3H2v18zM16.5 5C18.433 5 20 6.57 20 8.5c0 1.01-.43 1.93-1.12 2.57-.468.43-.414 1.19.111 1.55.914.63 1.509 1.69 1.509 2.88 0 1.93-1.567 3.5-3.5 3.5H4V5h12.5z">
+										</path>
+									</g>
+								</svg>
+								</a>
+							</span>
+                            <span class="nav-item-holder">
+								<a href="<?php echo cl_link("blue_account"); ?>" data-spa="true">
+									{%config name%} <?php echo cl_translate('Blue'); ?>
+								</a>
+							</span>
+                        </li>
+                    <?php endif; ?>
+                <?php endif; ?>
+                <li data-navitem="profile"
+                    class="sidebar-v-nav-item <?php if ($cl['pn'] == 'profile' && ($cl['prof_user']['id'] == $me['id'])) {
+                        echo('active');
+                    } ?>">
+					<span class="icon">
+					    <a href="<?php echo($me["url"]); ?>">
+						<?php echo cl_ikon('user'); ?>
+						</a>
+					</span>
+                    <span class="nav-item-holder">
+						<a href="<?php echo($me["url"]); ?>">
+							<?php echo cl_translate('Profile'); ?>
+						</a>
+					</span>
+                </li>
+                <li class="iconsCellPhone sidebar-v-nav-item sideMore" id="mobileSideMore">
+                    <a href="#" id="more-svg" data-toggle="dropdown">
+					    <span class="icon">
+					        	<?php echo cl_ikon("more"); ?>
+					    </span>
+                    </a>
+                    <span class="nav-item-holder dropdown notCut">
+						<div class="dropdown-menu dropdown-icons" id="mobileSideMoreDropDown">
+							<?php if (not_empty($cl['is_admin'])): ?>
+                                <a class="dropdown-item" href="<?php echo cl_link("admin_panel"); ?>" target="_blank">
+									<span class="flex-item dropdown-item-icon">
+										<?php echo cl_ikon('chart'); ?>
+									</span>
+									<span class="flex-item">
+										<?php echo cl_translate('Control panel'); ?>
+									</span>
+								</a>
+                            <?php endif; ?>
+                            <?php if ($cl['config']['advertising_system'] == 'on'): ?>
+                                <a class="dropdown-item" href="<?php echo cl_link("wallet"); ?>" data-spa="true">
+									<span class="flex-item dropdown-item-icon">
+										<?php echo cl_ikon('credit-card'); ?>
+									</span>
+									<span class="flex-item">
+										<?php echo cl_translate('Wallet'); ?> <b class="wallet">(
+											<?php echo cl_money($me['wallet']); ?>)
+										</b>
+									</span>
+								</a>
+
+                                <a class="dropdown-item" href="<?php echo cl_link("ads"); ?>" data-spa="true">
+									<span class="flex-item dropdown-item-icon">
+										<?php echo cl_ikon('feed'); ?>
+									</span>
+									<span class="flex-item">
+										<?php echo cl_translate('Advertising'); ?>
+									</span>
+								</a>
+                            <?php endif; ?>
+                            <?php if ($cl['config']['affiliates_system'] == 'on'): ?>
+                                <a class="dropdown-item" href="<?php echo cl_link("affiliates"); ?>" data-spa="true">
+									<span class="flex-item dropdown-item-icon">
+										<?php echo cl_ikon('support-alt'); ?>
+									</span>
+									<span class="flex-item">
+										<?php echo cl_translate('Affiliates'); ?>
+									</span>
+								</a>
+                            <?php endif; ?>
+							<!-- Blue Account  -->
+							<?php if ($cl['config']['blue_account_system_status'] == 'on'): ?>
+                                <?php if ($me["is_blue"] == 1): ?>
+                                    <a class="dropdown-item" href="<?php echo cl_link("blue_features"); ?>"
+                                       data-navitem="blue_features">
+
+										<span class="flex-item dropdown-item-icon">
+											<svg viewBox="0 0 24 24" aria-hidden="true"
+                                                 class="r-18jsvk2 r-4qtqp9 r-yyyyoo r-lwhw9o r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-cnnz9e">
+												<g>
+													<path
+                                                            d="M15.704 8.99c.457-.05.891-.17 1.296-.35-.302.45-.685.84-1.125 1.15.004.1.006.19.006.29 0 2.94-2.269 6.32-6.421 6.32-1.274 0-2.46-.37-3.459-1 .177.02.357.03.539.03 1.057 0 2.03-.35 2.803-.95-.988-.02-1.821-.66-2.109-1.54.138.03.28.04.425.04.206 0 .405-.03.595-.08-1.033-.2-1.811-1.1-1.811-2.18v-.03c.305.17.652.27 1.023.28-.606-.4-1.004-1.08-1.004-1.85 0-.4.111-.78.305-1.11 1.113 1.34 2.775 2.22 4.652 2.32-.038-.17-.058-.33-.058-.51 0-1.23 1.01-2.22 2.256-2.22.649 0 1.235.27 1.647.7.514-.1.997-.28 1.433-.54-.168.52-.526.96-.992 1.23zM2 21h15c3.038 0 5.5-2.46 5.5-5.5 0-1.4-.524-2.68-1.385-3.65-.08-.09-.089-.22-.023-.32.574-.87.908-1.91.908-3.03C22 5.46 19.538 3 16.5 3H2v18zM16.5 5C18.433 5 20 6.57 20 8.5c0 1.01-.43 1.93-1.12 2.57-.468.43-.414 1.19.111 1.55.914.63 1.509 1.69 1.509 2.88 0 1.93-1.567 3.5-3.5 3.5H4V5h12.5z">
+													</path>
+												</g>
+											</svg>
+										</span>
+										<span class="flex-item">
+
+											<?php echo cl_translate('Blue features'); ?>
+
+										</span>
+									</a>
+                                <?php else: ?>
+                                    <a class="dropdown-item" href="<?php echo cl_link('trending'); ?>" data-spa="true"
+                                       data-navitem="trending">
+
+										<span class="flex-item dropdown-item-icon">
+											<svg viewBox="0 0 24 24" aria-hidden="true"
+                                                 class="r-1kihuf0 r-18jsvk2 r-4qtqp9 r-yyyyoo r-1q142lx r-1472mwg r-mbgqwd r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-lrsllp"
+                                                 data-testid="icon">
+												<g>
+													<path
+                                                            d="M3 4.5C3 3.12 4.12 2 5.5 2h13C19.88 2 21 3.12 21 4.5v15c0 1.38-1.12 2.5-2.5 2.5h-13C4.12 22 3 20.88 3 19.5v-15zM5.5 4c-.28 0-.5.22-.5.5v15c0 .28.22.5.5.5h13c.28 0 .5-.22.5-.5v-15c0-.28-.22-.5-.5-.5h-13zM16 10H8V8h8v2zm-8 2h8v2H8v-2z">
+													</path>
+												</g>
+											</svg>
+										</span>
+										<span class="flex-item">
+
+											<?php echo cl_translate('actual'); ?>
+
+										</span>
+									</a>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                            <?php if ($cl['config']['prem_account_system_status'] == 'on'): ?>
+                                <?php if ($me["is_premium"] == 1): ?>
+                                    <a class="dropdown-item" href="<?php echo cl_link("premium_features"); ?>"
+                                       data-navitem="premium_features">
+
+										<span class="flex-item dropdown-item-icon">
+											<svg viewBox="0 0 24 24" aria-hidden="true"
+                                                 class="r-18jsvk2 r-4qtqp9 r-yyyyoo r-1q142lx r-1xvli5t r-1b7u577 r-dnmrzs r-bnwqim r-1plcrui r-lrvibr"
+                                                 data-testid="icon">
+												<g>
+													<path
+                                                            d="M5 22H2v-3c0-1.654 1.346-3 3-3s3 1.346 3 3-1.346 3-3 3zm-1-2h1c.551 0 1-.449 1-1s-.449-1-1-1-1 .449-1 1v1zm7.594 1.282l-.336-1.145c-.271-.923-.664-1.807-1.166-2.627-.452-.736-.992-1.421-1.607-2.036-.626-.625-1.322-1.173-2.069-1.627-.821-.499-1.706-.888-2.63-1.157l-1.151-.335L5.312 7h5.192c.613-.636 2.015-2.077 2.758-2.744C15.673 2.09 20.704 2.003 20.918 2l1.025-.013-.013 1.025c-.003.213-.09 5.245-2.256 7.656-.643.715-2.004 2.043-2.671 2.688v5.239l-5.407 2.688h-.002zm.64-4.046c.207.396.393.802.557 1.217l2.21-1.099v-2.333l-2.768 2.214zm-3.839-4.468c.531.391 1.034.823 1.503 1.292.459.459.883.951 1.267 1.471l4.104-3.284c.269-.257 2.169-2.084 2.916-2.915 1.084-1.208 1.531-3.667 1.681-5.269-1.602.149-4.061.596-5.268 1.68-.832.748-2.658 2.647-2.916 2.916l-3.287 4.109zM5.47 11.154c.414.163.819.347 1.214.551l2.165-2.706H6.548l-1.077 2.154z">
+													</path>
+												</g>
+											</svg>
+										</span>
+										<span class="flex-item">
+
+											<?php echo cl_translate('Premium features'); ?>
+
+										</span>
+									</a>
+                                <?php else: ?>
+                                    <a class="dropdown-item" href="<?php echo cl_link("premium_account"); ?>"
+                                       data-spa="true"
+                                       data-navitem="premium_account">
+
+										<span class="flex-item dropdown-item-icon">
+											<svg viewBox="0 0 24 24" aria-hidden="true"
+                                                 class="r-18jsvk2 r-4qtqp9 r-yyyyoo r-1q142lx r-1xvli5t r-1b7u577 r-dnmrzs r-bnwqim r-1plcrui r-lrvibr"
+                                                 data-testid="icon">
+												<g>
+													<path
+                                                            d="M5 22H2v-3c0-1.654 1.346-3 3-3s3 1.346 3 3-1.346 3-3 3zm-1-2h1c.551 0 1-.449 1-1s-.449-1-1-1-1 .449-1 1v1zm7.594 1.282l-.336-1.145c-.271-.923-.664-1.807-1.166-2.627-.452-.736-.992-1.421-1.607-2.036-.626-.625-1.322-1.173-2.069-1.627-.821-.499-1.706-.888-2.63-1.157l-1.151-.335L5.312 7h5.192c.613-.636 2.015-2.077 2.758-2.744C15.673 2.09 20.704 2.003 20.918 2l1.025-.013-.013 1.025c-.003.213-.09 5.245-2.256 7.656-.643.715-2.004 2.043-2.671 2.688v5.239l-5.407 2.688h-.002zm.64-4.046c.207.396.393.802.557 1.217l2.21-1.099v-2.333l-2.768 2.214zm-3.839-4.468c.531.391 1.034.823 1.503 1.292.459.459.883.951 1.267 1.471l4.104-3.284c.269-.257 2.169-2.084 2.916-2.915 1.084-1.208 1.531-3.667 1.681-5.269-1.602.149-4.061.596-5.268 1.68-.832.748-2.658 2.647-2.916 2.916l-3.287 4.109zM5.47 11.154c.414.163.819.347 1.214.551l2.165-2.706H6.548l-1.077 2.154z">
+													</path>
+												</g>
+											</svg>
+										</span>
+										<span class="flex-item">
+											<?php echo cl_translate('Premium account'); ?>
+										</span>
+									</a>
+                                <?php endif; ?>
+                            <?php endif; ?>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="<?php echo cl_link("settings"); ?>" data-spa="true">
+								<span class="flex-item dropdown-item-icon">
+									<?php echo cl_ikon('settings'); ?>
+								</span>
+								<span class="flex-item">
+									<?php echo cl_translate('Profile settings'); ?>
+								</span>
+							</a>
+							<a class="dropdown-item" href="<?php echo cl_link("faqs"); ?>">
+								<span class="flex-item dropdown-item-icon">
+									<?php echo cl_ikon('help'); ?>
+								</span>
+								<span class="flex-item">
+									<?php echo cl_translate('Help center'); ?>
+								</span>
+							</a>
+							<a class="dropdown-item" href="javascript:void(0);" onclick="SMColibri.display_settings();">
+								<span class="flex-item dropdown-item-icon">
+									<div role="presentation" class="css-1dbjc4n"><svg viewBox="0 0 24 24"
+                                                                                      aria-hidden="true"
+                                                                                      class="r-18jsvk2 r-4qtqp9 r-yyyyoo r-1q142lx r-1xvli5t r-1b7u577 r-dnmrzs r-bnwqim r-1plcrui r-lrvibr">
+											<g>
+												<path
+                                                        d="M15.692 11.205l6.383-7.216c.45-.45.45-1.18 0-1.628-.45-.45-1.178-.45-1.627 0l-7.232 6.402s.782.106 1.595.93c.548.558.882 1.51.882 1.51z">
+												</path>
+												<path
+                                                        d="M17.45 22.28H3.673c-1.148 0-2.083-.946-2.083-2.11V7.926c0-1.165.934-2.112 2.082-2.112h5.836c.414 0 .75.336.75.75s-.336.75-.75.75H3.672c-.32 0-.583.274-.583.612V20.17c0 .336.26.61.582.61h13.78c.32 0 .583-.273.583-.61v-6.28c0-.415.336-.75.75-.75s.75.335.75.75v6.28c0 1.163-.934 2.11-2.084 2.11z">
+												</path>
+											</g>
+										</svg><svg viewBox="0 0 24 24" aria-hidden="true"
+                                                   class="r-1cvl2hr r-4qtqp9 r-yyyyoo r-1q142lx r-1xvli5t r-1d2f490 r-1b7u577 r-dnmrzs r-u8s1d r-1plcrui r-ipm5af r-lrvibr">
+											<g>
+												<path
+                                                        d="M8.18 16.99c-.19.154-.476.032-.504-.21-.137-1.214-.234-4.053 1.483-5.943.908-1 3.02-1.52 4.475-.198s1.14 3.473.23 4.473c-2.07 2.15-3.428.058-5.686 1.878z">
+												</path>
+											</g>
+										</svg></div>
+								</span>
+								<span class="flex-item">
+									<?php echo cl_translate('Display'); ?>
+								</span>
+							</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="<?php echo cl_link("logout"); ?>">
+								<span class="flex-item dropdown-item-icon">
+									<?php echo cl_ikon('exit'); ?>
+								</span>
+								<span class="flex-item">
+									<?php echo cl_translate('Logout'); ?>
+								</span>
+							</a>
+						</div>
+					</span>
+                </li>
+                <li data-navitem="logout" id="logoutIcon" class="iconsCellPhone sidebar-v-nav-item">
+
+							<span class="icon">
+							    <a href="https://p-tweets.com/talk/logout">
+
+                                        <svg fill="#000000" height="800px" width="800px" version="1.1" id="Capa_1"
+                                             xmlns="http://www.w3.org/2000/svg"
+                                             xmlns:xlink="http://www.w3.org/1999/xlink"
+                                             viewBox="0 0 384.971 384.971" xml:space="preserve">
+                                        <g>
+                                        	<g id="Sign_Out">
+                                        		<path d="M180.455,360.91H24.061V24.061h156.394c6.641,0,12.03-5.39,12.03-12.03s-5.39-12.03-12.03-12.03H12.03
+                                        			C5.39,0.001,0,5.39,0,12.031V372.94c0,6.641,5.39,12.03,12.03,12.03h168.424c6.641,0,12.03-5.39,12.03-12.03
+                                        			C192.485,366.299,187.095,360.91,180.455,360.91z"/>
+                                        		<path d="M381.481,184.088l-83.009-84.2c-4.704-4.752-12.319-4.74-17.011,0c-4.704,4.74-4.704,12.439,0,17.179l62.558,63.46H96.279
+                                        			c-6.641,0-12.03,5.438-12.03,12.151c0,6.713,5.39,12.151,12.03,12.151h247.74l-62.558,63.46c-4.704,4.752-4.704,12.439,0,17.179
+                                        			c4.704,4.752,12.319,4.752,17.011,0l82.997-84.2C386.113,196.588,386.161,188.756,381.481,184.088z"/>
+                                        	</g>
+                                        	<g>
+                                        	</g>
+                                        	<g>
+                                        	</g>
+                                        	<g>
+                                        	</g>
+                                        	<g>
+                                        	</g>
+                                        	<g>
+                                        	</g>
+                                        	<g>
+                                        	</g>
+                                        </g>
+                                        </svg>
+								</a>
+							</span>
+                    <span class="nav-item-holder">
+								<a href="#" data-spa="true">
+								    Logout
+								</a>
+							</span>
+                </li>
+                <?php if (not_empty($cl['is_admin'])) { ?>
+                    <li data-navitem="admin" id="adminIcon" class="iconsCellPhone sidebar-v-nav-item">
+
+							<span class="icon">
+							    <a href="https://p-tweets.com/talk/admin_panel">
+							        <svg fill="#000000" width="800px" height="800px" viewBox="0 0 1920 1920"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M276.941 440.584v565.722c0 422.4 374.174 625.468 674.71 788.668l8.02 4.292 8.131-4.292c300.537-163.2 674.71-366.268 674.71-788.668V440.584l-682.84-321.657L276.94 440.584Zm682.73 1479.529c-9.262 0-18.523-2.372-26.993-6.89l-34.9-18.974C588.095 1726.08 164 1495.906 164 1006.306V404.78c0-21.91 12.65-41.788 32.414-51.162L935.727 5.42c15.134-7.228 32.866-7.228 48 0l739.313 348.2c19.765 9.374 32.414 29.252 32.414 51.162v601.525c0 489.6-424.207 719.774-733.779 887.943l-34.899 18.975c-8.47 4.517-17.731 6.889-27.105 6.889Zm467.158-547.652h-313.412l-91.595-91.482v-83.803H905.041v-116.78h-83.69l-58.503-58.504c-1.92.113-3.84.113-5.76.113-176.075 0-319.285-143.21-319.285-319.285 0-176.075 143.21-319.398 319.285-319.398 176.075 0 319.285 143.323 319.285 319.398 0 1.92 0 3.84-.113 5.647l350.57 350.682v313.412Zm-266.654-112.941h153.713v-153.713L958.462 750.155l3.953-37.27c1.017-123.897-91.595-216.621-205.327-216.621S550.744 588.988 550.744 702.72c0 113.845 92.612 206.344 206.344 206.344l47.21-5.309 63.811 63.7h149.873v116.78h116.781v149.986l25.412 25.299Zm-313.4-553.57c0 46.758-37.949 84.706-84.706 84.706-46.758 0-84.706-37.948-84.706-84.706s37.948-84.706 84.706-84.706c46.757 0 84.706 37.948 84.706 84.706"
+                                              fill-rule="evenodd"/>
+                                    </svg>
+								</a>
+							</span>
+                        <span class="nav-item-holder">
+								<a href="#" data-spa="true">
+								    Admin
+								</a>
+							</span>
+                    </li>
+                <?php } ?>
+
+                <li class="iconsCellPhone sidebar-v-nav-item sideMore">
+					<span class="icon">
+						<?php echo cl_ikon('more'); ?>
+					</span>
+                    <span class="nav-item-holder dropdown notCut">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							<?php echo cl_translate('More'); ?>
+						</a>
+						<div class="dropdown-menu dropdown-icons">
+							<?php if (not_empty($cl['is_admin'])): ?>
+                                <a class="dropdown-item" href="<?php echo cl_link("admin_panel"); ?>" target="_blank">
+									<span class="flex-item dropdown-item-icon">
+										<?php echo cl_ikon('chart'); ?>
+									</span>
+									<span class="flex-item">
+										<?php echo cl_translate('Control panel'); ?>
+									</span>
+								</a>
+                            <?php endif; ?>
+                            <?php if ($cl['config']['advertising_system'] == 'on'): ?>
+                                <a class="dropdown-item" href="<?php echo cl_link("wallet"); ?>" data-spa="true">
+									<span class="flex-item dropdown-item-icon">
+										<?php echo cl_ikon('credit-card'); ?>
+									</span>
+									<span class="flex-item">
+										<?php echo cl_translate('Wallet'); ?> <b class="wallet">(
+											<?php echo cl_money($me['wallet']); ?>)
+										</b>
+									</span>
+								</a>
+
+                                <a class="dropdown-item" href="<?php echo cl_link("ads"); ?>" data-spa="true">
+									<span class="flex-item dropdown-item-icon">
+										<?php echo cl_ikon('feed'); ?>
+									</span>
+									<span class="flex-item">
+										<?php echo cl_translate('Advertising'); ?>
+									</span>
+								</a>
+                            <?php endif; ?>
+                            <?php if ($cl['config']['affiliates_system'] == 'on'): ?>
+                                <a class="dropdown-item" href="<?php echo cl_link("affiliates"); ?>" data-spa="true">
+									<span class="flex-item dropdown-item-icon">
+										<?php echo cl_ikon('support-alt'); ?>
+									</span>
+									<span class="flex-item">
+										<?php echo cl_translate('Affiliates'); ?>
+									</span>
+								</a>
+                            <?php endif; ?>
+							<!-- Blue Account  -->
+							<?php if ($cl['config']['blue_account_system_status'] == 'on'): ?>
+                                <?php if ($me["is_blue"] == 1): ?>
+                                    <a class="dropdown-item" href="<?php echo cl_link("blue_features"); ?>"
+                                       data-navitem="blue_features">
+
+										<span class="flex-item dropdown-item-icon">
+											<svg viewBox="0 0 24 24" aria-hidden="true"
+                                                 class="r-18jsvk2 r-4qtqp9 r-yyyyoo r-lwhw9o r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-cnnz9e">
+												<g>
+													<path
+                                                            d="M15.704 8.99c.457-.05.891-.17 1.296-.35-.302.45-.685.84-1.125 1.15.004.1.006.19.006.29 0 2.94-2.269 6.32-6.421 6.32-1.274 0-2.46-.37-3.459-1 .177.02.357.03.539.03 1.057 0 2.03-.35 2.803-.95-.988-.02-1.821-.66-2.109-1.54.138.03.28.04.425.04.206 0 .405-.03.595-.08-1.033-.2-1.811-1.1-1.811-2.18v-.03c.305.17.652.27 1.023.28-.606-.4-1.004-1.08-1.004-1.85 0-.4.111-.78.305-1.11 1.113 1.34 2.775 2.22 4.652 2.32-.038-.17-.058-.33-.058-.51 0-1.23 1.01-2.22 2.256-2.22.649 0 1.235.27 1.647.7.514-.1.997-.28 1.433-.54-.168.52-.526.96-.992 1.23zM2 21h15c3.038 0 5.5-2.46 5.5-5.5 0-1.4-.524-2.68-1.385-3.65-.08-.09-.089-.22-.023-.32.574-.87.908-1.91.908-3.03C22 5.46 19.538 3 16.5 3H2v18zM16.5 5C18.433 5 20 6.57 20 8.5c0 1.01-.43 1.93-1.12 2.57-.468.43-.414 1.19.111 1.55.914.63 1.509 1.69 1.509 2.88 0 1.93-1.567 3.5-3.5 3.5H4V5h12.5z">
+													</path>
+												</g>
+											</svg>
+										</span>
+										<span class="flex-item">
+
+											<?php echo cl_translate('Blue features'); ?>
+
+										</span>
+									</a>
+                                <?php else: ?>
+                                    <a class="dropdown-item" href="<?php echo cl_link('trending'); ?>" data-spa="true"
+                                       data-navitem="trending">
+
+										<span class="flex-item dropdown-item-icon">
+											<svg viewBox="0 0 24 24" aria-hidden="true"
+                                                 class="r-1kihuf0 r-18jsvk2 r-4qtqp9 r-yyyyoo r-1q142lx r-1472mwg r-mbgqwd r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-lrsllp"
+                                                 data-testid="icon">
+												<g>
+													<path
+                                                            d="M3 4.5C3 3.12 4.12 2 5.5 2h13C19.88 2 21 3.12 21 4.5v15c0 1.38-1.12 2.5-2.5 2.5h-13C4.12 22 3 20.88 3 19.5v-15zM5.5 4c-.28 0-.5.22-.5.5v15c0 .28.22.5.5.5h13c.28 0 .5-.22.5-.5v-15c0-.28-.22-.5-.5-.5h-13zM16 10H8V8h8v2zm-8 2h8v2H8v-2z">
+													</path>
+												</g>
+											</svg>
+										</span>
+										<span class="flex-item">
+
+											<?php echo cl_translate('actual'); ?>
+
+										</span>
+									</a>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                            <?php if ($cl['config']['prem_account_system_status'] == 'on'): ?>
+                                <?php if ($me["is_premium"] == 1): ?>
+                                    <a class="dropdown-item" href="<?php echo cl_link("premium_features"); ?>"
+                                       data-navitem="premium_features">
+
+										<span class="flex-item dropdown-item-icon">
+											<svg viewBox="0 0 24 24" aria-hidden="true"
+                                                 class="r-18jsvk2 r-4qtqp9 r-yyyyoo r-1q142lx r-1xvli5t r-1b7u577 r-dnmrzs r-bnwqim r-1plcrui r-lrvibr"
+                                                 data-testid="icon">
+												<g>
+													<path
+                                                            d="M5 22H2v-3c0-1.654 1.346-3 3-3s3 1.346 3 3-1.346 3-3 3zm-1-2h1c.551 0 1-.449 1-1s-.449-1-1-1-1 .449-1 1v1zm7.594 1.282l-.336-1.145c-.271-.923-.664-1.807-1.166-2.627-.452-.736-.992-1.421-1.607-2.036-.626-.625-1.322-1.173-2.069-1.627-.821-.499-1.706-.888-2.63-1.157l-1.151-.335L5.312 7h5.192c.613-.636 2.015-2.077 2.758-2.744C15.673 2.09 20.704 2.003 20.918 2l1.025-.013-.013 1.025c-.003.213-.09 5.245-2.256 7.656-.643.715-2.004 2.043-2.671 2.688v5.239l-5.407 2.688h-.002zm.64-4.046c.207.396.393.802.557 1.217l2.21-1.099v-2.333l-2.768 2.214zm-3.839-4.468c.531.391 1.034.823 1.503 1.292.459.459.883.951 1.267 1.471l4.104-3.284c.269-.257 2.169-2.084 2.916-2.915 1.084-1.208 1.531-3.667 1.681-5.269-1.602.149-4.061.596-5.268 1.68-.832.748-2.658 2.647-2.916 2.916l-3.287 4.109zM5.47 11.154c.414.163.819.347 1.214.551l2.165-2.706H6.548l-1.077 2.154z">
+													</path>
+												</g>
+											</svg>
+										</span>
+										<span class="flex-item">
+
+											<?php echo cl_translate('Premium features'); ?>
+
+										</span>
+									</a>
+                                <?php else: ?>
+                                    <a class="dropdown-item" href="<?php echo cl_link("premium_account"); ?>"
+                                       data-spa="true"
+                                       data-navitem="premium_account">
+
+										<span class="flex-item dropdown-item-icon">
+											<svg viewBox="0 0 24 24" aria-hidden="true"
+                                                 class="r-18jsvk2 r-4qtqp9 r-yyyyoo r-1q142lx r-1xvli5t r-1b7u577 r-dnmrzs r-bnwqim r-1plcrui r-lrvibr"
+                                                 data-testid="icon">
+												<g>
+													<path
+                                                            d="M5 22H2v-3c0-1.654 1.346-3 3-3s3 1.346 3 3-1.346 3-3 3zm-1-2h1c.551 0 1-.449 1-1s-.449-1-1-1-1 .449-1 1v1zm7.594 1.282l-.336-1.145c-.271-.923-.664-1.807-1.166-2.627-.452-.736-.992-1.421-1.607-2.036-.626-.625-1.322-1.173-2.069-1.627-.821-.499-1.706-.888-2.63-1.157l-1.151-.335L5.312 7h5.192c.613-.636 2.015-2.077 2.758-2.744C15.673 2.09 20.704 2.003 20.918 2l1.025-.013-.013 1.025c-.003.213-.09 5.245-2.256 7.656-.643.715-2.004 2.043-2.671 2.688v5.239l-5.407 2.688h-.002zm.64-4.046c.207.396.393.802.557 1.217l2.21-1.099v-2.333l-2.768 2.214zm-3.839-4.468c.531.391 1.034.823 1.503 1.292.459.459.883.951 1.267 1.471l4.104-3.284c.269-.257 2.169-2.084 2.916-2.915 1.084-1.208 1.531-3.667 1.681-5.269-1.602.149-4.061.596-5.268 1.68-.832.748-2.658 2.647-2.916 2.916l-3.287 4.109zM5.47 11.154c.414.163.819.347 1.214.551l2.165-2.706H6.548l-1.077 2.154z">
+													</path>
+												</g>
+											</svg>
+										</span>
+										<span class="flex-item">
+											<?php echo cl_translate('Premium account'); ?>
+										</span>
+									</a>
+                                <?php endif; ?>
+                            <?php endif; ?>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="<?php echo cl_link("settings"); ?>" data-spa="true">
+								<span class="flex-item dropdown-item-icon">
+									<?php echo cl_ikon('settings'); ?>
+								</span>
+								<span class="flex-item">
+									<?php echo cl_translate('Profile settings'); ?>
+								</span>
+							</a>
+							<a class="dropdown-item" href="<?php echo cl_link("faqs"); ?>">
+								<span class="flex-item dropdown-item-icon">
+									<?php echo cl_ikon('help'); ?>
+								</span>
+								<span class="flex-item">
+									<?php echo cl_translate('Help center'); ?>
+								</span>
+							</a>
+							<a class="dropdown-item" href="javascript:void(0);" onclick="SMColibri.display_settings();">
+								<span class="flex-item dropdown-item-icon">
+									<div role="presentation" class="css-1dbjc4n"><svg viewBox="0 0 24 24"
+                                                                                      aria-hidden="true"
+                                                                                      class="r-18jsvk2 r-4qtqp9 r-yyyyoo r-1q142lx r-1xvli5t r-1b7u577 r-dnmrzs r-bnwqim r-1plcrui r-lrvibr">
+											<g>
+												<path
+                                                        d="M15.692 11.205l6.383-7.216c.45-.45.45-1.18 0-1.628-.45-.45-1.178-.45-1.627 0l-7.232 6.402s.782.106 1.595.93c.548.558.882 1.51.882 1.51z">
+												</path>
+												<path
+                                                        d="M17.45 22.28H3.673c-1.148 0-2.083-.946-2.083-2.11V7.926c0-1.165.934-2.112 2.082-2.112h5.836c.414 0 .75.336.75.75s-.336.75-.75.75H3.672c-.32 0-.583.274-.583.612V20.17c0 .336.26.61.582.61h13.78c.32 0 .583-.273.583-.61v-6.28c0-.415.336-.75.75-.75s.75.335.75.75v6.28c0 1.163-.934 2.11-2.084 2.11z">
+												</path>
+											</g>
+										</svg><svg viewBox="0 0 24 24" aria-hidden="true"
+                                                   class="r-1cvl2hr r-4qtqp9 r-yyyyoo r-1q142lx r-1xvli5t r-1d2f490 r-1b7u577 r-dnmrzs r-u8s1d r-1plcrui r-ipm5af r-lrvibr">
+											<g>
+												<path
+                                                        d="M8.18 16.99c-.19.154-.476.032-.504-.21-.137-1.214-.234-4.053 1.483-5.943.908-1 3.02-1.52 4.475-.198s1.14 3.473.23 4.473c-2.07 2.15-3.428.058-5.686 1.878z">
+												</path>
+											</g>
+										</svg></div>
+								</span>
+								<span class="flex-item">
+									<?php echo cl_translate('Display'); ?>
+								</span>
+							</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="<?php echo cl_link("logout"); ?>">
+								<span class="flex-item dropdown-item-icon">
+									<?php echo cl_ikon('exit'); ?>
+								</span>
+								<span class="flex-item">
+									<?php echo cl_translate('Logout'); ?>
+								</span>
+							</a>
+						</div>
+					</span>
+                </li>
+
+                <li class="iconsCellPhone sidebar-v-nav-item mobileNewPost">
+				    <span class="icon">
+			        	<a href="#" id="new-post-svg" data-toggle="modal" data-target="#add_new_post">
+						    <?php echo cl_ikon("new-post"); ?>
+				        </a>
+				    </span>
+
+                </li>
+                <li class="iconsCellPhone sidebar-v-nav-item" id="mobile-user-profile-menu">
+                    <span class="icon">
+        					<a href="#" class="profile-toggle" id="profile-svg" data-toggle="dropdown">
+        					        <?php echo cl_ikon("profile"); ?>
+        					</a>
+					 </span>
+                    <span class="nav-item-holder">
+						<a href="<?php echo($me["url"]); ?>">
+							<?php echo cl_translate('Profile Menu'); ?>
+						</a>
+					</span>
+                </li>
+
+            </ul>
+        </div>
+        <div class="mobile-sb-footer">
+            <?php echo cl_template('main/footer'); ?>
+        </div>
+        <a href="#" data-toggle="modal" data-target="#add_new_post">
+            <div class="tweet h-laptop" style="position: fixed; float: right; right: 20px; bottom: 60px;"> <span
+                        class="icon">
+					<svg viewBox="0 0 24 24" aria-hidden="true"
+                         class="r-jwli3a r-4qtqp9 r-yyyyoo r-1472mwg r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-lrsllp">
+						<g>
+							<path
+                                    d="M23 3c-6.62-.1-10.38 2.421-13.05 6.03C7.29 12.61 6 17.331 6 22h2c0-1.007.07-2.012.19-3H12c4.1 0 7.48-3.082 7.94-7.054C22.79 10.147 23.17 6.359 23 3zm-7 8h-1.5v2H16c.63-.016 1.2-.08 1.72-.188C16.95 15.24 14.68 17 12 17H8.55c.57-2.512 1.57-4.851 3-6.78 2.16-2.912 5.29-4.911 9.45-5.187C20.95 8.079 19.9 11 16 11zM4 9V6H1V4h3V1h2v3h3v2H6v3H4z">
+							</path>
+						</g>
+					</svg>
+				</span></div>
+        </a>
+        <div class="publish-post-btn">
+            <button class="btn btn-custom main-inline lg home btn-block" data-toggle="modal"
+                    data-target="#add_new_post">
+                <?php echo cl_translate('New post'); ?>
+            </button>
+        </div>
+        <div class="user-info h-mobile" style="position: fixed; bottom: 15px; flex-direction: row;">
+            <div class="avatar">
+                <img src="<?php echo($me['avatar']); ?>" alt="Avatar">
+            </div>
+            <div class="uname">
+                <h5 style="margin-bottom: 0px; font-size:15px; font-weight: 700;">
+					<span class="user-name-holder">
+						<?php echo($me['name']); ?>
+					</span>
+                    <p class="<?php if ($me['verified'] == '1') {
+                        echo('verified-badge');
+                    } ?>" style="display:inline-block;"></p>
+                </h5>
+                <a href="<?php echo($me['url']); ?>" data-spa="true" style="opacity: 0.7;">
+                    @<?php echo($me['username']); ?>
+                </a>
+                <span class="dropdown">
+					<a href="#" class="profile-toggle" data-toggle="dropdown">
+						<?php echo cl_ikon("three-dots"); ?>
+					</a>
+					<div class="dropdown-menu dropdown-icons profile">
+						<h5 style="text-align: center; margin-top: 20px; margin-bottom:0px;">
+							<span class="user-name-holder <?php if ($me['verified'] == '1') {
+                                echo('verified-badge');
+                            } ?>">
+								<?php echo($me['name']); ?>
+							</span>
+						</h5>
+						<h5 style="text-align: center; margin-bottom: 10px;">
+							<a href="<?php echo($me['url']); ?>" data-spa="true">
+								@<?php echo($me['username']); ?>
+							</a>
+						</h5>
+						<a class="dropdown-item" href="javascript:void(0);" onclick="SMColibri.display_settings();">
+							<span class="flex-item dropdown-item-icon">
+								<?php echo cl_ikon('display'); ?>
+							</span>
+							<span class="flex-item">
+								<?php echo cl_translate('Display'); ?>
+							</span>
+						</a>
+                        <!-- Premium Account -->
+						<?php if ($cl['config']['prem_account_system_status'] == 'on'): ?>
+                            <?php if ($me["is_premium"] == 1): ?>
+                                <a class="dropdown-item" href="<?php echo cl_link("premium_features"); ?>"
+                                   data-navitem="premium_features">
+									<span class="flex-item dropdown-item-icon">
+										<svg viewBox="0 0 24 24" aria-hidden="true"
+                                             class="r-18jsvk2 r-4qtqp9 r-yyyyoo r-1q142lx r-1xvli5t r-1b7u577 r-dnmrzs r-bnwqim r-1plcrui r-lrvibr"
+                                             data-testid="icon">
+											<g>
+												<path
+                                                        d="M5 22H2v-3c0-1.654 1.346-3 3-3s3 1.346 3 3-1.346 3-3 3zm-1-2h1c.551 0 1-.449 1-1s-.449-1-1-1-1 .449-1 1v1zm7.594 1.282l-.336-1.145c-.271-.923-.664-1.807-1.166-2.627-.452-.736-.992-1.421-1.607-2.036-.626-.625-1.322-1.173-2.069-1.627-.821-.499-1.706-.888-2.63-1.157l-1.151-.335L5.312 7h5.192c.613-.636 2.015-2.077 2.758-2.744C15.673 2.09 20.704 2.003 20.918 2l1.025-.013-.013 1.025c-.003.213-.09 5.245-2.256 7.656-.643.715-2.004 2.043-2.671 2.688v5.239l-5.407 2.688h-.002zm.64-4.046c.207.396.393.802.557 1.217l2.21-1.099v-2.333l-2.768 2.214zm-3.839-4.468c.531.391 1.034.823 1.503 1.292.459.459.883.951 1.267 1.471l4.104-3.284c.269-.257 2.169-2.084 2.916-2.915 1.084-1.208 1.531-3.667 1.681-5.269-1.602.149-4.061.596-5.268 1.68-.832.748-2.658 2.647-2.916 2.916l-3.287 4.109zM5.47 11.154c.414.163.819.347 1.214.551l2.165-2.706H6.548l-1.077 2.154z">
+												</path>
+											</g>
+										</svg>
+									</span>
+									<span class="flex-item">
+
+										<?php echo cl_translate('Premium features'); ?>
+
+									</span>
+								</a>
+                            <?php else: ?>
+                                <a class="dropdown-item" href="<?php echo cl_link("premium_account"); ?>"
+                                   data-spa="true"
+                                   data-navitem="premium_account">
+
+									<span class="flex-item dropdown-item-icon">
+										<svg viewBox="0 0 24 24" aria-hidden="true"
+                                             class="r-18jsvk2 r-4qtqp9 r-yyyyoo r-1q142lx r-1xvli5t r-1b7u577 r-dnmrzs r-bnwqim r-1plcrui r-lrvibr"
+                                             data-testid="icon">
+											<g>
+												<path
+                                                        d="M5 22H2v-3c0-1.654 1.346-3 3-3s3 1.346 3 3-1.346 3-3 3zm-1-2h1c.551 0 1-.449 1-1s-.449-1-1-1-1 .449-1 1v1zm7.594 1.282l-.336-1.145c-.271-.923-.664-1.807-1.166-2.627-.452-.736-.992-1.421-1.607-2.036-.626-.625-1.322-1.173-2.069-1.627-.821-.499-1.706-.888-2.63-1.157l-1.151-.335L5.312 7h5.192c.613-.636 2.015-2.077 2.758-2.744C15.673 2.09 20.704 2.003 20.918 2l1.025-.013-.013 1.025c-.003.213-.09 5.245-2.256 7.656-.643.715-2.004 2.043-2.671 2.688v5.239l-5.407 2.688h-.002zm.64-4.046c.207.396.393.802.557 1.217l2.21-1.099v-2.333l-2.768 2.214zm-3.839-4.468c.531.391 1.034.823 1.503 1.292.459.459.883.951 1.267 1.471l4.104-3.284c.269-.257 2.169-2.084 2.916-2.915 1.084-1.208 1.531-3.667 1.681-5.269-1.602.149-4.061.596-5.268 1.68-.832.748-2.658 2.647-2.916 2.916l-3.287 4.109zM5.47 11.154c.414.163.819.347 1.214.551l2.165-2.706H6.548l-1.077 2.154z">
+												</path>
+											</g>
+										</svg>
+									</span>
+									<span class="flex-item">
+
+										<?php echo cl_translate('Premium account'); ?>
+
+									</span>
+								</a>
+                            <?php endif; ?>
+                        <?php endif; ?>
+
+						<a class="dropdown-item" href="<?php echo cl_link("settings"); ?>" data-spa="true">
+							<span class="flex-item dropdown-item-icon">
+								<?php echo cl_ikon('settings'); ?>
+							</span>
+							<span class="flex-item">
+								<?php echo cl_translate('Profile settings'); ?>
+							</span>
+						</a>
+						<a class="dropdown-item" href="<?php echo cl_link("logout"); ?>">
+							<span class="flex-item dropdown-item-icon">
+								<?php echo cl_ikon('exit'); ?>
+							</span>
+							<span class="flex-item">
+								<?php echo cl_translate('Logout'); ?>
+							</span>
+						</a>
+						<div class="account-stats">
+							<div class="stat-holder">
+								<a href="<?php echo($me["url"]); ?>" data-spa="true">
+									<b data-an="total-posts">
+										<?php echo cl_number($me['posts']); ?>
+									</b>
+									<span>
+										<?php echo cl_translate('Posts'); ?>
+									</span>
+								</a>
+							</div>
+							<div class="stat-holder">
+								<?php if (not_empty($me['following'])): ?>
+                                    <a href="<?php echo(cl_strf('%s/following', $cl['me']['url'])); ?>" data-spa="true">
+										<b data-an="total-following">
+											<?php echo cl_number($me['following']); ?>
+										</b>
+										<span>
+											<?php echo cl_translate('Following'); ?>
+										</span>
+									</a>
+                                <?php else: ?>
+                                    <b data-an="total-following">
+										<?php echo cl_number($me['following']); ?>
+									</b>
+                                    <span>
+										<?php echo cl_translate('Following'); ?>
+									</span>
+                                <?php endif; ?>
+							</div>
+							<div class="stat-holder">
+								<?php if (not_empty($me['followers'])): ?>
+                                    <a href="<?php echo(cl_strf('%s/followers', $cl['me']['url'])); ?>" data-spa="true">
+										<b data-an="total-followers">
+											<?php echo cl_number($me['followers']); ?>
+										</b>
+										<span>
+											<?php echo cl_translate('Followers'); ?>
+										</span>
+									</a>
+                                <?php else: ?>
+                                    <b data-an="total-followers">
+										<?php echo cl_number($me['followers']); ?>
+									</b>
+                                    <span>
+										<?php echo cl_translate('Followers'); ?>
+									</span>
+                                <?php endif; ?>
+							</div>
+						</div>
+					</div>
+				</span>
+            </div>
+        </div>
+    </div>
+    <?php if (not_empty($cl["is_logged"]) && in_array($cl["pn"], array("conversation")) != true): ?>
+        <?php echo cl_template('main/bottom_navbar'); ?>
+    <?php endif; ?>
+</div>
+<span class="dropdown">
+    <div id="sidebarProfileDropdownMenu" class="dropdown-menu dropdown-icons profile">
+        <h5 style="text-align: center; margin-top: 20px; margin-bottom:0px;">
+            <span class="user-name-holder <?php if ($me['verified'] == '1') {
+                echo('verified-badge');
+            } ?>">
+                <?php echo($me['name']); ?>
+            </span>
+        </h5>
+        <h5 style="text-align: center; margin-bottom: 10px;">
+            <a href="<?php echo($me['url']); ?>" data-spa="true">
+                @<?php echo($me['username']); ?>
+            </a>
+        </h5>
+        <a class="dropdown-item" href="javascript:void(0);" onclick="SMColibri.display_settings();">
+            <span class="flex-item dropdown-item-icon">
+                <?php echo cl_ikon('display'); ?>
+            </span>
+            <span class="flex-item">
+                <?php echo cl_translate('Display'); ?>
+            </span>
+        </a>
+        <!-- Premium Account -->
+        <?php if ($cl['config']['prem_account_system_status'] == 'on'): ?>
+            <?php if ($me["is_premium"] == 1): ?>
+                <a class="dropdown-item" href="<?php echo cl_link("premium_features"); ?>"
+                   data-navitem="premium_features">
+                    <span class="flex-item dropdown-item-icon">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"
+                             class="r-18jsvk2 r-4qtqp9 r-yyyyoo r-1q142lx r-1xvli5t r-1b7u577 r-dnmrzs r-bnwqim r-1plcrui r-lrvibr"
+                             data-testid="icon">
+                            <g>
+                                <path
+                                        d="M5 22H2v-3c0-1.654 1.346-3 3-3s3 1.346 3 3-1.346 3-3 3zm-1-2h1c.551 0 1-.449 1-1s-.449-1-1-1-1 .449-1 1v1zm7.594 1.282l-.336-1.145c-.271-.923-.664-1.807-1.166-2.627-.452-.736-.992-1.421-1.607-2.036-.626-.625-1.322-1.173-2.069-1.627-.821-.499-1.706-.888-2.63-1.157l-1.151-.335L5.312 7h5.192c.613-.636 2.015-2.077 2.758-2.744C15.673 2.09 20.704 2.003 20.918 2l1.025-.013-.013 1.025c-.003.213-.09 5.245-2.256 7.656-.643.715-2.004 2.043-2.671 2.688v5.239l-5.407 2.688h-.002zm.64-4.046c.207.396.393.802.557 1.217l2.21-1.099v-2.333l-2.768 2.214zm-3.839-4.468c.531.391 1.034.823 1.503 1.292.459.459.883.951 1.267 1.471l4.104-3.284c.269-.257 2.169-2.084 2.916-2.915 1.084-1.208 1.531-3.667 1.681-5.269-1.602.149-4.061.596-5.268 1.68-.832.748-2.658 2.647-2.916 2.916l-3.287 4.109zM5.47 11.154c.414.163.819.347 1.214.551l2.165-2.706H6.548l-1.077 2.154z">
+                                </path>
+                            </g>
+                        </svg>
+                    </span>
+                    <span class="flex-item">
+
+                        <?php echo cl_translate('Premium features'); ?>
+
+                    </span>
+                </a>
+            <?php else: ?>
+                <a class="dropdown-item" href="<?php echo cl_link("premium_account"); ?>"
+                   data-spa="true"
+                   data-navitem="premium_account">
+
+                    <span class="flex-item dropdown-item-icon">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"
+                             class="r-18jsvk2 r-4qtqp9 r-yyyyoo r-1q142lx r-1xvli5t r-1b7u577 r-dnmrzs r-bnwqim r-1plcrui r-lrvibr"
+                             data-testid="icon">
+                            <g>
+                                <path
+                                        d="M5 22H2v-3c0-1.654 1.346-3 3-3s3 1.346 3 3-1.346 3-3 3zm-1-2h1c.551 0 1-.449 1-1s-.449-1-1-1-1 .449-1 1v1zm7.594 1.282l-.336-1.145c-.271-.923-.664-1.807-1.166-2.627-.452-.736-.992-1.421-1.607-2.036-.626-.625-1.322-1.173-2.069-1.627-.821-.499-1.706-.888-2.63-1.157l-1.151-.335L5.312 7h5.192c.613-.636 2.015-2.077 2.758-2.744C15.673 2.09 20.704 2.003 20.918 2l1.025-.013-.013 1.025c-.003.213-.09 5.245-2.256 7.656-.643.715-2.004 2.043-2.671 2.688v5.239l-5.407 2.688h-.002zm.64-4.046c.207.396.393.802.557 1.217l2.21-1.099v-2.333l-2.768 2.214zm-3.839-4.468c.531.391 1.034.823 1.503 1.292.459.459.883.951 1.267 1.471l4.104-3.284c.269-.257 2.169-2.084 2.916-2.915 1.084-1.208 1.531-3.667 1.681-5.269-1.602.149-4.061.596-5.268 1.68-.832.748-2.658 2.647-2.916 2.916l-3.287 4.109zM5.47 11.154c.414.163.819.347 1.214.551l2.165-2.706H6.548l-1.077 2.154z">
+                                </path>
+                            </g>
+                        </svg>
+                    </span>
+                    <span class="flex-item">
+
+                        <?php echo cl_translate('Premium account'); ?>
+
+                    </span>
+                </a>
+            <?php endif; ?>
+        <?php endif; ?>
+
+        <a class="dropdown-item" href="<?php echo cl_link("settings"); ?>" data-spa="true">
+            <span class="flex-item dropdown-item-icon">
+                <?php echo cl_ikon('settings'); ?>
+            </span>
+            <span class="flex-item">
+                <?php echo cl_translate('Profile settings'); ?>
+            </span>
+        </a>
+        <a class="dropdown-item" href="<?php echo cl_link("logout"); ?>">
+            <span class="flex-item dropdown-item-icon">
+                <?php echo cl_ikon('exit'); ?>
+            </span>
+            <span class="flex-item">
+                <?php echo cl_translate('Logout'); ?>
+            </span>
+        </a>
+        <div class="mobile-account-stats">
+            <div class="mobile-account-status-first-div">
+                    <div class="mobile-stat-holder">
+                        <a href="<?php echo($me["url"]); ?>" class="mobile-stat-holder-a"
+                           data-spa="true">
+                            <b data-an="total-posts">
+                                <?php echo cl_number($me['posts']); ?>
+                            </b>
+                            <span>
+                                <?php echo cl_translate('Posts'); ?>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="mobile-stat-holder">
+                        <?php if (not_empty($me['following'])): ?>
+                            <a href="<?php echo(cl_strf('%s/following', $cl['me']['url'])); ?>"
+                               data-spa="true" class="mobile-stat-holder-a">
+                                <b data-an="total-following">
+                                    <?php echo cl_number($me['following']); ?>
+                                </b>
+                                <span>
+                                    <?php echo cl_translate('Following'); ?>
+                                </span>
+                            </a>
+                        <?php else: ?>
+                            <div class="mobile-stat-holder-a">
+                                <b data-an="total-following">
+                                <?php echo cl_number($me['following']); ?>
+                            </b>
+                            <span>
+                                <?php echo cl_translate('Following'); ?>
+                            </span>
+                        </div>
+                        <?php endif; ?>
+                    </div>
+            </div>
+            <div class="mobile-account-status-second-div">
+                <div class="mobile-stat-holder">
+                    <?php if (not_empty($me['followers'])): ?>
+                        <a href="<?php echo(cl_strf('%s/followers', $cl['me']['url'])); ?>"
+                           class="mobile-stat-holder-a" data-spa="true">
+                            <b data-an="total-followers">
+                                <?php echo cl_number($me['followers']); ?>
+                            </b>
+                            <span>
+                                <?php echo cl_translate('Followers'); ?>
+                            </span>
+                        </a>
+                    <?php else: ?>
+                        <div class="mobile-stat-holder-a">
+                                <b data-an="total-followers">
+                                <?php echo cl_number($me['followers']); ?>
+                            </b>
+                            <span>
+                                <?php echo cl_translate('Followers'); ?>
+                            </span>
+                        </div>
+                    <?php endif; ?>
+            </div>
+            </div>
+
+        </div>
+
+    </div>
+</span>

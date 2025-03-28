@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; }
+        .content { width: 100%; padding: 20px; background-color: #fff; }
+        .button { padding: 10px 20px; background-color: #007bff; color: white !important; text-decoration: none; border-radius: 5px;}
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h2>Dear Customer,</h2>
+        <p>Your advertisement "<?php echo $cl['ad_message_data']['ad_name']; ?>" is about to expire in <b><?php echo $cl['ad_message_data']['timeleft']; ?></b> days.</p> 
+        <p>Please take action to extend the duration of your <b>AD</b>, if you wish to keep it live.</p>
+        <p>Click the link below to manage your advertisement: </p>
+            <a href="<?php echo $cl['ad_message_data']['ad_url']; ?>" target="_blank" class="button">View AD</a>
+        <p>To ensure continued exposure for your business and services, we encourage you to sign up for an extension before the deadline.</p>
+        <p>By renewing, you'll continue to reach your target audience and keep your business front and center.</p>
+        <p>If you have any questions or need assistance with the renewal process, feel free to contact us.</p>
+        <p>We’re here to help!</p>
+
+        <p>http://P-tweets.com</p>
+        <p>ptweets2@gmail.com</p>
+        
+        <p>Best regards,</p>
+    </div>
+</body>
+</html>

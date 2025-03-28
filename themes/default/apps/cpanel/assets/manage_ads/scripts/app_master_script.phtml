@@ -1,0 +1,433 @@
+<script>
+ 	"use strict";
+
+	$(document).ready(function($) {
+	    
+        let coverDeleted = false;
+
+        function refreshIframe(videoId) {
+            const container = document.getElementById('youtube_container');
+            const oldIframe = document.getElementById('youtube_iframe');
+            
+            // Remove old iframe
+            if (oldIframe) {
+                oldIframe.remove();
+            }
+            
+            // Create new iframe
+            const newIframe = document.createElement('iframe');
+            newIframe.id = 'youtube_iframe';
+            newIframe.style = 'max-width: 100%; height: auto;';
+            newIframe.frameBorder = '0';
+            newIframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+            newIframe.allowFullscreen = true;
+            newIframe.autoplay = true;
+            newIframe.src = `https://www.youtube.com/embed/${videoId}`;
+            
+            // Add to container
+            container.appendChild(newIframe);
+        }
+
+        SMC_CPanel.PS = Object({
+            app: $('[data-app="user-ads"]'),
+            edit: function(id = false) {
+
+                coverDeleted = false;
+                
+                if ($.isNumeric(id) && id) {
+                    $.ajax({
+                        url: '<?php echo cl_link("native_api/cpanel/show_user_ad"); ?>',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {id: id},
+                    }).done(function(data) {
+                        if (data.status != 200) {
+                            SMC_CPanel.errorMSG();
+                        }
+                        else {
+                            $("#ad_id").val(data.data.id);                  
+                            $("#ad_company").val(data.data.company);
+                            $("#ad_target_url").val(data.data.target_url);
+                            $("#ad_description").val(data.data.description);
+                            $("#ad_cta").val(data.data.cta);
+                            
+                            if (data.data.og_data) {
+                                var OG_data = JSON.parse(data.data.og_data);
+                                if(OG_data.status == 200 ) {
+                                    // var embedUrl = "https://www.youtube.com/embed/"+ data.data.link_src;
+                                    // $("#youtube_iframe").attr("src", embedUrl).show();
+                                    $("#youtube_container").show();
+                                    refreshIframe(data.data.link_src);
+                                    // Hide the cover image preview
+                                    $("#cover_preview").hide();
+                                }
+                                // Set the YouTube iframe source and show the container
+                                $("#ad_youtube_url").val(OG_data.og_data.url);
+                                $("#clearYoutubeBtn").show()
+
+                            } else if (data.data.cover) {
+                                // Build the image URL
+                                var imgUrl = data.url + "/" + data.data.cover;
+                                // Set the cover image source and show it
+                                $("#cover_preview").attr("src", imgUrl).show();
+                                // Hide the YouTube container
+                                $("#youtube_container").hide();
+                                // Optional: clear any previous YouTube URL
+                                $("#youtube_iframe").attr("src", "");
+                                $("#deleteCoverBtn").show();
+                                $("#clearYoutubeBtn").hide();
+                            } else {
+                                // If neither media is available, hide both containers (or set a placeholder as needed)
+                                $("#cover_preview").hide();
+                                $("#youtube_container").hide();
+                                $("#deleteCoverBtn").hide();
+                                $("#clearYoutubeBtn").hide();
+
+                            }
+
+                            $("#editModal").modal("show");
+                        }
+                    }).always(function() {
+                        $("div.confirm-actions-modal").modal("hide");
+                        SMC_CPanel.waitme();
+                    });
+                }
+            },
+            paginate: function(e = false) {
+
+                var _self = $(e);
+                var _app_ = this.app;
+
+                if (_self.hasClass('disabled') != true) {
+                    var ads_list  = _app_.find('[data-an="ads-list"]');
+                    var dir       = ((_self.data('dir') == 'prev') ? 'up' : 'down');
+                    var offset_lt = ads_list.find('[data-ads-item]').first().data('ads-item');
+                    var offset_gt = ads_list.find('[data-ads-item]').last().data('ads-item');
+
+                    $.ajax({
+                        url: '<?php echo cl_link("native_api/cpanel/get_user_ads"); ?>',
+                        type: 'GET',
+                        dataType: 'json',
+                        data: {
+                            dir: dir, 
+                            offset_lt: offset_lt, 
+                            offset_gt: offset_gt
+                        },
+                        beforeSend: function() {
+                            _app_.find('a[data-dir]').removeClass('disabled');
+
+                            SMC_CPanel.waitme("show");
+                        }
+                    }).done(function(data) {
+                        if (data.status == 200) {
+                            ads_list.html(data.html);
+                        }
+                        else{
+                            _self.addClass('disabled');
+                        }
+                    }).always(function() {
+                        delay(function() {
+                            SMC_CPanel.waitme();
+                        }, 1000);
+                    });
+                }
+                else {
+                    return false;
+                }
+            },
+            delete: function(id = false) {
+                if ($.isNumeric(id) && id) {
+                    var _app_   = this.app;
+                    var promise = SMC_CPanel.confirm_action({
+                        btn_1: "Cancel",
+                        btn_2: "Delete",
+                        title: "Please confirm your actions!",
+                        message: "Please note that if you remove this user ad? Note that the action cannot be undone",
+                    });
+
+                    promise.done(function() {
+                        $.ajax({
+                            url: '<?php echo cl_link("native_api/cpanel/delete_user_ad"); ?>',
+                            type: 'POST',
+                            dataType: 'json',
+                            data: {id: id},
+                            beforeSend: function() {
+                                SMC_CPanel.waitme("show");
+                            }
+                        }).done(function(data) {
+                            if (data.status != 200) {
+                                SMC_CPanel.errorMSG();
+                            }
+                            else {
+                                $('[data-ads-item="{0}"]'.format(id)).slideUp(300, function() {
+                                    $(this).remove();
+
+                                    if ($('[data-ads-item]').length < 1) {
+                                        $(window).reloadPage(500);
+                                    }
+                                });
+                            }
+                        }).always(function() {
+                            $("div.confirm-actions-modal").modal("hide");
+                            SMC_CPanel.waitme();
+                        });
+                    });
+
+                    promise.fail(function() {
+                        $("div.confirm-actions-modal").modal("hide");
+                    });
+                }
+            },
+            approve: function(id = false) {
+                var _app_ = this.app;
+
+                if ($.isNumeric(id) && id) {
+                    $.ajax({
+                        url: '<?php echo cl_link("native_api/cpanel/approve_user_ad"); ?>',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {id: id},
+                        beforeSend: function() {
+                            SMC_CPanel.waitme("show");
+                        }
+                    }).done(function(data) {
+                        if (data.status != 200) {
+                            SMC_CPanel.errorMSG();
+                        } else {
+                            if (data.approved == "Y") {
+                                _app_.find("[data-ads-item='{0}']".format(id)).find('[data-an="approval-status"]').replaceClass('bg-grey', 'bg-blue');
+                                _app_.find("[data-ads-item='{0}']".format(id)).find('[data-an="approval-status"]').text("Yes");
+                                _app_.find(".pt-ad-approve").text("Unapproved");
+                            } else if (data.approved == "N") {
+                                _app_.find("[data-ads-item='{0}']".format(id)).find('[data-an="approval-status"]').replaceClass('bg-blue', 'bg-grey');
+                                _app_.find("[data-ads-item='{0}']".format(id)).find('[data-an="approval-status"]').text("No");
+                                _app_.find(".pt-ad-approve").text("Approved");
+                            }
+                        }
+                    }).always(function() {
+                        SMC_CPanel.waitme();
+                    });
+                }
+            }
+        });
+
+        
+        // Handle delete cover button click
+        $("#deleteCoverBtn").click(function(){
+            var ad_id = $("#ad_id").val();
+            
+            // Confirm deletion
+            // Hide the cover preview
+            $("#cover_preview").hide();
+            $("#deleteCoverBtn").hide();
+            
+            // Set flag to track that we want to delete the cover
+            coverDeleted = true;
+        });
+
+        // Trigger file input when "Change Cover Image" button is clicked
+        $("#changeCoverBtn").click(function(){
+            $("#cover_input").click();
+        });
+
+        // Update preview image when a file is selected
+        $("#cover_input").change(function(e) {
+            coverDeleted = false;
+            var input = this;
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $("#cover_preview").attr('src', e.target.result).show();
+                    $("#deleteCoverBtn").show();
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        });
+
+        // When the Save changes button is clicked...
+        $("#saveAdChanges").click(function() {
+            // Get values from form fields
+            var ad_id       = $("#ad_id").val();
+            var company     = $("#ad_company").val();
+            var target_url  = $("#ad_target_url").val();
+            var youtube_url = $("#ad_youtube_url").val();
+            var description = $("#ad_description").val();
+            var cta         = $("#ad_cta").val();
+            var coverFile   = $("#cover_input")[0].files[0];
+
+            // Basic validation for required fields
+
+            if (!$.isNumeric(ad_id) || company.trim() === "" || target_url.trim() === "" || description.trim() === "" || cta.trim() === "") {
+                SMC_CPanel.errorMSG("Please fill in all required fields.");
+                return;
+            }
+
+            // Function to update other ad details
+            function updateAd() {
+                $.ajax({
+                    url: '<?php echo cl_link("native_api/cpanel/update_admin_ad"); ?>',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        ad_id: ad_id,
+                        company: company,
+                        target_url: target_url,
+                        youtube_url: youtube_url,
+                        description: description,
+                        cta: cta
+                        // Optionally include cover URL if your backend requires it.
+                    },
+                    beforeSend: function() {
+                        SMC_CPanel.waitme("show");
+                    }
+                }).done(function(response) {
+                    if (response.status === 200) {
+                        $("#editModal").modal("hide");
+                        window.location.reload();
+                    } else {
+                        SMC_CPanel.errorMSG("Failed to update ad. Please try again.");
+                    }
+                }).fail(function() {
+                    SMC_CPanel.errorMSG("An error occurred while updating the ad.");
+                }).always(function() {
+                    SMC_CPanel.waitme();
+                });
+            }
+
+            function uploadNewCover() {
+                var formData = new FormData();
+                formData.append('ad_id', ad_id);
+                formData.append('cover', coverFile);
+                
+                $.ajax({
+                    url: '<?php echo cl_link("native_api/cpanel/upload_user_ad_cover"); ?>',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function() {
+                        SMC_CPanel.waitme("show");
+                    }
+                }).done(function(uploadResponse) {
+                    if (uploadResponse.status === 200) {
+                        console.log("Cover image uploaded successfully.");
+                        updateAd();
+                    } else {
+                        SMC_CPanel.errorMSG(uploadResponse.message || "Failed to upload cover image.");
+                    }
+                }).fail(function() {
+                    SMC_CPanel.errorMSG("An error occurred while uploading the cover image.");
+                }).always(function() {
+                    SMC_CPanel.waitme();
+                });
+            }
+
+            if (coverDeleted) {
+            $.ajax({
+                url: '<?php echo cl_link("native_api/cpanel/delete_ad_cover"); ?>',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    ad_id: ad_id
+                },
+                beforeSend: function() {
+                    SMC_CPanel.waitme("show");
+                }
+            }).done(function(response) {
+                if (response.status === 200) {
+
+                    // Reset the flag
+                    coverDeleted = false;
+                    
+                    // Continue with other updates
+                    if (coverFile) {
+                        // User deleted the cover but also selected a new one, so upload the new one
+                        uploadNewCover();
+                    } else {
+                        // Just update the ad details
+                        updateAd();
+                    }
+                } else {
+                    SMC_CPanel.errorMSG(response.message || "Failed to delete cover image.");
+                }
+            }).fail(function() {
+                SMC_CPanel.errorMSG("An error occurred while deleting the cover image.");
+            }).always(function() {
+                SMC_CPanel.waitme();
+            });
+        } 
+            // If a new cover file is selected without deletion, upload it
+            else if (coverFile) {
+                uploadNewCover();
+            } 
+            // No cover changes, just update the ad details
+            else {
+                updateAd();
+            }
+        });
+
+        // Single event binding for modal close: reset the form and hide preview.
+        $("#close-modal-button").click(function(){
+            $("#editAdForm")[0].reset();
+            $("#cover_input").val('');
+            $("#cover_preview").hide();
+        });
+	});
+
+    // <!-- jQuery to handle the close button click -->
+
+    $(document).ready(function($){
+        $("#close-modal-button").click(function(){
+            $("#editModal").modal("hide");
+        });
+
+        $('#clearSearch').on('click', function() {
+            $('#search').val(''); // Clear the search input
+
+            // Remove query parameters from URL
+            window.location.href = window.location.pathname;
+        });
+
+        // Handle clear YouTube URL button click
+        $("#clearYoutubeBtn").on('click', function() {
+            // Clear the YouTube URL input
+            $("#ad_youtube_url").val('');
+            
+            // Hide the YouTube player container
+            $("#youtube_container").hide();
+            
+            // Optionally: clear the iframe source to stop any playing video
+            $("#youtube_iframe").attr('src', '');
+            
+            $(this).hide();
+            // Give focus back to the input field
+            $("#ad_youtube_url").focus();
+        });
+        
+        // Style the button to align nicely with the input
+        // You can adjust the CSS as needed to match your design
+        $("#clearYoutubeBtn").css({
+            'margin-left': '10px',
+            'height': 'auto'
+        });
+        
+        $("#ad_youtube_url").on('input', function() {
+            if ($(this).val().trim() !== '') {
+                $("#clearYoutubeBtn").show();
+            } else {
+                $("#clearYoutubeBtn").hide();
+            }
+        });
+        
+        // Also check on modal open if the field already has content
+        $("#editModal").on('shown.bs.modal', function() {
+            if ($("#ad_youtube_url").val().trim() !== '') {
+                $("#clearYoutubeBtn").show();
+            } else {
+                $("#clearYoutubeBtn").hide();
+            }
+        });
+    });
+
+</script>

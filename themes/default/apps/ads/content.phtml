@@ -1,0 +1,186 @@
+<!-- MDB -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.css" rel="stylesheet" />
+<!-- MDB -->
+<div class="timeline-container" data-app="advertisements">
+	<div class="timeline-header" data-el="tl-header">
+		<div class="timeline-header__topline">
+			<div data-el="timeline-bs-notifs" class="timeline-bs-notifs"></div>
+		</div>
+		<div class="timeline-header" data-el="tl-header">
+			<div class="lp">
+				<div class="nav-link-holder" style="display: flex;justify-content: center;align-items: center; margin-left:5px;">
+					<span class="go-back" onclick="SMColibri.go_back();">
+						<?php echo cl_ikon('arrow-left'); ?>
+					</span>
+					<a href="<?php echo cl_link('ads'); ?>">
+						<?php echo cl_translate('Advertisement'); ?>
+					</a>
+				</div>
+			</div>
+			<div>
+				<span class="rate"> Monthly Rate: <strong class="wallet"><?php echo cl_money(isset($cl['config']['advertisement_mprice']) ? $cl['config']['advertisement_mprice'] : 9.99); ?></strong> - Yearly Rate: <strong class="wallet"><?php echo cl_money(isset($cl['config']['advertisement_yprice']) ? $cl['config']['advertisement_yprice'] : 99.99); ?></strong></span>
+			</div>
+			<div class="rp">
+				<div class="nav-link-holder">
+					<?php if (in_array($cl["page_tab"], array('upsert', 'edit'))) : ?>
+						<span class="go-back" onclick="SMColibri.go_back();">
+							
+						</span>
+					<?php else : ?>
+						<a href="<?php echo cl_link("ads/new"); ?>" data-spa="true" title="<?php echo cl_translate("New"); ?>">
+							<?php echo cl_ikon('plus'); ?>
+						</a>
+					<?php endif; ?>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="timeline-navbar">
+		<div class="timeline-navbar__item">
+			<a href="<?php echo cl_link('ads') ?>" data-spa="true">
+				<button class="timeline-navbar__item-btn <?php if ($cl['page_tab'] == 'active') {
+																echo ('active');
+															} ?>">
+					<span class="btn-flex-inner">
+						<span class="text">
+							<?php echo cl_translate("Active ads"); ?>
+						</span>
+					</span>
+				</button>
+			</a>
+		</div>
+		<div class="timeline-navbar__item">
+			<a href="<?php echo cl_link('ads/archive') ?>" data-spa="true">
+				<button class="timeline-navbar__item-btn <?php if ($cl['page_tab'] == 'archive') {
+																echo ('active');
+															} ?>">
+					<span class="btn-flex-inner">
+						<span class="text">
+							<?php echo cl_translate("Archive"); ?>
+						</span>
+					</span>
+				</button>
+			</a>
+		</div>
+		<div class="timeline-navbar__item">
+			<a href="<?php echo cl_link('ads/pending') ?>" data-spa="true">
+				<button class="timeline-navbar__item-btn <?php if ($cl['page_tab'] == 'pending') {
+																echo ('active');
+															} ?>">
+					<span class="btn-flex-inner">
+						<span class="text">
+							<?php echo cl_translate("Pending"); ?>
+						</span>
+					</span>
+				</button>
+			</a>
+		</div>
+	</div>
+
+	<div class="ads-management">
+		<?php if ($cl["page_tab"] == 'active') : ?>
+			<?php echo cl_template('ads/includes/active'); ?>
+		<?php elseif ($cl["page_tab"] == 'archive') : ?>
+			<?php echo cl_template('ads/includes/archive'); ?>
+		<?php elseif ($cl["page_tab"] == 'pending') : ?>
+			<?php echo cl_template('ads/includes/pending'); ?>
+		<?php elseif ($cl["page_tab"] == 'upsert') : ?>
+			<?php echo cl_template('ads/includes/upsert'); ?>
+		<?php endif; ?>
+	</div>
+
+	<?php echo cl_template('ads/scripts/app_master_script'); ?>
+	
+	<style>
+		body main.main-content-container div.main-content-container-inner div.timeline-container-wrapper div.timeline-container-inner div.timeline-container div.timeline-placeholder div.icon2 {
+			line-height: 0px;
+			margin-bottom: 35px;
+			width: 100%;
+			text-align: center;
+		}
+
+		.terms {
+
+			font-size: 12px;
+			margin-top: 20px;
+
+		}
+
+		.blue_desc .help {
+			text-align: left !important;
+			margin-left: 40px !important;
+		}
+
+		.blue_desc span svg {
+			margin-right: 12px;
+			color: var(--cl-primary-text-color);
+			position: relative;
+			max-width: 100%;
+			height: 1.25em;
+			fill: currentcolor;
+			display: inline-block;
+			font-size: 15px;
+		}
+
+		.pl-message {
+			margin-top: 30px;
+		}
+
+		.nav-tabs {
+
+			border-bottom-color: var(--smc-main-border-color);
+			border-bottom-style: solid;
+			border-bottom-width: 1px;
+		}
+
+		.nav-fill .nav-item .nav-link,
+		.nav-justified .nav-item .nav-link {
+			width: auto;
+			text-decoration: none;
+			text-transform: none;
+			color: var(--smc-main-text-color-lighten-5);
+			font-weight: 500;
+			font-size: 15px;
+		}
+
+		.nav-tabs .nav-item.show .nav-link,
+		.nav-tabs .nav-link.active {
+			color: var(--smc-main-text-color);
+			border-bottom-color: var(--smc-main-border-color);
+			border-bottom-width: 1px;
+			font-weight: 700;
+			background: transparent;
+		}
+
+		.nav-tabs .nav-item.show .nav-link,
+		.nav-tabs .nav-link.active div.css-1dbjc4n {
+			background-color: rgb(29, 155, 240);
+			height: 4px;
+			width: 56px;
+			border-radius: 9999px;
+			text-align: center;
+			display: block;
+			position: relative;
+			bottom: 0;
+			margin-left: auto;
+			margin-right: auto;
+			margin-top: 15px;
+			margin-bottom: -15px;
+
+		}
+
+		div.icon2 img {
+			width: 150px;
+			height: auto;
+			margin-bottom: 0px;
+			margin-top: -30px;
+		}
+
+		div.icon2 {
+			text-align: center;
+		}
+		.h-mobile{
+	        width: max-content !important;
+	    }
+	</style>
+</div>

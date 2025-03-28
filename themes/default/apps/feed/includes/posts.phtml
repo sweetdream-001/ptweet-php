@@ -1,0 +1,36 @@
+<div v-show="(query_result == '1')" class="timeline-posts-container">
+	 <?php  $count = 0; ?>
+	<div class="timeline-posts-ls" data-an="entry-list">
+		<?php if (not_empty($cl["query_result"])): ?>
+		    <?php
+		    //function compareById($a, $b) {
+               // return $b["id"] - $a["id"];
+            //}
+            
+            // Sort the array using the custom comparison function
+               // usort($cl["query_result"], "compareById");
+		      //  echo var_dump(json_encode($cl["query_result"])); die;
+		    ?>
+		
+			<?php 
+
+			//echo "<pre>";print_r($cl["query_result"]);exit("OK");
+			
+			foreach ($cl["query_result"] as $cl['li']): ?>
+				<?php  $count++; ?>
+				<?php echo cl_template('timeline/post'); ?>
+				<?php  if ($count == 4) {
+            echo cl_template('feed/includes/htags');
+        }?>
+		<?php  if ($count == 3) {
+            echo "";
+        }?>
+			<?php endforeach; ?>
+		
+		<?php endif; ?>
+	</div>
+</div>
+
+<?php 
+$hash = cl_template('feed/includes/htags');
+?>

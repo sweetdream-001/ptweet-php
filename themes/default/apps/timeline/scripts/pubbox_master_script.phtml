@@ -1,0 +1,166 @@
+<script>
+	
+	"use strict";
+
+	$(document).ready(function($) {
+        
+        $.get('https://p-tweets.com/talk/native_api/home/banned_words', function(data) {
+          // Handle the response data here
+          console.log(data);
+              let jsonData = data.data;
+              console.log("jsonData");
+              console.log(jsonData);
+              window.banned_words = jsonData
+        })
+        .fail(function(error) {
+          // Handle the error here
+          console.error(error);
+        });
+        
+        // $.get('https://p-tweets.com/talk/native_api/cpanel/get_all_categories', function(data) {
+        $.get('https://p-tweets.com/talk/native_api/home/get_all_categories', function(data) {
+            <?php 
+              if (isset($_GET['thread_id']) && !empty($_GET['thread_id'])) {
+                  global $db;
+                  $db->where('id', $_GET['thread_id']);
+                  $threadData = $db->get(T_PUBS);
+    
+                  $db->where('id', $threadData[0]['category_id']);
+                  $threadCategoryData = $db->get(T_CATEGORY);
+              }
+              ?>
+                // Assuming you have the 'data' object available
+                let jsonData = data.data;
+                const $categorySelect = $('.sz_post_cate');
+                
+                $categorySelect.html(''); // Clear existing options
+                
+                // Add options to select box
+                jsonData.forEach(category => {
+                  const indentation = category.parent_id !== null ? '&nbsp;&nbsp;&nbsp;' : '';
+                  let selected = '';
+                
+                  <?php if (isset($threadCategoryData[0]['id']) && !empty($threadCategoryData[0]['id'])) { ?>
+                      if (category.id == <?= $threadCategoryData[0]['id']; ?>) {
+                        selected = 'selected';
+                      }
+                  <?php } ?>
+                
+                  $categorySelect.append(`<option value="${category.id}" ${selected}>${indentation}${category.name}</option>`);
+                });
+        })
+        .fail(function(error) {
+          // Handle the error here
+          console.error(error);
+        });
+
+		<?php echo cl_js_template('apps/timeline/scripts/js/pubbox_mixin'); ?>
+		
+		if ($("form#vue-pubbox-app-2").length) {
+			var pubbox_app_2 = new Vue({
+				el:"#vue-pubbox-app-2",
+				mixins: [pubbox_form_app_mixin]
+			});
+
+			SMColibri.extend_vue('pubbox2', pubbox_app_2);
+
+			$(document).on('hidden.bs.modal', 'div#add_new_post', function () {  
+			    console.log('hide now');
+		        pubbox_app_2.thread_id    = 0;
+		        pubbox_app_2.post_privacy = "everyone";
+		    });
+		    
+            $(document).on('shown.bs.modal', 'div#add_new_post', function () {
+              console.log("modal show");
+              console.log($(this));
+              setTimeout(() => {
+                  console.log("afer 3 secs"); 
+                  $('.modal [data-toggle="tooltip"]').tooltip({trigger: 'hover'}); 
+              })
+             
+            });
+		}
+		if ($("form#vue-pubbox-app-3").length) {
+			var pubbox_app_2 = new Vue({
+				el:"#vue-pubbox-app-3",
+				mixins: [pubbox_form_app_mixin]
+			});
+
+			SMColibri.extend_vue('pubbox2', pubbox_app_2);
+
+			$(document).on('hidden.bs.modal', 'div#add_new_post', function () {  
+		        pubbox_app_2.thread_id    = 0;
+		        pubbox_app_2.post_privacy = "everyone";
+		    });
+		}
+		
+	});
+	
+	
+// document.addEventListener('DOMContentLoaded', function () {
+//     try {
+//         var catId = <?php echo ($_GET['cat_id'] ?? '0'); ?>;
+//     } catch (e) {
+//         console.log(e);
+//     }
+
+//     console.log("catId");
+//     console.log(catId);
+
+//     if (catId != 0) {
+//         return;
+//     }
+
+//     // Get all post list items
+//     const postListItems = document.querySelectorAll('.post-list-item');
+//     console.log(postListItems);
+
+//     // Hide the first three elements and apply initial transform
+//     for (let i = 0; i < 4; i++) {
+//         if (postListItems[i]) {
+//             postListItems[i].style.display = 'none';
+//             postListItems[i].style.transform = 'translateY(-100%)';
+//         }
+//     }
+
+//     setTimeout(() => {
+//         for (let i = 3; i >= 0; i--) {
+//             setTimeout(() => {
+//                 $(postListItems[i]).slideDown(1000); // Apply slideDown effect
+//                 postListItems[i].style.transition = 'transform 0.5s';
+//                 postListItems[i].style.transform = 'translateY(0)';
+//             }, 4000 * (3 - i));
+//         }
+//     }, 3000);
+
+//     // Your existing code for showing recent elements
+//     var delay = 3000;
+//     var count = 15;
+//     var showing = 0;
+//     var i = 11;
+
+//     function move(i) {
+//         return function () {
+//             if (i > 10) {
+//                 $(postListItems[i]).css('display', 'block');
+//                 $(postListItems[i]).slideDown(1000);
+//             }
+//         };
+//     }
+
+//     function shift() {
+//         var toShow = i + showing;
+//         $(postListItems[toShow]).slideDown(1000, move(i));
+//         if (i < count) {
+//             i = i + 1;
+//         }
+//         setTimeout(shift, delay);
+//     }
+
+//     $(document).ready(function () {
+//         setTimeout(shift, delay);
+//     });
+// });
+
+	
+</script>

@@ -1,0 +1,192 @@
+<script>
+	"use strict";
+	
+	$(document).ready(function($) {
+		$('.pub-go-back').on('click', function() {
+			var postId = $(this).attr('post-id');
+			var url = 'https://p-tweets.com/talk/';
+			var fullUrl = url + '?' + 'post_id=' + postId;
+			window.location.href = fullUrl;
+		})
+	})
+	
+	$(document).ready(function($) {
+	    
+	    var postId = $('#hidden-field').data('post-id');
+	    
+		var _app = $('[data-app="thread"]');
+
+		_app.find('div[data-an="thread-data"]').scroll2();
+
+		_app.find('button[data-an="load-more"]').on('click', function(event) {
+			event.preventDefault();
+
+			var _self     = $(this);
+			var replys_ls = _app.find('div[data-an="replys-list"]');
+			var last_item = replys_ls.find('div[data-post-offset]').last();
+
+			if (last_item.length) {
+				$.ajax({
+					url: '<?php echo cl_link("native_api/thread/load_thread_replys"); ?>',
+					type: 'GET',
+					dataType: 'json',
+					data: {
+						offset: last_item.data('post-offset'),
+						thread_id: '<?php echo($cl['thread_data']['post']['id']); ?>'
+					},
+					beforeSend: function(){
+						_self.attr('disabled', 'true').text("<?php echo cl_translate("Please wait"); ?>");
+					}
+				}).done(function(data) {
+					if (data.status == 200) {
+						replys_ls.append(data.html);
+						
+						_self.removeAttr('disabled').text("<?php echo cl_translate("Show more"); ?>");
+					}
+					else {
+						_self.text("<?php echo cl_translate("That is all for now!"); ?>");
+					}
+				});
+			}
+		});
+		
+		if(postId){
+			
+			$.ajax({
+
+					url: '<?php echo cl_link("native_api/thread/view_count_update"); ?>',
+					type: 'POST',
+					dataType: 'json',
+					data: {
+						post_id: postId
+					},
+				}).done(function(data) {
+
+                    console.log("post-id",postId);
+					console.log("like_count",data.data);
+					if (data.status == 200) {
+
+					    const viewCountElement = document.querySelector(`.post_view_count-${postId}`);
+  if (viewCountElement) {
+    viewCountElement.textContent = ""; // or set the desired value
+  } else {
+    console.error(`Element with class 'num post_view_count-${postId}' not found.`);
+  }
+					    console.log("come",data.data);
+					           // document.querySelector('.num.post_view_count').textContent = 10;
+
+					   $(`.num.post_view_count-${postId}`).text("");
+					   
+                       $('.ctrls-item').find(`span.num.post_view_count-${postId}`).text(10);
+					}
+				});
+		}
+		
+		
+	});
+</script>
+
+<script>
+	"use strict";
+	$(window).scroll(function() {
+        if ($(this).scrollTop() > 100) {
+          $('#scroll-to-top').fadeIn(1000);
+        } else {
+          $('#scroll-to-top').hide();
+        }
+      });
+    
+      $('#scroll-to-top').click(function(e) {
+        e.preventDefault();
+        $('html, body').animate({scrollTop: 0}, 1000);
+      });
+      
+	$(document).ready(function($) {
+		var _app = $('[data-app="thread"]');
+		new Vue({
+			el: "#vue-ads-upsert-app",
+			data: {
+				ad_data: <?php echo cl_minify_js(json($cl['thread_data']['post'], 1)); ?>,
+				tos_agree: false,
+				submitting: false,
+				is_subscribed: false,
+				subscription_type: "",
+				monthlyPrice: "<?php echo cl_money(isset($cl['config']['advertisement_mprice']) ? $cl['config']['advertisement_mprice'] : 9.99); ?>",
+				yearlyPrice: "<?php echo cl_money(isset($cl['config']['advertisement_yprice']) ? $cl['config']['advertisement_yprice'] : 99.99); ?>",
+				wallet: <?php echo $me["wallet"]; ?>,
+				ads_subscription_mprice_val: <?php echo isset($cl['config']['advertisement_mprice']) ? $cl['config']['advertisement_mprice'] : 9.99; ?>,
+				ads_subscription_yprice_val: <?php echo isset($cl['config']['advertisement_yprice']) ? $cl['config']['advertisement_yprice'] : 99.99; ?>
+			},
+			computed: {
+				selectMonthlyText: function() {
+					return "Select Monthly Plan - " + this.monthlyPrice + "/Month";
+				},
+				selectYearlyText: function() {
+					return "Select Yearly Plan - " + this.yearlyPrice + "/Year"; 
+				}
+			},
+			methods: {
+				selectPlan: function(plan) {
+					var _self = $(this);
+					var _app_ = this;
+					this.is_subscribed = true;
+					this.subscription_type = plan;
+					
+					let requiredAmount = 0;
+					if (plan === "monthly") {
+						requiredAmount = parseFloat(this.ads_subscription_mprice_val);
+					} else if (plan === "yearly") {
+						requiredAmount = parseFloat(this.ads_subscription_yprice_val);
+					}
+
+					if (this.wallet < requiredAmount) {
+						cl_bs_notify("<?php echo cl_translate('Insufficient wallet balance for Plan upgrade.'); ?>", 3000, "danger");
+						return;
+					}
+					
+					$.ajax({		
+						url: "<?php echo cl_link("native_api/ads/expire_ad_continue"); ?>",
+						type: 'POST',
+						dataType: 'json',
+						data: {
+							id: this.ad_data.id,
+							requiredAmount: requiredAmount,
+							subscription_type: this.subscription_type
+						},
+						beforeSend: function() {
+							_app_.loading   = true;
+						}
+					}).done(function(data) {
+						if (data.status == 200) {
+							cl_bs_notify("<?php echo cl_translate('Plan continued:'); ?> " + plan);
+							_app_.loading   = false;
+							window.location.reload();
+						} else {
+							if (data.err_code == 'invalid_ad') {
+								cl_bs_notify("<?php echo cl_translate('Invalid advertisement'); ?>", 3000, "danger");
+							} else if (data.err_code == 'unauthorized') {
+								cl_bs_notify("<?php echo cl_translate('Unauthorized access'); ?>", 3000, "danger");
+							} else if (data.err_code == 'invalid_subscription') {
+								cl_bs_notify("<?php echo cl_translate('Invalid subscription type'); ?>", 3000, "danger");
+							} else if (data.err_code == 'invalid_amount') {
+								cl_bs_notify("<?php echo cl_translate('Invalid amount'); ?>", 3000, "danger");
+							} else if (data.err_code == 'insufficient_funds') {
+								cl_bs_notify("<?php echo cl_translate('Insufficient funds'); ?>", 3000, "danger");
+							} else if (data.err_code == 'invalid_monthly_price') {
+								cl_bs_notify("<?php echo cl_translate('Invalid monthly price'); ?>", 3000, "danger");
+							} else if (data.err_code == 'invalid_yearly_price') {
+								cl_bs_notify("<?php echo cl_translate('Invalid yearly price'); ?>", 3000, "danger");
+							} else if (data.err_code == 'update_failed') {
+								cl_bs_notify("<?php echo cl_translate('Failed to update subscription'); ?>", 3000, "danger");
+							} else if (data.err_code == 'wallet_update_failed') {
+								cl_bs_notify("<?php echo cl_translate('Failed to update wallet'); ?>", 3000, "danger");
+							} else {
+								cl_bs_notify("<?php echo cl_translate('An error occurred'); ?>", 3000, "danger");
+							}
+						}
+					});
+				}
+			}
+		});
+	});
+</script>
