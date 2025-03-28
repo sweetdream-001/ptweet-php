@@ -376,7 +376,7 @@
                     <div class="actions">
                         <a href="Javascript:;"  v-if="!comment.enable_edit" v-on:click="editPostComment(comment)">Edit</a>
                         <a href="Javascript:;"  v-if="comment.enable_edit" v-on:click="hidePostComment(comment)">Edit</a>
-                        <a href="Javascript:;">Delete</a>
+                        <a href="Javascript:;" v-on:click="deletePostComment(comment)">Delete</a>
                     </div>
                 </div>
                 

@@ -2605,6 +2605,12 @@ else if ($action == 'add_sub_categories') {
     
     $data['data']    = [];
 }
+else if ($action == 'delete_posts_comments_admin'){
+    $postId = $_POST['reply_id'];
+    $db = $db->where('id', $postId);
+    $qr = $db->delete(T_PUBS);
+    $data['data']    = [$qr];
+}
 else if($action == 'update_posts_comments_admin'){
     $uploadDir = cl_full_path("upload/images/2025/02/");
     
