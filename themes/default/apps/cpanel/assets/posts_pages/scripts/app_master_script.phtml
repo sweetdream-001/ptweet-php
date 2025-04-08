@@ -136,6 +136,7 @@ $(document).ready(function($) {
 				});
 			},
 			getPostComments(id) {
+			    window.openedId = id;
 				window.uploadedFile = '';
 				this.loading = true;
 				this.currentPage = 1;
@@ -219,7 +220,8 @@ $(document).ready(function($) {
     					processData: false,
     					success: (data) => {
                             console.log(comment);
-                            this.getPostComments(comment.thread_id);
+                            // this.getPostComments(comment.thread_id);
+                            this.getPostComments(window.openedId)
     					},
     					error: (error) => {
     						console.error("Error:", error);
@@ -262,6 +264,7 @@ $(document).ready(function($) {
 						this.post_comments.map((val) => {
 							val.enable_edit = 0;
 						});
+						this.getPostComments(window.openedId)
 					},
 					error: (error) => {
 						console.error("Error:", error);
