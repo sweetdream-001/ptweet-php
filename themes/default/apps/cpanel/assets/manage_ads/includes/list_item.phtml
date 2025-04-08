@@ -1,6 +1,12 @@
 <tr data-ads-item="<?php echo($cl['li']['id']); ?>">
     <td scope="row">
-        <?php echo($cl['li']['id']); ?>
+        <?php 
+            $total_items = $cl['total_ads']; // Make sure this is passed from your controller
+            $items_per_page = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
+            $current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+            $position = $total_items - (($current_page - 1) * $items_per_page + $cl['i'] - 1);
+            echo $position;
+        ?>
     </td>
     <td>
     	<div class="user-info-holder">

@@ -45,6 +45,7 @@ function cl_admin_get_users($args = array()) {
     if (cl_queryset($users)) {
         foreach ($users as $row) {
             $row['url']         = cl_link($row['username']);
+            $row['wallet']      = cl_money($row['wallet']);    
             $row['avatar']      = cl_get_media($row['avatar']);
             $row['last_active'] = date('d M, Y h:m',$row['last_active']);
             $banner_code        = fetch_or_get($cl['country_codes'][$row['country_id']], 'us');

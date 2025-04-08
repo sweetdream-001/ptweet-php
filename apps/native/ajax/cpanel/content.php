@@ -1012,7 +1012,7 @@ else if ($action == 'update_admin_ad') {
     
     $new_description = fetch_or_get($_POST['description'], false);
     if (!empty($new_description)) {
-        if (strlen($new_description) > 550) {
+        if (strlen($new_description) > 2000) {
             $data['err_code'] = 'invalid_description';
             $data['message']  = 'Description is too long.';
             return;

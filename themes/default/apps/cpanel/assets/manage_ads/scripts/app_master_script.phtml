@@ -161,7 +161,7 @@
                             else {
                                 $('[data-ads-item="{0}"]'.format(id)).slideUp(300, function() {
                                     $(this).remove();
-
+                                    window.location.reload();
                                     if ($('[data-ads-item]').length < 1) {
                                         $(window).reloadPage(500);
                                     }

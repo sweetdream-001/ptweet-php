@@ -34,9 +34,9 @@
 		</div>
 	</div>
 	<div style="background: #ffff" class="post-list-advert__body post-list-item pt-active-div"  <?php if (not_empty($cl["is_logged"])) {echo 'pt-post-link=' . @$cl['li']['url'];} else {echo 'data-toggle="modal" data-target="#loginModal"';}?> pt-post-id="<?php echo $cl['li']['id']; ?>" >
-		<div class="post-list-advert__text" >
+		<div class="post-list-advert__text mb-5" >
 
-		<div class="publication-text">
+		<div class="publication-text mt-3">
 			<h4>
 				<?php
 				if(isset($cl['li']['company']) && !empty($cl['li']['company']) ){

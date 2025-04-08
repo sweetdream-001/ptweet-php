@@ -185,7 +185,7 @@
 						// You can extend this later to trigger payment flow for subscription if needed.
 						this.is_subscribed = true;
 						this.subscription_type = plan;
-						cl_bs_notify("<?php echo cl_translate('Subscription selected:'); ?> " + plan);
+						cl_bs_notify("<?php echo cl_translate('Plan selected:'); ?> " + plan);
 					},
 					select_audience: function(country_id = false) {
 						if ($.isNumeric(country_id)) {

@@ -23,7 +23,7 @@
                             <h5>
                                 <?php echo cl_translate('Manage user ads'); ?>
                             </h5>
-                            
+                            <h6>Total Ads: <?php echo (not_empty($cl['total_ads'])) ? $cl['total_ads'] : 0; ?></h6>
                             <div class="card-header d-flex justify-content-between align-items-center">
                                 <form method="get" action="" class="form-inline ">
                                     <div class="form-group mr-2">
@@ -131,8 +131,10 @@
                                     </thead>
                                     <tbody data-an="ads-list">
                                         <?php if (not_empty($cl['user_ads'])) : ?>
+                                            <?php $cl['i'] = 1; ?>
                                             <?php foreach ($cl['user_ads'] as $cl['li']) : ?>
                                                 <?php echo cl_template('cpanel/assets/manage_ads/includes/list_item'); ?>
+                                                <?php $cl['i']++; ?>
                                             <?php endforeach; ?>
                                         <?php else : ?>
                                             <tr>

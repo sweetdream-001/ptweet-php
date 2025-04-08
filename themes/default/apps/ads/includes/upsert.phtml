@@ -181,10 +181,12 @@
                 </div>
             </div>
         </div>
-
+        <h6 class="form-info-label text-center">
+            <?php echo cl_translate('Click above Plan to Select it'); ?>
+        </h6>
         <!-- Show selected subscription if any -->
         <div class="form-group" v-if="subscription_type">
-            <label><?php echo cl_translate("Selected Subscription"); ?></label>
+            <label><?php echo cl_translate("Selected Plan"); ?></label>
             <input type="text" class="form-control" :value="subscription_type" readonly>
         </div>
         <!-- Subscription Section End -->

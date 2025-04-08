@@ -68,7 +68,7 @@ $config        = cl_get_configurations();
                         $ad_owner = $db->where('id', $ad['user_id'])->getOne(T_USERS);
                         
                         $cl['ad_message_data']['ad_name'] = $ad['company'];
-                        $cl['ad_message_data']['timeleft'] = $ad['timeleft'];
+                        $cl['ad_message_data']['timeleft'] = $new_timeleft;
                         $cl['ad_message_data']['ad_url'] = cl_link('ad_thread/'.$ad['id']);
                         $cl['ad_message_data']['ad_owner'] = $ad_owner['fname'];
                         $cl['ad_message_data']['site_name'] = $config['name'];

@@ -10,7 +10,7 @@
 @*************************************************************************@
  */
 
-SELECT `id`, `email`, `active`, `avatar`, `admin`, `active`, `verified`, `last_active`, `username`, `country_id`, `ip_address`, CONCAT(`fname`) as `name`
+SELECT `id`, `email`, `wallet`, `active`, `avatar`, `admin`, `active`, `verified`, `last_active`, `username`, `country_id`, `ip_address`, CONCAT(`fname`) as `name`
 
 	FROM `<?php echo($data['t_users']); ?>`
 
@@ -47,6 +47,10 @@ SELECT `id`, `email`, `active`, `avatar`, `admin`, `active`, `verified`, `last_a
 
 		<?php if(not_empty($data['filter']['email'])): ?>
 			AND `email` = "<?php echo cl_text_secure($data['filter']['email']); ?>"
+		<?php endif; ?>
+		
+		<?php if(not_empty($data['filter']['wallet'])): ?>
+			AND `wallet` = "<?php echo cl_text_secure($data['filter']['wallet']); ?>"
 		<?php endif; ?>
 
 		<?php if(not_empty($data['filter']['status'])): ?>

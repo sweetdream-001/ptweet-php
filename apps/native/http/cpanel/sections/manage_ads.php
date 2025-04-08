@@ -48,6 +48,7 @@ $total_ads = $count_result['count'];
 $total_pages = ceil($total_ads / $limit);
 
 // Now fetch the actual ads using your existing function (which should use the same filters)
+$cl['total_ads']    = $total_ads;
 $cl['user_ads']     = cl_admin_get_user_ads(array('limit' => $limit, 'offset' => $offset));
 $cl['current_page'] = $page;
 $cl['total_pages']  = $total_pages;

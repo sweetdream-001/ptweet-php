@@ -44,6 +44,10 @@ function cl_get_timeline_feed($limit = false, $offset = false, $onset = false) {
 		$pc = 0;
 
 		foreach ($query_res as $row) {
+		  //  echo var_dump(count($db->rawQuery("CALL `GetCommentTree`(197);")));die;
+		    
+		  //  $row['replys_count'] =  count($db->rawQuery("CALL `GetCommentTree`(".$row['publication_id'].");"));
+		    
 			$post_data = cl_raw_post_data($row['publication_id']);
 
 			$counter = $counter + 1;
@@ -70,7 +74,16 @@ function cl_get_timeline_feed($limit = false, $offset = false, $onset = false) {
 				}
 
 				$post_data['attrs'] = ((not_empty($post_data['attrs'])) ? implode(' ', $post_data['attrs']) : '');
-				$data[]             = cl_post_data($post_data);
+				$postData = cl_post_data($post_data);
+				$postData['replys_count'] = count($db->rawQuery("CALL `GetCommentTree`(".$postData['id'].");"));
+				
+				// if($postData['id'] == 197) {
+    				// echo "<pre>";
+        //         	print_r($postData);
+        //         	exit;    
+				// }
+				
+				$data[]             = $postData;
 			}
 
 			// echo $cl['config']['advertising_system'];
@@ -122,10 +135,10 @@ function cl_get_timeline_feed($limit = false, $offset = false, $onset = false) {
 			}
 		}
 	}
-
-	// echo "<pre>";
-	// print_r($data);
-	// exit;
+	
+// 	echo "<pre>";
+// 	print_r($data);
+// 	exit;
 
     // echo json_encode($data);die;
 	return $data;

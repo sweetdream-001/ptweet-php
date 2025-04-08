@@ -16,7 +16,7 @@
 	    
 		var _app = $('[data-app="thread"]');
 
-		_app.find('div[data-an="thread-data"]').scroll2();
+// 		_app.find('div[data-an="thread-data"]').scroll2();
 
 		_app.find('button[data-an="load-more"]').on('click', function(event) {
 			event.preventDefault();
@@ -104,7 +104,7 @@
 	$(document).ready(function($) {
 		var _app = $('[data-app="thread"]');
 		new Vue({
-			el: "#vue-ads-upsert-app",
+			el: "#vue-ads-upsert-expire-app",
 			data: {
 				ad_data: <?php echo cl_minify_js(json($cl['thread_data']['post'], 1)); ?>,
 				tos_agree: false,
@@ -126,16 +126,22 @@
 				}
 			},
 			methods: {
-				selectPlan: function(plan) {
-					var _self = $(this);
+			    selectPlan: function(plan) {
+			        // Save the selected subscription plan (e.g., 'monthly' or 'yearly' keston)
+						// You can extend this later to trigger payment flow for subscription if needed.
+						this.is_subscribed = true;
+						this.subscription_type = plan;
+						cl_bs_notify("<?php echo cl_translate('Plan selected:'); ?> " + plan);
+			    },
+
+				publish: function() {
+
 					var _app_ = this;
-					this.is_subscribed = true;
-					this.subscription_type = plan;
 					
 					let requiredAmount = 0;
-					if (plan === "monthly") {
+					if (this.subscription_type === "monthly") {
 						requiredAmount = parseFloat(this.ads_subscription_mprice_val);
-					} else if (plan === "yearly") {
+					} else if (this.subscription_type === "yearly") {
 						requiredAmount = parseFloat(this.ads_subscription_yprice_val);
 					}
 
@@ -158,7 +164,7 @@
 						}
 					}).done(function(data) {
 						if (data.status == 200) {
-							cl_bs_notify("<?php echo cl_translate('Plan continued:'); ?> " + plan);
+							cl_bs_notify("<?php echo cl_translate('Plan continued:'); ?> " + this.subscription_type);
 							_app_.loading   = false;
 							window.location.reload();
 						} else {

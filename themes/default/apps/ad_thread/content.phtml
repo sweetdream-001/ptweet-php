@@ -116,7 +116,7 @@ body main.main-content-container div.main-content-container-inner div.timeline-c
 	
 	<div class="ads-management">	
 		<div class="ads-management__upsert">
-			<form class="form" id="vue-ads-upsert-app" autocomplete="off">						
+			<form class="form" id="vue-ads-upsert-expire-app" autocomplete="off">						
 				<div class="form-group">
 						<?php if ($cl['thread_data']['post']['timeleft'] <= 7 && $cl['thread_data']['post']['owner']['username'] == $me['username']) : ?>
 							<!-- Subscription Section Start -->
@@ -194,6 +194,39 @@ body main.main-content-container div.main-content-container-inner div.timeline-c
 									</div>
 								</div>
 							</div>
+							
+							<h6 class="form-info-label text-center">
+                                <?php echo cl_translate('Click above Plan to Select it'); ?>
+                            </h6>
+                             <!-- Show selected subscription if any -->
+                            <div class="form-group" v-if="subscription_type">
+                                <label><?php echo cl_translate("Selected Plan"); ?></label>
+                                <input type="text" class="form-control" :value="subscription_type" readonly>
+                            </div>
+                            <!-- Subscription Section End -->
+                    		<div class="form-group">
+                    			<div class="form-tos">
+                    				<div class="form-check">
+                    					<input v-model="tos_agree" id="tos-agree" type="checkbox" class="form-check-input">
+                    					<label for="tos-agree" class="form-check-label">
+                    						<span>
+                    							<?php echo cl_translate("By continuing, you agree to {@site_name@}",array(
+                    								"site_name" => $cl["config"]["name"]
+                    							)); ?>
+                    						</span>
+                    						<a href="<?php echo cl_link('terms_of_use'); ?>"><?php echo cl_translate("Terms of Use"); ?></a> <?php echo cl_translate("And"); ?> <a href="<?php echo cl_link('privacy_policy'); ?>"><?php echo cl_translate("Privacy policy"); ?></a>
+                    					</label>
+                    				</div>
+                    			</div>
+                    		</div>
+                    		<div class="form-group">
+                    			<button v-if="submitting" disabled="true" class="btn btn-custom main-inline lg btn-block">
+                    				<?php echo cl_translate("Please wait"); ?>
+                    			</button>
+                    			<button v-else v-bind:disabled="!is_subscribed || !tos_agree" type="button" class="btn btn-custom main-inline lg btn-block" @click="publish">
+                					<?php echo cl_translate("Publish"); ?>
+                    			</button>
+                    		</div>
 						<?php endif; ?>
 				</div>
 			</form>
@@ -389,12 +422,12 @@ body main.main-content-container div.main-content-container-inner div.timeline-c
 							</div>
 							<div class="publication-content">
 								<?php if (not_empty($cl['thread_data']['post']['company'])): ?>
-									<div class="publication-text">
+									<div class="publication-text mb-5">
 										<h4>
 											<?php echo $cl['thread_data']['post']['company']; ?>
 										</h4>
 										<p>
-											<?php echo $cl['thread_data']['post']['description']; ?>
+											<?php echo cl_rn2br($cl['thread_data']['post']['description']); ?>
 										</p>
 									</div>
 								<?php endif; ?>
