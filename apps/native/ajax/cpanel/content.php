@@ -2306,7 +2306,10 @@ else if ($action == 'update_post') {
 		}
 			// Update the cl_pubmedia table
 	}  else {
-		if(isset($youtub_url) && !empty($youtub_url)){
+	    $pattern = '/^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/(watch\?v=|embed\/|v\/)?([a-zA-Z0-9_-]{11})(\S+)?$/';
+        $isValidYtUrl = (bool)preg_match($pattern, $youtub_url);
+		
+		if(isset($youtub_url) && !empty($youtub_url) && $isValidYtUrl){
 			$og_url    	= 	fetch_or_get($youtub_url, "");
 				try {
 					require_once(cl_full_path("core/libs/htmlParser/simple_html_dom.php"));

@@ -700,7 +700,7 @@ echo $string;
 							    ?>
 								<?php
 								   // echo count($abc) - 1;
-								    echo $cl['li']['replys_count'] - 1; 
+								    echo ($cl['li']['replys_count'] == 1 ? 0 : $cl['li']['replys_count']); 
 								?>
 							</span>
 						</a>
