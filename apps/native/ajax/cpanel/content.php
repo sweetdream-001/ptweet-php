@@ -2364,13 +2364,24 @@ else if ($action == 'update_post') {
 							} 
 						}
 
+                        if(empty($og_data_values["image"])){
+                            $quality = 'hqdefault';
+                            if (preg_match('/(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/', $youtub_url, $matches)) {
+                                $videoId = $matches[1];
+                                $thumb =  "https://img.youtube.com/vi/{$videoId}/{$quality}.jpg";
+                            }
+                            $og_data_values["image"] = $thumb;
+                        }
+
 						$og_data_values = array(
 							'title'       => cl_croptxt($og_data_values["title"], 160, '..'),
 							'description' => cl_croptxt($og_data_values["description"], 300, '..'),
 							'image'       => $og_data_values["image"],
 							'type'        => $og_data_values["type"],
-							'url'         => $og_url
+							'url'         => $og_url,
 						);
+
+                        
 
 						if (not_empty($og_data_values['title'])) {
 		
