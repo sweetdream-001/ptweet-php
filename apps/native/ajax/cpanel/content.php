@@ -2621,7 +2621,7 @@ else if ($action == 'add_sub_categories') {
 }
 else if ($action == 'delete_posts_comments_admin'){
     $postId = $_POST['reply_id'];
-    
+    $publicationId = $_POST['publication_id'];
     
     $db = $db->where('id', $postId);
     $qr = $db->delete(T_PUBS); 
@@ -2631,6 +2631,16 @@ else if ($action == 'delete_posts_comments_admin'){
 // 	$up = $db->update('cl_publications', array(
 // 		'type' => 'text'
 // 	));
+
+    $thrds = $db->rawQuery("CALL GetCommentTree($publicationId);");
+    $cng = count($thrds) - 1;
+    $count = ($cng < 1 ? 0 : $cng);
+
+    
+	$db = $db->where('id',$publicationId);
+    $up = $db->update(T_PUBS,array(
+        'replys_count' => $count
+    ));
     
     $data['data']    = [$qr];
 }

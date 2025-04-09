@@ -405,7 +405,7 @@ define('APP_NAME','https://p-tweets.com/talk/');
             display : none !important;
         }
 
-        .sidebar__inner .user-info {
+        .sidebar__inner .h-mobile {
             margin-bottom : 68px !important;
         }
         .sidebar__inner .account-stats{
@@ -430,12 +430,27 @@ define('APP_NAME','https://p-tweets.com/talk/');
 
 
     }
+    
+    @media only screen and (max-width : 1024px)
+    {
+        .h-mobile {
+            display : flex !important;
+        }
+        .h-laptop {
+            display : none !important;
+        }
+    }
 
     @media only screen and (max-width: 768px)
     {
-        .sidebar__inner .user-info
+        .sidebar__inner .h-mobile
         {
-            display : none;
+            display : none !important;
+        }
+        
+        body main.main-content-container div.main-content-container-inner div.left-sb-container div.sidebar__inner div.sidebar-v-nav-wrapper ul.sidebar-v-nav 
+        {
+            margin-top : 80px;
         }
     }
 

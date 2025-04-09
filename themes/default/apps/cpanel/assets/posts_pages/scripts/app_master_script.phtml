@@ -211,6 +211,7 @@ $(document).ready(function($) {
                 if (confirm) {
                 	let formData = new FormData();
     				formData.append("reply_id", comment.publication_id);
+    				formData.append("publication_id", window.openedId);
     				
     				$.ajax({
     					url: "https://p-tweets.com/talk/native_api/cpanel/delete_posts_comments_admin",
