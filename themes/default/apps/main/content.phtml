@@ -5,571 +5,584 @@ define('APP_NAME','https://p-tweets.com/talk/');
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
-	<title>
-		<?php if (not_empty($me['new_notifs'])): ?>
-			(
-			<?php echo fetch_or_get($me['new_notifs']); ?>)
-		<?php endif; ?>
+    <meta charset="UTF-8">
+    <title>
+        <?php if (not_empty($me['new_notifs'])): ?>
+            (
+            <?php echo fetch_or_get($me['new_notifs']); ?>)
+        <?php endif; ?>
 
-		<?php echo fetch_or_get($cl["page_title"], $cl["config"]["title"]); ?> /
-		<?php echo fetch_or_get($cl["config"]["title"]); ?>
-	</title>
+        <?php echo fetch_or_get($cl["page_title"], $cl["config"]["title"]); ?> /
+        <?php echo fetch_or_get($cl["config"]["title"]); ?>
+    </title>
 
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<meta name="title" content="<?php echo fetch_or_get($cl["page_title"], $cl["config"]["title"]); ?>" />
-	<meta name="description" content="<?php echo fetch_or_get($cl["page_desc"], $cl["config"]["description"]); ?>" />
-	<meta name="keywords" content="<?php echo fetch_or_get($cl['page_kw'], $cl["config"]["keywords"]); ?>" />
-	<meta name="image" content="<?php echo fetch_or_get($cl['page_img'], $cl["config"]["site_logo"]); ?>" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="title" content="<?php echo fetch_or_get($cl["page_title"], $cl["config"]["title"]); ?>" />
+    <meta name="description" content="<?php echo fetch_or_get($cl["page_desc"], $cl["config"]["description"]); ?>" />
+    <meta name="keywords" content="<?php echo fetch_or_get($cl['page_kw'], $cl["config"]["keywords"]); ?>" />
+    <meta name="image" content="<?php echo fetch_or_get($cl['page_img'], $cl["config"]["site_logo"]); ?>" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 
-	<?php if ($cl["pn"] == 'thread'): ?>
-		<meta property="og:type" content="article" />
-		<meta property="og:image" content="<?php echo fetch_or_get($cl["page_image"], ''); ?>" />
-		<meta property="og:image:secure_url" content="<?php echo fetch_or_get($cl["page_image"], ''); ?>" />
-		<meta property="og:description"
-			content="<?php echo fetch_or_get($cl["page_desc"], $cl["config"]["description"]); ?>" />
-		<meta property="og:title" content="<?php echo fetch_or_get($cl["page_title"], $cl["config"]["title"]); ?>" />
-		<meta property="og:url" content="<?php echo fetch_or_get($cl["page_url"], $cl["config"]["url"]); ?>" />
-		<meta name="twitter:card" content="summary">
-		<meta name="twitter:title" content="<?php echo fetch_or_get($cl["page_title"], $cl["config"]["title"]); ?>" />
-		<meta name="twitter:description"
-			content="<?php echo fetch_or_get($cl["page_desc"], $cl["config"]["description"]); ?>" />
-		<meta name="twitter:image" content="<?php echo fetch_or_get($cl["page_image"], ''); ?>" />
-	<?php endif; ?>
+    <?php if ($cl["pn"] == 'thread'): ?>
+        <meta property="og:type" content="article" />
+        <meta property="og:image" content="<?php echo fetch_or_get($cl["page_image"], ''); ?>" />
+        <meta property="og:image:secure_url" content="<?php echo fetch_or_get($cl["page_image"], ''); ?>" />
+        <meta property="og:description"
+              content="<?php echo fetch_or_get($cl["page_desc"], $cl["config"]["description"]); ?>" />
+        <meta property="og:title" content="<?php echo fetch_or_get($cl["page_title"], $cl["config"]["title"]); ?>" />
+        <meta property="og:url" content="<?php echo fetch_or_get($cl["page_url"], $cl["config"]["url"]); ?>" />
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:title" content="<?php echo fetch_or_get($cl["page_title"], $cl["config"]["title"]); ?>" />
+        <meta name="twitter:description"
+              content="<?php echo fetch_or_get($cl["page_desc"], $cl["config"]["description"]); ?>" />
+        <meta name="twitter:image" content="<?php echo fetch_or_get($cl["page_image"], ''); ?>" />
+    <?php endif; ?>
 
-	<?php if (in_array($cl["pn"], array("profile", "connections"))): ?>
-		<?php if ($cl['prof_user']['index_privacy'] == 'N'): ?>
-			<meta name="robots" content="noindex">
-			<meta name="googlebot" content="noindex">
-		<?php endif; ?>
-	<?php endif; ?>
+    <?php if (in_array($cl["pn"], array("profile", "connections"))): ?>
+        <?php if ($cl['prof_user']['index_privacy'] == 'N'): ?>
+            <meta name="robots" content="noindex">
+            <meta name="googlebot" content="noindex">
+        <?php endif; ?>
+    <?php endif; ?>
 
-	<link rel="stylesheet" href="{%config theme_url%}/statics/css/libs/animate.min.css?v={%config version%}">
-	<link rel="stylesheet" href="{%config theme_url%}/statics/css/custom-style.css">
-	<link rel="stylesheet" href="{%config theme_url%}/statics/css/css-libs.css">
-	<link rel="stylesheet"
-		href="{%config theme_url%}/statics/css/main.styles.css?v={%config version%}&v={%config version%}">
-	<link rel="stylesheet"
-		href="{%config theme_url%}/statics/css/master.styles.css?v={%config version%}&v={%config version%}">
-		
-	<link rel="stylesheet" href="{%config theme_url%}/statics/css/custom.styles.css?v=0.021">
+    <link rel="stylesheet" href="{%config theme_url%}/statics/css/libs/animate.min.css?v={%config version%}">
+    <link rel="stylesheet" href="{%config theme_url%}/statics/css/custom-style.css">
+    <link rel="stylesheet" href="{%config theme_url%}/statics/css/css-libs.css">
+    <link rel="stylesheet"
+          href="{%config theme_url%}/statics/css/main.styles.css?v={%config version%}&v={%config version%}">
+    <link rel="stylesheet"
+          href="{%config theme_url%}/statics/css/master.styles.css?v={%config version%}&v={%config version%}">
+
+    <link rel="stylesheet" href="{%config theme_url%}/statics/css/custom.styles.css?v=0.021">
 
 
-	<?php if ($cl["curr_lang"]["lang_data"]["is_rtl"] == "Y"): ?>
+    <?php if ($cl["curr_lang"]["lang_data"]["is_rtl"] == "Y"): ?>
 
-	<?php endif; ?>
-	<link rel="stylesheet" href="{%config theme_url%}/statics/css/libs/jquery.fancybox.css?v={%config version%}">
-	<link rel="stylesheet" href="{%config theme_url%}/statics/js/libs/plyr/plyr-code/plyr.css?v={%config version%}">
-	<link rel="icon" href="{%config site_fav%}" type="image/png">
-	<link rel="icon" href="{%config site_fav%}" type="image/x-icon">
-	<script src="{%config theme_url%}/statics/js/libs/jquery-3.5.1.min.js?v={%config version%}"></script>
-	<?php if ($cl["server_mode"] == 'dev'): ?>
-		<script src="{%config theme_url%}/statics/js/libs/vuejs/vue-v2.6.11.dev.min.js?v={%config version%}"></script>
-	<?php else: ?>
-		<script src="{%config theme_url%}/statics/js/libs/vuejs/vue-v2.6.11.min.js?v={%config version%}"></script>
-	<?php endif; ?>
+    <?php endif; ?>
+    <link rel="stylesheet" href="{%config theme_url%}/statics/css/libs/jquery.fancybox.css?v={%config version%}">
+    <link rel="stylesheet" href="{%config theme_url%}/statics/js/libs/plyr/plyr-code/plyr.css?v={%config version%}">
+    <link rel="icon" href="{%config site_fav%}" type="image/png">
+    <link rel="icon" href="{%config site_fav%}" type="image/x-icon">
+    <script src="{%config theme_url%}/statics/js/libs/jquery-3.5.1.min.js?v={%config version%}"></script>
+    <?php if ($cl["server_mode"] == 'dev'): ?>
+        <script src="{%config theme_url%}/statics/js/libs/vuejs/vue-v2.6.11.dev.min.js?v={%config version%}"></script>
+    <?php else: ?>
+        <script src="{%config theme_url%}/statics/js/libs/vuejs/vue-v2.6.11.min.js?v={%config version%}"></script>
+    <?php endif; ?>
 
-	<script
-		src="{%config theme_url%}/statics/js/libs/vuejs/vue-plugins/validators.min.js?v={%config version%}"></script>
-	<script src="{%config theme_url%}/statics/js/libs/vuejs/vue-plugins/vuelidate.min.js?v={%config version%}"></script>
-	<script
-		src="{%config theme_url%}/statics/js/libs/jquery-plugins/jquery.form-v4.2.2.min.js?v={%config version%}"></script>
-	<script src="{%config theme_url%}/statics/js/libs/popper.1.12.9.min.js?v={%config version%}"></script>
-	<script src="{%config theme_url%}/statics/js/libs/bootstrap.v4.0.0.min.js?v={%config version%}"></script>
-	<script src="{%config theme_url%}/statics/js/libs/afterglow/afterglow.min.js?v={%config version%}"></script>
-	<script
-		src="{%config theme_url%}/statics/js/libs/sticky-sidebar/source/jquery.sticky-sidebar.js?v={%config version%}"></script>
-	<script src="{%config theme_url%}/statics/js/master.script.js?v={%config version%}"></script>
-	<script src="{%config theme_url%}/statics/js/custom.js?v={%config version%}"></script>
-	<script src="{%config theme_url%}/statics/js/libs/clipboard.min.js?v={%config version%}"></script>
-	<script
-		src="{%config theme_url%}/statics/js/libs/jquery-plugins/jquery.fancybox.min.js?v={%config version%}"></script>
-	<script src="{%config theme_url%}/statics/js/libs/lozad.min.js"></script>
-	<script src="{%config theme_url%}/statics/js/libs/waitme/waitMe.min.js"></script>
-	<script src="{%config theme_url%}/statics/js/libs/txt.autoresize.min.js"></script>
-	<script src="{%config theme_url%}/statics/js/libs/audio-recorder.js"></script>
-	<script src="{%config theme_url%}/statics/js/libs/plyr/plyr-code/plyr.min.js"></script>
-	
-	<script src="{%config theme_url%}/statics/js/libs/plyr/lite-youtube/lite-yt-embed.js"></script>
-	<link rel="stylesheet" href="{%config theme_url%}/statics/js/libs/plyr/lite-youtube/lite-yt-embed.css?v={%config version%}">
+    <script
+            src="{%config theme_url%}/statics/js/libs/vuejs/vue-plugins/validators.min.js?v={%config version%}"></script>
+    <script src="{%config theme_url%}/statics/js/libs/vuejs/vue-plugins/vuelidate.min.js?v={%config version%}"></script>
+    <script
+            src="{%config theme_url%}/statics/js/libs/jquery-plugins/jquery.form-v4.2.2.min.js?v={%config version%}"></script>
+    <script src="{%config theme_url%}/statics/js/libs/popper.1.12.9.min.js?v={%config version%}"></script>
+    <script src="{%config theme_url%}/statics/js/libs/bootstrap.v4.0.0.min.js?v={%config version%}"></script>
+    <script src="{%config theme_url%}/statics/js/libs/afterglow/afterglow.min.js?v={%config version%}"></script>
+    <script
+            src="{%config theme_url%}/statics/js/libs/sticky-sidebar/source/jquery.sticky-sidebar.js?v={%config version%}"></script>
+    <script src="{%config theme_url%}/statics/js/master.script.js?v={%config version%}"></script>
+    <script src="{%config theme_url%}/statics/js/custom.js?v={%config version%}"></script>
+    <script src="{%config theme_url%}/statics/js/libs/clipboard.min.js?v={%config version%}"></script>
+    <script
+            src="{%config theme_url%}/statics/js/libs/jquery-plugins/jquery.fancybox.min.js?v={%config version%}"></script>
+    <script src="{%config theme_url%}/statics/js/libs/lozad.min.js"></script>
+    <script src="{%config theme_url%}/statics/js/libs/waitme/waitMe.min.js"></script>
+    <script src="{%config theme_url%}/statics/js/libs/txt.autoresize.min.js"></script>
+    <script src="{%config theme_url%}/statics/js/libs/audio-recorder.js"></script>
+    <script src="{%config theme_url%}/statics/js/libs/plyr/plyr-code/plyr.min.js"></script>
 
-	<script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+    <script src="{%config theme_url%}/statics/js/libs/plyr/lite-youtube/lite-yt-embed.js"></script>
+    <link rel="stylesheet" href="{%config theme_url%}/statics/js/libs/plyr/lite-youtube/lite-yt-embed.css?v={%config version%}">
 
-	<?php if ($cl["server_mode"] == 'dev'): ?>
-		<script>
-			document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')
-		</script>
-	<?php endif; ?>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
 
-	<?php if ($cl["pn"] == "guest" && $cl["auth_type"] == "signup"): ?>
-		<?php if ($cl["config"]["google_recaptcha"] == "on"): ?>
-			<script src='https://www.google.com/recaptcha/api.js' async defer></script>
-		<?php endif; ?>
-	<?php endif; ?>
-	<script>
-		<?php echo (cl_get_custom_code("headerjs")); ?>
-	</script>
-	<style>
-		<?php echo (cl_get_custom_code("headercss")); ?>
-	</style>
+    <?php if ($cl["server_mode"] == 'dev'): ?>
+        <script>
+            document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')
+        </script>
+    <?php endif; ?>
+
+    <?php if ($cl["pn"] == "guest" && $cl["auth_type"] == "signup"): ?>
+        <?php if ($cl["config"]["google_recaptcha"] == "on"): ?>
+            <script src='https://www.google.com/recaptcha/api.js' async defer></script>
+        <?php endif; ?>
+    <?php endif; ?>
+    <script>
+        <?php echo (cl_get_custom_code("headerjs")); ?>
+    </script>
+    <style>
+        <?php echo (cl_get_custom_code("headercss")); ?>
+    </style>
 </head>
 
 <body <?php if ($cl["curr_lang"]["lang_data"]["is_rtl"] == "Y") {
-	echo ('dir="rtl"');
+    echo ('dir="rtl"');
 } else {
-	echo ('dir="ltr"');
+    echo ('dir="ltr"');
 } ?>
-	class="cl-app-<?php echo fetch_or_get($cl["pn"], "none"); ?>"
-	data-page-tab="<?php echo fetch_or_get($cl["page_tab"], "none"); ?>" data-skin="<?php if ($cl["pn"] != "guest") {
-			echo ($cl["display_set"]["color_scheme"]);
-		} else {
-			echo ("default");
-		} ?>" data-bg="<?php if ($cl["pn"] != "guest") {
-			 echo ($cl["display_set"]["background"]);
-		 } else {
-			 echo ("default");
-		 } ?>">
-	<div class="main-preloader-holder" id="main-preloader-holder">
-		<div class="main-preloader">
-			<div class="loading">
-				<div class="lds-ellipsis">
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div data-el="main-content-holder">
+        class="cl-app-<?php echo fetch_or_get($cl["pn"], "none"); ?>"
+        data-page-tab="<?php echo fetch_or_get($cl["page_tab"], "none"); ?>" data-skin="<?php if ($cl["pn"] != "guest") {
+    echo ($cl["display_set"]["color_scheme"]);
+} else {
+    echo ("default");
+} ?>" data-bg="<?php if ($cl["pn"] != "guest") {
+    echo ($cl["display_set"]["background"]);
+} else {
+    echo ("default");
+} ?>">
+<div class="main-preloader-holder" id="main-preloader-holder">
+    <div class="main-preloader">
+        <div class="loading">
+            <div class="lds-ellipsis">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div data-el="main-content-holder">
 
-		<main class="main-content-container <?php echo (($cl["is_logged"]) ? "" : "guest-mode"); ?>">
+    <main class="main-content-container <?php echo (($cl["is_logged"]) ? "" : "guest-mode"); ?>">
 
-			<div class="main-content-container-inner">
+        <div class="main-content-container-inner">
 
-				<?php if ($cl["pn"] == "guest"): ?>
-					<?php echo $cl["http_res"]; ?>
-				<?php else: ?>
-					<!-- Left Sidebar -->
-					<?php if (not_empty($cl["sbl"])): ?>
-						<?php if (not_empty($cl["is_logged"])): ?>
-							<?php echo cl_template('main/left_sidebar'); ?>
-						<?php else: ?>
-							<?php echo cl_template('main/left_sidebar_guest'); ?>
-						<?php endif; ?>
-					<?php endif; ?>
-					<!-- End Left Sidebar -->
-					<!-- Main Content -->
-					<div data-el="timeline-container-wrapper" class="timeline-container-wrapper">
-					    	<a class="top" style="cursor: pointer;" href="<?php echo cl_link("/"); ?>" rel="nofollow" data-spa="true">
-                        		<h1 class="navLogo">P-tweets</h1>
-                        	</a>
-						<div data-el="timeline-content" class="timeline-container-inner">
-							<?php echo $cl["http_res"]; ?>
-						</div>
+            <?php if ($cl["pn"] == "guest"): ?>
+                <?php echo $cl["http_res"]; ?>
+            <?php else: ?>
+            <!-- Left Sidebar -->
+            <?php if (not_empty($cl["sbl"])): ?>
+                <?php if (not_empty($cl["is_logged"])): ?>
+                    <?php echo cl_template('main/left_sidebar'); ?>
+                <?php else: ?>
+                    <?php echo cl_template('main/left_sidebar_guest'); ?>
+                <?php endif; ?>
+            <?php endif; ?>
+            <!-- End Left Sidebar -->
+            <!-- Main Content -->
+            <div data-el="timeline-container-wrapper" class="timeline-container-wrapper">
+                <a class="top" style="cursor: pointer;" href="<?php echo cl_link("/"); ?>" rel="nofollow" data-spa="true">
+                    <h1 class="navLogo">P-tweets</h1>
+                </a>
+                <div data-el="timeline-content" class="timeline-container-inner">
+                    <?php echo $cl["http_res"]; ?>
+                </div>
 
-						<div data-el="spa-preloader" class="spa-preloader d-none">
-							<div class="spa-preloader-inner">
+                <div data-el="spa-preloader" class="spa-preloader d-none">
+                    <div class="spa-preloader-inner">
 								<span class="spinner-icon">
 									<?php echo cl_icon("spinner-icon"); ?>
 								</span>
-							</div>
-						</div>
-					</div>
-					<!-- End Main Content -->
-					<!-- Right Sidebar -->
-					<?php
-					$cl["right_sidebar_main"] = cl_template('main/right_sidebar');
-					?>
-					<?php echo fetch_or_get($cl["right_sidebar"], $cl["right_sidebar_main"]); ?>
-					<!-- End Right Sidebar -->
-				</div>
-			<?php endif; ?>
-		</main>
+                    </div>
+                </div>
+            </div>
+            <!-- End Main Content -->
+            <!-- Right Sidebar -->
+            <?php
+            $cl["right_sidebar_main"] = cl_template('main/right_sidebar');
+            ?>
+            <?php echo fetch_or_get($cl["right_sidebar"], $cl["right_sidebar_main"]); ?>
+            <!-- End Right Sidebar -->
+        </div>
+        <?php endif; ?>
+    </main>
 
 
-		<input id="csrf-token" type="hidden" class="hidden d-none"
-			value="<?php echo fetch_or_get($cl['csrf_token'], 'none'); ?>">
+    <input id="csrf-token" type="hidden" class="hidden d-none"
+           value="<?php echo fetch_or_get($cl['csrf_token'], 'none'); ?>">
 
-		<?php if ($cl['is_logged']): ?>
-			<div class="modal fade modal-pubbox" data-app="modal-pubbox" id="add_new_post" tabindex="-1" role="dialog"
-				aria-hidden="true">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<div class="close">
-								<button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-							</div>
+    <?php if ($cl['is_logged']): ?>
+        <div class="modal fade modal-pubbox" data-app="modal-pubbox" id="add_new_post" tabindex="-1" role="dialog"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="close">
+                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                        </div>
 
-						</div>
-						<div class="modal-body">
-							<?php $cl['pb_id'] = 2;
-							echo cl_template('timeline/pubbox'); ?>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="modal fade modal-pubbox" data-app="modal-pubbox" id="add_new_post_reply" tabindex="-1" role="dialog"
-				aria-hidden="true">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<div class="close">
-								<button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-							</div>
+                    </div>
+                    <div class="modal-body">
+                        <?php $cl['pb_id'] = 2;
+                        echo cl_template('timeline/pubbox'); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade modal-pubbox" data-app="modal-pubbox" id="add_new_post_reply" tabindex="-1" role="dialog"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="close">
+                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                        </div>
 
-						</div>
-						<div class="modal-body">
-							<?php $cl['pb_id'] = 3;
-							echo cl_template('timeline/pubbox'); ?>
-						</div>
-					</div>
-				</div>
-			</div>
-			<?php echo cl_template('timeline/scripts/pubbox_master_script'); ?>
-		<?php endif; ?>
-		<div data-app="black-hole"></div>
-		<?php if (not_empty($cl['config']['google_analytics'])): ?>
-			<?php echo htmlspecialchars_decode($cl['config']['google_analytics']); ?>
-		<?php endif; ?>
+                    </div>
+                    <div class="modal-body">
+                        <?php $cl['pb_id'] = 3;
+                        echo cl_template('timeline/pubbox'); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php echo cl_template('timeline/scripts/pubbox_master_script'); ?>
+    <?php endif; ?>
+    <div data-app="black-hole"></div>
+    <?php if (not_empty($cl['config']['google_analytics'])): ?>
+        <?php echo htmlspecialchars_decode($cl['config']['google_analytics']); ?>
+    <?php endif; ?>
 
-		<?php if ($cl["pn"] != 'guest'): ?>
-			<?php echo cl_template("main/scripts/app_master_script"); ?>
-		<?php endif; ?>
+    <?php if ($cl["pn"] != 'guest'): ?>
+        <?php echo cl_template("main/scripts/app_master_script"); ?>
+    <?php endif; ?>
 
-		<?php if ($cl['is_logged']): ?>
-			<?php if (in_array($cl["pn"], array("bookmarks", "home", "profile", "search", "thread"))): ?>
-				<?php echo cl_template("main/modals/report_post"); ?>
-			<?php endif; ?>
+    <?php if ($cl['is_logged']): ?>
+        <?php if (in_array($cl["pn"], array("bookmarks", "home", "profile", "search", "thread"))): ?>
+            <?php echo cl_template("main/modals/report_post"); ?>
+        <?php endif; ?>
 
-			<?php echo cl_template("main/modals/display_settings"); ?>
-		<?php endif; ?>
-	</div>
+        <?php echo cl_template("main/modals/display_settings"); ?>
+    <?php endif; ?>
+</div>
 
-	<?php if ($cl['config']['cookie_warning_popup'] == "on"): ?>
-		<?php if (empty($_COOKIE['__c_u_a__'])): ?>
-			<?php if ($cl["pn"] != "stat_pages"): ?>
-				<?php echo cl_template("main/modals/cookies_alert"); ?>
-			<?php endif; ?>
-		<?php endif; ?>
-	<?php endif; ?>
+<?php if ($cl['config']['cookie_warning_popup'] == "on"): ?>
+    <?php if (empty($_COOKIE['__c_u_a__'])): ?>
+        <?php if ($cl["pn"] != "stat_pages"): ?>
+            <?php echo cl_template("main/modals/cookies_alert"); ?>
+        <?php endif; ?>
+    <?php endif; ?>
+<?php endif; ?>
 
 
-	<script>
-		<?php echo (cl_get_custom_code("footerjs")); ?>
-	</script>
-	<style>
-	    		.top {
-    			height: 39px;
-    			background: url(<?php echo APP_NAME . '/img/nav.png'; ?>) no-repeat;
-    			margin-top: 15px;
-    			padding: 5px 5px 0px;
-    			font-size: 13px;
-    			color: #aee3f0;
-    			display: flex;
-    			/*width: 1310px;*/
-    			/*margin-left: auto;*/
-    			/*margin-right: auto;*/
-    			 margin-left: -5px;
-                 margin-right: 0px;
-    		}
-		#add_new_post .modal-dialog {
-			min-width: 600px;
-		}
+<script>
+    <?php echo (cl_get_custom_code("footerjs")); ?>
+</script>
+<style>
+    .top {
+        height: 39px;
+        background: url(<?php echo APP_NAME . '/img/nav.png'; ?>) no-repeat;
+        margin-top: 15px;
+        padding: 5px 5px 0px;
+        font-size: 13px;
+        color: #aee3f0;
+        display: flex;
+        /*width: 1310px;*/
+        /*margin-left: auto;*/
+        /*margin-right: auto;*/
+        margin-left: -5px;
+        margin-right: 0px;
+    }
+    #add_new_post .modal-dialog {
+        min-width: 600px;
+    }
 
-		#add_new_post .modal-header {
-			border: none;
-		}
+    #add_new_post .modal-header {
+        border: none;
+    }
 
-		body {
-			background: #b7ebf7 url(<?php echo APP_NAME . '/img/bg1.gif'; ?>) top left repeat-x;
-		}
-		
-		/*body.cl-app-ad_thread .timeline-container-inner, body.cl-app-thread .timeline-container-inner {*/
-  /*          background-color: #b7ebf7;*/
-  /*      }*/
-        
-        body.cl-app-ad_thread .publisher-info, body.cl-app-thread .publisher-info {
-            margin-top: 30px;
+    body {
+        background: #b7ebf7 url(<?php echo APP_NAME . '/img/bg1.gif'; ?>) top left repeat-x;
+    }
+
+    /*body.cl-app-ad_thread .timeline-container-inner, body.cl-app-thread .timeline-container-inner {*/
+    /*          background-color: #b7ebf7;*/
+    /*      }*/
+
+    body.cl-app-ad_thread .publisher-info, body.cl-app-thread .publisher-info {
+        margin-top: 30px;
+    }
+
+    .rp {
+        overflow: visible !important;
+    }
+
+    .ad-publisher-info {
+        align-items: end !important;
+    }
+
+    .ad-publication-data-inner .uname {
+        display: flex !important;
+        gap: 20px;
+    }
+
+    .publication-data-inner .uname {
+        /*display: flex !important;*/
+        gap: 20px;
+    }
+
+    body main.main-content-container {
+        background: transparent;
+    }
+
+    body main.main-content-container div.main-content-container-inner div.left-sb-container {
+        background: transparent;
+    }
+
+    body main.main-content-container div.main-content-container-inner div.right-sb-container {
+        background: transparent;
+    }
+
+    body main.main-content-container div.main-content-container-inner {
+        background: url(https://p-tweets.com/talk/img/bg_transparent2.png);
+        max-width: 1300px;
+    }
+
+    body main.main-content-container div.main-content-container-inner div.timeline-container-wrapper div.timeline-container-inner div.timeline-container div.timeline-header {
+        background: url(https://p-tweets.com/talk/img/bg_transparent2.png);
+    }
+
+    .social_login {
+        background: url(https://p-tweets.com/talk/img/bg_transparent2.png);
+    }
+    @media (max-width: 1024px) {
+        body.cl-app-ad_thread .user-name-holder, body.cl-app-thread .user-name-holder {
+            margin-bottom: 20px;
+            overflow: visible;
         }
-        
-        .rp {
-            overflow: visible !important;
-        }
-        
-        .ad-publisher-info {
-			align-items: end !important;
-		}
-
-		.ad-publication-data-inner .uname {
-			display: flex !important;
-			gap: 20px;
-		}
-		
-		.publication-data-inner .uname {
-			/*display: flex !important;*/
-			gap: 20px;
-		}
-
-		body main.main-content-container {
-			background: transparent;
-		}
-
-		body main.main-content-container div.main-content-container-inner div.left-sb-container {
-			background: transparent;
-		}
-
-		body main.main-content-container div.main-content-container-inner div.right-sb-container {
-			background: transparent;
-		}
-
-		body main.main-content-container div.main-content-container-inner {
-			background: url(https://p-tweets.com/talk/img/bg_transparent2.png);
-			max-width: 1300px;
-		}
-
-		body main.main-content-container div.main-content-container-inner div.timeline-container-wrapper div.timeline-container-inner div.timeline-container div.timeline-header {
-			background: url(https://p-tweets.com/talk/img/bg_transparent2.png);
-		}
-
-		.social_login {
-			background: url(https://p-tweets.com/talk/img/bg_transparent2.png);
-		}
-		@media (max-width: 1024px) {
-		    body.cl-app-ad_thread .user-name-holder, body.cl-app-thread .user-name-holder {
-                margin-bottom: 20px;
-                overflow: visible;
-            }
-		}
-    		@media only screen and (max-width: 767px) {
+    }
+    @media only screen and (max-width: 767px) {
         /*.top {*/
         /*            margin-top: 60px;*/
         /*            width: 100%;*/
         /*        }*/
-                            body main.main-content-container div.main-content-container-inner div.timeline-container-wrapper div.timeline-container-inner div.timeline-container {
-                padding-top: 0px !important;
-            }
-            }
-
-         Apply styles only for screens with a maximum width of 479px (typical for mobiles) and below 
-        @media only screen and (max-width: 479px) {
-            /*.top {*/
-            /*    margin-top: 60px;*/
-            /*    width: 100%;*/
-            /*}*/
-            body main.main-content-container div.main-content-container-inner div.timeline-container-wrapper div.timeline-container-inner div.timeline-container {
-                padding-top: 0px !important;
-            }
-                    }
-		.right-sb-container.sidebar .inner-wrapper-sticky {
-			top: 0px!important;
-		}
-
-		.tweet2 {
-				display: flex;
-				width: 100%;
-				justify-content: center;
-			}
-			.tweet2 img {
-				width: 100%;
-				height: auto;
-				text-align: center;
-			}
-		.top h1 {
-			float: left;
-			text-align: left;
-			color: #fff;
-			font-size: 24px;
-			line-height: 24px;
-			display: flex;
-			justify-content: start;
-			margin-top: 6px;
-			margin-left: 20px;
-		}
-		.mobile-sb-footer{
-		    display : none !important;
-		}
-		@media only screen and (max-width: 1200px) {
-		    .left-sb-container .sidebar-v-nav{
-		        width : 50% !important;
-		    }
-		    body main.main-content-container div.main-content-container-inner div.left-sb-container{
-		        box-shadow: none !important;
-		    }
-		    .sidebar__inner .account-stats .stat-holder,
-		    .sidebar__inner .user-info,
-		    .sidebar__inner .mobile-sb-footer
-		    
-		    {
-		        display : none !important;
-		    }
-		    .sidebar__inner .account-stats{
-		            margin-top: 25px;
-		    }
-		  .left-sb-container .inner-wrapper-sticky{
-    		    top: 50px !important;
-    		}
-    		 .right-sb-container{
-    		    display:none !important;
-    		}
-    		.left-sb-container{
-    		    height:100% !important;
-    		}
-    
-    		.main-content-container-inner{
-    		    display: grid !important;
-                 grid-template-columns: 55px 2fr 0fr;
-                 grid-template-rows: auto;
-                 gap: 10px;
-		    }
-		    
-		    
-		}
-		
-		<?php if(isset($_GET["thread_id"]) && !empty($_GET["thread_id"])) ?>
-		@media only screen and (max-width: 767px) {
-    	    	.top {
-        			display:none !important;
-        		}
-    			.main-content-container-inner{
-        		    display: grid !important;
-                     grid-template-columns: 1fr;
-                     grid-template-rows: auto;
-                     gap: 10px;
-        		}
-		}
-		<?php ?>
-		
-		    <?php
-		      if(!isset($_GET["thread_id"]) && empty($_GET["thread_id"])) {
-		    ?>
-                .main-content-container-inner {
-                    display: grid;
-                    grid-template-columns: 271px 2fr 1fr;
-                    grid-template-rows: auto;
-                    gap: 10px;
-                }
-
-            @media only screen and (max-width: 767px) {
-                .main-content-container-inner {
-                    display: grid;
-                    grid-template-columns: 45px 2fr 0fr;
-                    grid-template-rows: auto;
-                    gap: 10px;
-                }
-                .sideMore{
-                    display: none !important;
-                }
-    		    body main.main-content-container div.main-content-container-inner div.left-sb-container div.sidebar__inner div.sidebar-v-nav-wrapper ul.sidebar-v-nav li.sidebar-v-nav-item span.nav-item-holder:not(.notCut) {
-                 display: none;
-		             }
-                }
-
-        		.left-sb-container,.timeline-container-wrapper,.right-sb-container,.left-sb-container .inner-wrapper-sticky{
-        		    min-width: 1px!important;
-        		    width: auto !important;
-                    max-width: none !important;
-        		}
-        		.left-sb-container{
-        		    grid-column: 1;
-        		}
-        		.timeline-container-wrapper{
-        		    grid-column: 2;
-        		}
-        		.right-sb-container{
-        		    grid-column: 3;
-        		}
-		    
-			body main.main-content-container div.main-content-container-inner div.left-sb-container{
-		        left : 0px;
-		        z-index: 1 !important;
-		    }
-		    <?php } ?>
-		    body main.main-content-container.guest-mode div.main-content-container-inner div.left-sb-container div.sidebar__inner{
-		        padding: 0px !important;
-		    }
-		    body main.main-content-container div.main-content-container-inner div.left-sb-container div.sidebar__inner{
-		        width : auto !important;
-		    }
-		    
-		    .szLeftCate{
-		        overflow: scroll !important;
-                text-align: left;
-                overflow: hidden;
-                width: 11rem;
-                
-                font-size: 20px;
-                color: var(--smc-main-text-color);
-                font-weight: 400;
-                text-decoration: none;
-                line-height: 20px;
-		    }
-		    
-		     .szLeftCate::-webkit-scrollbar-thumb,
-		     .sz_post_cate::-webkit-scrollbar-thumb{
-                background-color: var(--smc-main-uiel-color);
-                outline: 0;
-                border-radius: 5px;
-                width:2px
-            }
-             .szLeftCate::-webkit-scrollbar,
-             .sz_post_cate::-webkit-scrollbar{
-                width: 5px;
-                background: var(--smc-main-border-color);
-            }
-             .szLeftCate{
-                background : transparent;
-                border: none;
-                width: max-content;
-            }
-             .szLeftCate option{
-                width: 1px !important;
-                background: #e1f7fc;
-            }
-		    		     .mainCat::-webkit-scrollbar-thumb{
-                background-color: var(--smc-main-uiel-color);
-                outline: 0;
-                border-radius: 5px;
-                width:2px
-            }
-             .mainCat::-webkit-scrollbar {
-                width: 5px;
-                background: var(--smc-main-border-color);
-            }
-            .szTran {
-                    transform: translateY(0px);
-                     transition: transform 0.5s ease 0s;
-            }
-	</style>
-	<script>
-	    $(document).ready(function () {
-        	   $('.sz_post_cate').on('change', function () {
-        	       console.log('ff');
-                // Get the selected value
-                var selectedValue = $(this).val();
-        
-                // Update the selected option in all select boxes
-                $('.sz_post_cate').val(selectedValue);
-              });
-              
-              
-              
-    try {
-        var catId = <?php echo ($_GET['cat_id'] ?? '0'); ?>;
-    } catch (e) {
-        console.log(e);
+        body main.main-content-container div.main-content-container-inner div.timeline-container-wrapper div.timeline-container-inner div.timeline-container {
+            padding-top: 0px !important;
+        }
     }
 
-    console.log("catId");
-    console.log(catId);
-
-    if (catId != 0) {
-        return;
+    Apply styles only for screens with a maximum width of 479px (typical for mobiles) and below
+    @media only screen and (max-width: 479px) {
+        /*.top {*/
+        /*    margin-top: 60px;*/
+        /*    width: 100%;*/
+        /*}*/
+        body main.main-content-container div.main-content-container-inner div.timeline-container-wrapper div.timeline-container-inner div.timeline-container {
+            padding-top: 0px !important;
+        }
+    }
+    .right-sb-container.sidebar .inner-wrapper-sticky {
+        top: 0px!important;
     }
 
-    // Get all post list items
+    .tweet2 {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+    }
+    .tweet2 img {
+        width: 100%;
+        height: auto;
+        text-align: center;
+    }
+    .top h1 {
+        float: left;
+        text-align: left;
+        color: #fff;
+        font-size: 24px;
+        line-height: 24px;
+        display: flex;
+        justify-content: start;
+        margin-top: 6px;
+        margin-left: 20px;
+    }
+    .mobile-sb-footer{
+        display : none !important;
+    }
+    @media only screen and (max-width: 1200px) {
+        .left-sb-container .sidebar-v-nav{
+            width : 50% !important;
+        }
+        body main.main-content-container div.main-content-container-inner div.left-sb-container{
+            box-shadow: none !important;
+        }
+        .sidebar__inner .account-stats .stat-holder,
+        .sidebar__inner .mobile-sb-footer
+
+        {
+            display : none !important;
+        }
+
+        .sidebar__inner .user-info {
+            margin-bottom : 68px !important;
+        }
+        .sidebar__inner .account-stats{
+            margin-top: 25px;
+        }
+        .left-sb-container .inner-wrapper-sticky{
+            top: 50px !important;
+        }
+        .right-sb-container{
+            display:none !important;
+        }
+        .left-sb-container{
+            height:100% !important;
+        }
+
+        .main-content-container-inner{
+            display: grid !important;
+            grid-template-columns: 55px 2fr 0fr;
+            grid-template-rows: auto;
+            gap: 10px;
+        }
+
+
+    }
+
+    @media only screen and (max-width: 768px)
+    {
+        .sidebar__inner .user-info
+        {
+            display : none;
+        }
+    }
+
+
+
+    <?php if(isset($_GET["thread_id"]) && !empty($_GET["thread_id"])) ?>
+    @media only screen and (max-width: 767px) {
+        .top {
+            display:none !important;
+        }
+        .main-content-container-inner{
+            display: grid !important;
+            grid-template-columns: 1fr;
+            grid-template-rows: auto;
+            gap: 10px;
+        }
+    }
+    <?php ?>
+
+    <?php
+      if(!isset($_GET["thread_id"]) && empty($_GET["thread_id"])) {
+    ?>
+    .main-content-container-inner {
+        display: grid;
+        grid-template-columns: 271px 2fr 1fr;
+        grid-template-rows: auto;
+        gap: 10px;
+    }
+
+    @media only screen and (max-width: 767px) {
+        .main-content-container-inner {
+            display: grid;
+            grid-template-columns: 45px 2fr 0fr;
+            grid-template-rows: auto;
+            gap: 10px;
+        }
+        .sideMore{
+            display: none !important;
+        }
+        body main.main-content-container div.main-content-container-inner div.left-sb-container div.sidebar__inner div.sidebar-v-nav-wrapper ul.sidebar-v-nav li.sidebar-v-nav-item span.nav-item-holder:not(.notCut) {
+            display: none;
+        }
+    }
+
+    .left-sb-container,.timeline-container-wrapper,.right-sb-container,.left-sb-container .inner-wrapper-sticky{
+        min-width: 1px!important;
+        width: auto !important;
+        max-width: none !important;
+    }
+    .left-sb-container{
+        grid-column: 1;
+    }
+    .timeline-container-wrapper{
+        grid-column: 2;
+    }
+    .right-sb-container{
+        grid-column: 3;
+    }
+
+    body main.main-content-container div.main-content-container-inner div.left-sb-container{
+        left : 0px;
+        z-index: 1 !important;
+    }
+    <?php } ?>
+    body main.main-content-container.guest-mode div.main-content-container-inner div.left-sb-container div.sidebar__inner{
+        padding: 0px !important;
+    }
+    body main.main-content-container div.main-content-container-inner div.left-sb-container div.sidebar__inner{
+        width : auto !important;
+    }
+
+    .szLeftCate{
+        overflow: scroll !important;
+        text-align: left;
+        overflow: hidden;
+        width: 11rem;
+
+        font-size: 20px;
+        color: var(--smc-main-text-color);
+        font-weight: 400;
+        text-decoration: none;
+        line-height: 20px;
+    }
+
+    .szLeftCate::-webkit-scrollbar-thumb,
+    .sz_post_cate::-webkit-scrollbar-thumb{
+        background-color: var(--smc-main-uiel-color);
+        outline: 0;
+        border-radius: 5px;
+        width:2px
+    }
+    .szLeftCate::-webkit-scrollbar,
+    .sz_post_cate::-webkit-scrollbar{
+        width: 5px;
+        background: var(--smc-main-border-color);
+    }
+    .szLeftCate{
+        background : transparent;
+        border: none;
+        width: max-content;
+    }
+    .szLeftCate option{
+        width: 1px !important;
+        background: #e1f7fc;
+    }
+    .mainCat::-webkit-scrollbar-thumb{
+        background-color: var(--smc-main-uiel-color);
+        outline: 0;
+        border-radius: 5px;
+        width:2px
+    }
+    .mainCat::-webkit-scrollbar {
+        width: 5px;
+        background: var(--smc-main-border-color);
+    }
+    .szTran {
+        transform: translateY(0px);
+        transition: transform 0.5s ease 0s;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        $('.sz_post_cate').on('change', function () {
+            console.log('ff');
+            // Get the selected value
+            var selectedValue = $(this).val();
+
+            // Update the selected option in all select boxes
+            $('.sz_post_cate').val(selectedValue);
+        });
+
+
+
+        try {
+            var catId = <?php echo ($_GET['cat_id'] ?? '0'); ?>;
+        } catch (e) {
+            console.log(e);
+        }
+
+        console.log("catId");
+        console.log(catId);
+
+        if (catId != 0) {
+            return;
+        }
+
+        // Get all post list items
 //     const postListItems = document.querySelectorAll('.post-list-item');
 //     console.log(postListItems);
 
@@ -595,7 +608,7 @@ define('APP_NAME','https://p-tweets.com/talk/');
 //     }
 // }, 3000);
 
-    
+
 
 //     // Your existing code for showing recent elements
 //     var delay = 3000;
@@ -624,138 +637,138 @@ define('APP_NAME','https://p-tweets.com/talk/');
 //     $(document).ready(function () {
 //         setTimeout(shift, delay);
 //     });
-              
-	    });
-	    
-	    $(document).on('click', '.post-list-item-content, .pt-post-read-more', function(event) {
-			if (!$(event.target).hasClass('pt-prevent-click') && !$(event.target).is('svg')) {
-				var postLink = $(this).attr('pt-post-link');
-				var postId = $(this).attr('pt-post-id');
-				if (postLink) {
-					window.location.href = postLink;
-					$.ajax({
-						url: '<?php echo cl_link("native_api/thread/view_count_update"); ?>',
-						type: 'POST',
-						dataType: 'json',
-						data: {
-							post_id: postId
-						},
-					})
-				}
-			}
-		});
-		$(document).on('click', '.pt-post-view-count', function(event) {
-			var postId = $(this).attr('pt-post-id');
-			if (postId) {
-				$.ajax({
-					url: '<?php echo cl_link("native_api/thread/view_count_update"); ?>',
-					type: 'POST',
-					dataType: 'json',
-					data: {
-						post_id: postId
-					},
-					success: function(response) {
-						var viewButton = $('.pt-count[pt-post-id="' + postId + '"]');
-						var spanElement = viewButton.find('span.num');
-						spanElement.text(response.data);
-					}
-				})
-			}
-		});
-		
-		function like_ad(ad_id) {
-			adId = ad_id;
-			if (adId) {
-				$.ajax({
-					url: '<?php echo cl_link("native_api/ads/ad_like_count_update"); ?>',
-					type: 'POST',
-					dataType: 'json',
-					data: {
-						ad_id: adId
-					},
-					success: function(response) {
-						if (response.status == 200) {
-							var likeButton = $('.pt-like[pt-ad-id="' + adId + '"]');
-							var spanElement = likeButton.find('span.num');
-							spanElement.text(response.likes_count);
-						}
-					}
-				})
-			}
-		}
 
-		function share_ad(ad_id) {
-			adId = ad_id;
+    });
 
-			if (adId) {
-				$.ajax({
-					url: '<?php echo cl_link("native_api/ads/ad_reshare_count_update"); ?>',
-					type: 'POST',
-					dataType: 'json',
-					data: {
-						ad_id: adId
-					},
-					success: function(response) {
-						if (response.status == 200) {
-							var reshareButton = $('.pt-reshare[pt-ad-id="' + adId + '"]');
-							var spanElement = reshareButton.find('span.num');
-							spanElement.text(response.reposts_count);
-						}
-					}
-				})
-			}
-		}
+    $(document).on('click', '.post-list-item-content, .pt-post-read-more', function(event) {
+        if (!$(event.target).hasClass('pt-prevent-click') && !$(event.target).is('svg')) {
+            var postLink = $(this).attr('pt-post-link');
+            var postId = $(this).attr('pt-post-id');
+            if (postLink) {
+                window.location.href = postLink;
+                $.ajax({
+                    url: '<?php echo cl_link("native_api/thread/view_count_update"); ?>',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        post_id: postId
+                    },
+                })
+            }
+        }
+    });
+    $(document).on('click', '.pt-post-view-count', function(event) {
+        var postId = $(this).attr('pt-post-id');
+        if (postId) {
+            $.ajax({
+                url: '<?php echo cl_link("native_api/thread/view_count_update"); ?>',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    post_id: postId
+                },
+                success: function(response) {
+                    var viewButton = $('.pt-count[pt-post-id="' + postId + '"]');
+                    var spanElement = viewButton.find('span.num');
+                    spanElement.text(response.data);
+                }
+            })
+        }
+    });
 
-		$(document).on('click', '.post-list-advert', function(event) {
-			if (!$(event.target).hasClass('pt-prevent-click') && !$(event.target).is('svg') && !$(event.target).is('path')) {
-				var adLink = $(this).attr('pt-ad-link');
-				var adId = $(this).attr('data-ad');
-				console.log(adLink);
-				console.log(adId);
-				if (adLink) {
-					window.location.href = adLink;
-					$.ajax({
-						url: '<?php echo cl_link("native_api/ads/view_count_update"); ?>',
-						type: 'POST',
-						dataType: 'json',
-						data: {
-							ad_id: adId
-						},
-						success: function(response) {
-							if (response.status == 200) {
-								var viewButton = $('.pt-views[pt-ad-id="' + adId + '"]');
-								var spanElement = viewButton.find('span.num');
-								spanElement.text(response.views_count);
-							}
-						}
-					})
-				}
-			}
-		});
+    function like_ad(ad_id) {
+        adId = ad_id;
+        if (adId) {
+            $.ajax({
+                url: '<?php echo cl_link("native_api/ads/ad_like_count_update"); ?>',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    ad_id: adId
+                },
+                success: function(response) {
+                    if (response.status == 200) {
+                        var likeButton = $('.pt-like[pt-ad-id="' + adId + '"]');
+                        var spanElement = likeButton.find('span.num');
+                        spanElement.text(response.likes_count);
+                    }
+                }
+            })
+        }
+    }
 
-		$(document).on('click', '.pt-ad-view-count', function(event) {
-			var adLink = $(this).attr('pt-ad-link');
-			var adId = $(this).attr('data-ad');
-			if (adLink) {
-				$.ajax({
-					url: '<?php echo cl_link("native_api/ads/view_count_update"); ?>',
-					type: 'POST',
-					dataType: 'json',
-					data: {
-						ad_id: adId
-					},
-					success: function(response) {
-						if (response.status == 200) {
-							var viewButton = $('.pt-views[pt-ad-id="' + adId + '"]');
-							var spanElement = viewButton.find('span.num');
-							spanElement.text(response.views_count);
-						}
-					}
-				})
-			}
-		});
-	</script>
-	
+    function share_ad(ad_id) {
+        adId = ad_id;
+
+        if (adId) {
+            $.ajax({
+                url: '<?php echo cl_link("native_api/ads/ad_reshare_count_update"); ?>',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    ad_id: adId
+                },
+                success: function(response) {
+                    if (response.status == 200) {
+                        var reshareButton = $('.pt-reshare[pt-ad-id="' + adId + '"]');
+                        var spanElement = reshareButton.find('span.num');
+                        spanElement.text(response.reposts_count);
+                    }
+                }
+            })
+        }
+    }
+
+    $(document).on('click', '.post-list-advert', function(event) {
+        if (!$(event.target).hasClass('pt-prevent-click') && !$(event.target).is('svg') && !$(event.target).is('path')) {
+            var adLink = $(this).attr('pt-ad-link');
+            var adId = $(this).attr('data-ad');
+            console.log(adLink);
+            console.log(adId);
+            if (adLink) {
+                window.location.href = adLink;
+                $.ajax({
+                    url: '<?php echo cl_link("native_api/ads/view_count_update"); ?>',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        ad_id: adId
+                    },
+                    success: function(response) {
+                        if (response.status == 200) {
+                            var viewButton = $('.pt-views[pt-ad-id="' + adId + '"]');
+                            var spanElement = viewButton.find('span.num');
+                            spanElement.text(response.views_count);
+                        }
+                    }
+                })
+            }
+        }
+    });
+
+    $(document).on('click', '.pt-ad-view-count', function(event) {
+        var adLink = $(this).attr('pt-ad-link');
+        var adId = $(this).attr('data-ad');
+        if (adLink) {
+            $.ajax({
+                url: '<?php echo cl_link("native_api/ads/view_count_update"); ?>',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    ad_id: adId
+                },
+                success: function(response) {
+                    if (response.status == 200) {
+                        var viewButton = $('.pt-views[pt-ad-id="' + adId + '"]');
+                        var spanElement = viewButton.find('span.num');
+                        spanElement.text(response.views_count);
+                    }
+                }
+            })
+        }
+    });
+</script>
+
 </body>
 
 </html>
