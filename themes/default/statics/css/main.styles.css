@@ -8283,11 +8283,15 @@ body
     left: 0px;
     width: 250px;
   }
+}
+
+@media (max-width : 768px)
+{
   body
-    main.main-content-container
-    div.main-content-container-inner
-    div.left-sb-container
-    div.publish-post-btn {
+  main.main-content-container
+  div.main-content-container-inner
+  div.left-sb-container
+  div.publish-post-btn {
     display: none;
   }
 }
