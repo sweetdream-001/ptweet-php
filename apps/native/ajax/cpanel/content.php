@@ -2243,6 +2243,9 @@ else if ($action == 'update_post') {
 		$update['category_id']				=  $data['category_id'];
 	}
 
+
+    // echo var_dump($update);die;
+
 	if(isset($data['id']) && !empty($data['id'])){
 
 		$db->where('id', $data['id']);
@@ -2287,7 +2290,7 @@ else if ($action == 'update_post') {
 				"video_thumb" => $file_upload['filename']
 			);
 		}
-
+        
 		$q = "UPDATE `cl_publications` SET `type` = '"  . $fileType ."',link_src='',`og_data`='',`text` ='".filterText($data['text'])."'  WHERE `cl_publications`.`id` = '". $data['id']."'";
 		$resp1 = $db->rawQuery($q);
 		$isExist = $db->rawQuery("SELECT * FROM `cl_pubmedia` where pub_id= ". $data['id']);
@@ -2834,8 +2837,6 @@ else if ($action == 'get_all_posts_admin') {
     $pubs = $db->rawQuery("select * from cl_publications");  
     foreach($pubs as $pub) {
         $publicationId = $pub['id'];
-        var_dump($publicationId);
-        echo '<br/>';
         $thrds = $db->rawQuery("CALL GetCommentTree($publicationId);");
         $cng = count($thrds) - 1;
         $count = ($cng < 1 ? 0 : $cng);

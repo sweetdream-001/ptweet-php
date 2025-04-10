@@ -8,7 +8,6 @@
 # @ JOOJ Talk - The Ultimate Modern Social Media Sharing Platform           @
 # @ Copyright (c) 2020 - 2023 JOOJ Talk. All rights reserved.               @
 # @*************************************************************************@
-
 if ($action == 'load_more') {
     if (not_empty($cl["is_logged"])) {
         $data['status'] = 400;

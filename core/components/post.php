@@ -1034,10 +1034,15 @@ function youTubeToText($url)
 		return $onlyText." ".$newUrl;
 	}
 
-	function filterText($text){
-		$pattern 	= '/(https?:\/\/[^\s]+)/';
-		// Remove all URLs from the text
-		$text 		= preg_replace($pattern, '', $text);
-
-		return rtrim($text);
-	}
+    function filterText($text) {
+        // Pattern matches all URLs except tinyurl.com, and replaces them with a single space
+        $pattern = '/https?:\/\/(?!tinyurl\.com\/)[^\s]+/i';
+    
+        // Replace unwanted URLs with a space to preserve structure
+        $text = preg_replace($pattern, ' ', $text);
+    
+        // Clean up multiple spaces that may result from removals
+        $text = preg_replace('/\s+/', ' ', $text);
+    
+        return trim($text);
+    }

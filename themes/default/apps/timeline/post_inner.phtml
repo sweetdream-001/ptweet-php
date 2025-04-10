@@ -694,13 +694,14 @@ echo $string;
 							<span class="icon pt-prevent-click">
 								<?php echo cl_ikon('chat-post'); ?>
 							</span>
-							<span class="num pt-prevent-click">
+							<span class="num pt-prevent-click ahsanff">
 							    <?php 
 							        // $abc =  $db->rawQuery("CALL `GetCommentTree`(197);"); 
 							    ?>
 								<?php
+								    echo $cl['li']['replys_count'];
 								   // echo count($abc) - 1;
-								    echo ($cl['li']['replys_count'] == 1 ? 0 : $cl['li']['replys_count']); 
+								    // echo ($cl['li']['replys_count'] == 1 ? 0 : $cl['li']['replys_count']); 
 								?>
 							</span>
 						</a>

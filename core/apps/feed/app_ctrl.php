@@ -29,7 +29,7 @@ function cl_get_guest_feed($offset = false, $limit = 3000) {
             $counter += 1;
 
             $postData = cl_post_data($row);
-            $postData['replys_count'] = count($db->rawQuery("CALL `GetCommentTree`(".$postData['id'].");"));
+            // $postData['replys_count'] = count($db->rawQuery("CALL `GetCommentTree`(".$postData['id'].");")) -1;
 			$data[] = $postData;
 
             if ($cl['config']['advertising_system'] == 'on') {
