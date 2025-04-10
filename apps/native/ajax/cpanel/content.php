@@ -2830,6 +2830,24 @@ else if ($action == 'get_posts_comments_admin') {
 else if ($action == 'get_all_posts_admin') {
     $data['status'] = 200;
 
+
+    $pubs = $db->rawQuery("select * from cl_publications");  
+    foreach($pubs as $pub) {
+        $publicationId = $pub['id'];
+        var_dump($publicationId);
+        echo '<br/>';
+        $thrds = $db->rawQuery("CALL GetCommentTree($publicationId);");
+        $cng = count($thrds) - 1;
+        $count = ($cng < 1 ? 0 : $cng);
+        
+    
+    	$db = $db->where('id',$pub['id']);
+        $up = $db->update(T_PUBS,array(
+            'replys_count' => $count
+        ));
+    }
+    // echo 'done';die;
+
     // Set the page and limit values (you can adjust these dynamically via user input)
     $page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Default to page 1 if not provided
     $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10; // Default to 10 posts per page if not provided
