@@ -676,13 +676,13 @@ body main.main-content-container div.main-content-container-inner div.timeline-c
 										<?php echo cl_ikon('share'); ?>
 									</span>
 								</button>
-
-								<div class="reply_button">
-									<button
-										onclick="SMColibri.pub_reply('<?php echo $cl['thread_data']['post']['id']; ?>');"
-										class="btn-custom reply main-inline md post-pub-btn">
-										<?php echo cl_translate("Tweet Your Reply"); ?> </button>
-								</div>
+                                <!--Hide reply button   2025.04.11 by keston-->
+								<!--<div class="reply_button">-->
+								<!--	<button-->
+								<!--		onclick="SMColibri.pub_reply('<?php echo $cl['thread_data']['post']['id']; ?>');"-->
+								<!--		class="btn-custom reply main-inline md post-pub-btn">-->
+								<!--		<?php echo cl_translate("Tweet Your Reply"); ?> </button>-->
+								<!--</div>-->
 							</div>
 						</div>
 					<?php endif; ?>
@@ -693,6 +693,7 @@ body main.main-content-container div.main-content-container-inner div.timeline-c
 					<?php echo $cl["gads_horiz"]; ?>
 				</div>
 			<?php endif; ?>
+			<!--Hide reply thread holder 2025.04.11 by keston-->
 			<div class="publication--thread-replys-holder">
 				<?php if (not_empty($cl['thread_data']['next'])): ?>
 					<div class="timeline-posts-container">
