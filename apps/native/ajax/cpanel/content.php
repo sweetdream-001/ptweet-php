@@ -1142,6 +1142,7 @@ else if($action == 'delete_user_ad') {
 }
 
 else if($action == 'approve_user_ad') {
+    global $cl;
 	$data['err_code'] = 0;
     $data['status']   = 400;
     $ad_id            = fetch_or_get($_POST['id'], false);
@@ -1155,6 +1156,7 @@ else if($action == 'approve_user_ad') {
 				"approved" => "Y"
 			));
 			$data['approved'] = "Y";
+			$cl['approve_ad'] = $ad_data['id'];
 		} else {
 			cl_update_ad_data($ad_id, array(
 				"approved" => "N"
