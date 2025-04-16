@@ -198,7 +198,7 @@
                                 _app_.find("[data-ads-item='{0}']".format(id)).find('[data-an="approval-status"]').replaceClass('bg-grey', 'bg-blue');
                                 _app_.find("[data-ads-item='{0}']".format(id)).find('[data-an="approval-status"]').text("Yes");
                                 _app_.find(".pt-ad-approve").text("Unapproved");
-                                window.location.href = 'https://p-tweets.com/talk/';
+                                window.location.href = 'https://p-tweets.com/talk?ad_stat=1&id=' + id;
                                 
                             } else if (data.approved == "N") {
                                 _app_.find("[data-ads-item='{0}']".format(id)).find('[data-an="approval-status"]').replaceClass('bg-blue', 'bg-grey');

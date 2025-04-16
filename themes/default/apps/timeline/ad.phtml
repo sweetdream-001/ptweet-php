@@ -180,16 +180,16 @@
 	<?php //if (not_empty($cl['li']['show_stats'])): ?>
 	<?php //endif; ?>
 	<div class="post-list-advert__footer pt-prevent-click">
-		<button class="ctrls-item pt-prevent-click">
-			<a href="<?php echo $cl['li']['url']; ?>">
-				<span class="icon ctrls-item__icon pt-prevent-click">
-					<?php echo cl_ikon('chat-post'); ?>
-				</span>
-				<span class="num pt-prevent-click">
-					<?php echo $cl['li']['replys_count']; ?>
-				</span>
-			</a>
-		</button>
+		<!--<button class="ctrls-item pt-prevent-click">-->
+		<!--	<a href="<?php echo $cl['li']['url']; ?>">-->
+		<!--		<span class="icon ctrls-item__icon pt-prevent-click">-->
+		<!--			<?php echo cl_ikon('chat-post'); ?>-->
+		<!--		</span>-->
+		<!--		<span class="num pt-prevent-click">-->
+		<!--			<?php echo $cl['li']['replys_count']; ?>-->
+		<!--		</span>-->
+		<!--	</a>-->
+		<!--</button>-->
 		<?php if (empty($cl['li']['has_liked'])): ?>
 		<button class="ctrls-item pt-reshare pt-prevent-click" onclick="share_ad('<?php echo $cl['li']['id']; ?>', this);" pt-ad-id="<?php echo $cl['li']['id']; ?>">
 			<span class="icon ctrls-item__icon pt-prevent-click">
