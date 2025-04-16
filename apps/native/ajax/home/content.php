@@ -46,7 +46,7 @@ else if ($action == 'get_all_categories') {
     require_once(cl_full_path("core/apps/home/app_ctrl.php"));
 
     $data['status']    = 200;
-    $categories = $db->rawQuery("SELECT * FROM cl_categories WHERE parent_id IS NULL  order by name ASC ;");
+    $categories = $db->rawQuery("SELECT * FROM cl_categories WHERE parent_id IS NULL  order by sort, name ASC ;");
 
     $flattenedData = [];
     $flattenedData = [
