@@ -181,6 +181,7 @@ button[title="Audio"] {
   body main.main-content-container div.main-content-container-inner div.left-sb-container div.sidebar__inner  {
     overflow-y: auto !important;
     scrollbar-width: none !important; /* Firefox */
+    width : 70px !important;
   }
 
   body main.main-content-container div.main-content-container-inner div.left-sb-container div.sidebar__inner::-webkit-scrollbar {
