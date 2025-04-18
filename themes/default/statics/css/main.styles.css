@@ -187,7 +187,21 @@ button[title="Audio"] {
     display: none !important; /* Chrome, Safari */
   }
 }
+@media (max-width: 1190px) {
+  .notifications {
+    height: 70vh;
+    overflow: hidden overlay;
+    scrollbar-width: none; /* Firefox */
+  }
 
+  .notifications::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+  }
+
+  body div.timeline-pubbox-container > div.rp form div.post-ctrls-holder{
+    flex-wrap : wrap !important;
+  }
+}
 body
   main.main-content-container
   div.main-content-container-inner
