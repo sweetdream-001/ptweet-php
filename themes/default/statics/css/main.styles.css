@@ -177,6 +177,17 @@ body[data-bg="black"] {
 button[title="Audio"] {
   display: none !important;
 }
+@media (max-width: 768px) {
+  body main.main-content-container div.main-content-container-inner div.left-sb-container div.sidebar__inner  {
+    overflow-y: auto !important;
+    scrollbar-width: none !important; /* Firefox */
+  }
+
+  body main.main-content-container div.main-content-container-inner div.left-sb-container div.sidebar__inner::-webkit-scrollbar {
+    display: none !important; /* Chrome, Safari */
+  }
+}
+
 body
   main.main-content-container
   div.main-content-container-inner
