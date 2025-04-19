@@ -726,7 +726,7 @@
 
             <?php if (!empty($cl["feed"]) && is_array($cl["feed"])): ?>
                 <?php foreach ($cl["feed"] as $cl['li']): ?>
-                    <!-- your loop content here -->
+                    <?php echo cl_template('timeline/post'); ?>
                 <?php endforeach; ?>
             <?php endif; ?>
 
