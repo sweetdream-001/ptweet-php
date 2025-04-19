@@ -2461,7 +2461,7 @@ else if ($action == 'update_post') {
 }
 else if ($action == 'get_categories') {	
     $data['status']    = 200;
-    $categories = $db->rawQuery("SELECT * FROM `cl_categories` where parent_id IS NULL");
+    $categories = $db->rawQuery("SELECT * FROM `cl_categories` where parent_id IS NULL order by name ASC");
     // foreach($categories as $k => $cat){
     //     $categories[$k]['childs'] = $db->rawQuery("SELECT * FROM `cl_categories` where parent_id = " . $cat['id']);
     // }

@@ -1,4 +1,4 @@
-<?php 
+<?php
 # @*************************************************************************@
 # @ Software author: JOOJ Team (JOOJ.us)                           @
 # @ Author_url 1: https://jooj.us                       @
@@ -23,12 +23,12 @@ else if ($action == 'load_more') {
     $offset           = fetch_or_get($_GET['offset'], 0);
     $html_arr         = array();
 
-    if (is_posnum($offset)) {    
+    if (is_posnum($offset)) {
 
         $posts_ls = cl_get_timeline_feed(30, $offset);
-        
+
         $data['status'] = 200;
-            $data['html']   = $posts_ls;
+        $data['html']   = $posts_ls;
 
         if (not_empty($posts_ls)) {
             foreach ($posts_ls as $cl['li']) {
@@ -39,7 +39,7 @@ else if ($action == 'load_more') {
             $data['html']   = implode("", $html_arr);
         }
     }
-    
+
 }
 else if ($action == 'get_all_categories') {
 
@@ -51,8 +51,8 @@ else if ($action == 'get_all_categories') {
     $flattenedData = [];
     $flattenedData = [
         ['name' => 'Select category...']
-        ];
-    
+    ];
+
     foreach ($categories as $k => $cat) {
         $flattenedData[] = $cat; // Add main category
         $subcategories = $db->rawQuery("SELECT * FROM `cl_categories` WHERE parent_id = " . $cat['id'] . " order by name ASC");
@@ -60,9 +60,9 @@ else if ($action == 'get_all_categories') {
             $flattenedData[] = $subcategory; // Add subcategory
         }
     }
-    
+
     $data['data'] = $flattenedData;
-    
+
 }
 else if ($action == 'banned_words') {
 
@@ -71,7 +71,7 @@ else if ($action == 'banned_words') {
     $data['status']    = 200;
     $words = $db->rawQuery("SELECT * FROM cl_banned_words;");
 
-    $data['data'] = $words;  
+    $data['data'] = $words;
 }
 // else if ($action == 'update_timeline') {
 
@@ -95,5 +95,5 @@ else if ($action == 'banned_words') {
 //             $data['html']   = implode("", $html_arr);
 //         }
 //     }
-    
+
 // }
