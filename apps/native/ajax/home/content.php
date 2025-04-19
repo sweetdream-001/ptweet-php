@@ -55,7 +55,7 @@ else if ($action == 'get_all_categories') {
     
     foreach ($categories as $k => $cat) {
         $flattenedData[] = $cat; // Add main category
-        $subcategories = $db->rawQuery("SELECT * FROM `cl_categories` WHERE parent_id = " . $cat['id'] . " order by sort ASC");
+        $subcategories = $db->rawQuery("SELECT * FROM `cl_categories` WHERE parent_id = " . $cat['id'] . " order by name ASC");
         foreach ($subcategories as $subcategory) {
             $flattenedData[] = $subcategory; // Add subcategory
         }
