@@ -2771,7 +2771,7 @@ else if($action == 'update_posts_comments_admin'){
 }
 else if ($action == 'get_sub_categories') {	
     $data['status']    = 200;
-    $categories = $db->rawQuery("SELECT a.*, (SELECT name FROM cl_categories b WHERE b.id = a.parent_id) as parent_name FROM cl_categories as a WHERE parent_id IS NOT NULL;");
+    $categories = $db->rawQuery("SELECT a.*, (SELECT name FROM cl_categories b WHERE b.id = a.parent_id) as parent_name FROM cl_categories as a WHERE parent_id IS NOT NULL ORDER BY a.name ASC");
     // foreach($categories as $k => $cat){
     //     $categories[$k]['childs'] = $db->rawQuery("SELECT * FROM `cl_categories` where parent_id = " . $cat['id']);
     // }
