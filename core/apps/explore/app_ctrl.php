@@ -114,11 +114,24 @@ function cl_search_posts($keyword = "", $offset = false, $post_id = false, $limi
     $counter   = 0;
 
 	if (cl_queryset($query_res)) {
+	    
+	    if ($cl['config']['advertising_system'] == 'on') {
+                if (cl_is_feed_nad_allowed()) {
+                    //if (empty($offset)) {
+                        $ad = cl_get_timeline_ads();
+    
+                        if (not_empty($ad)) {
+                            $data[] = $ad;
+                        }
+                   // }
+                }
+            }
+            
 		foreach ($query_res as $row) {
 
             $counter += 1;
 			$data[] = cl_post_data($row);
-
+            
             if ($cl['config']['advertising_system'] == 'on') {
                 if (cl_is_feed_nad_allowed()) {
                    // if (not_empty($offset)) {
