@@ -385,3 +385,9 @@ $conn->close();
 		Dots: false,
 	})
 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // This will remove query parameters after the page loads
+        window.history.replaceState(null, null, window.location.pathname);
+    });
+</script>
