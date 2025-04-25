@@ -128,67 +128,58 @@
 			</div>
 		</div>
 		
-		
+		<h6 class="form-label text-danger text-center mt-1">
+            <?php echo cl_translate("Select a plan to proceed."); ?>
+        </h6>
 				<!-- Subscription Section Start keston -->
         <div class="form-group mb-0">
-            <label><?php echo cl_translate("Ad Plan - Ads are approved in 48 hours. If your Ad is not approved you will receive email for next step."); ?></label>
-            <ul class="nav nav-tabs nav-justified mb-3" id="adSubscriptionTab" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link active" id="yearly-tab" data-toggle="tab" href="#yearly" role="tab"
-                        aria-controls="yearly" aria-selected="true">
-                        <?php echo cl_translate("Yearly Plan (365 days) "); ?>
-                    </a>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link" id="monthly-tab" data-toggle="tab" href="#monthly" role="tab"
-                        aria-controls="monthly" aria-selected="false">
-                        <?php echo cl_translate("Monthly Plan (30 days) "); ?>
-                    </a>
-                </li>
-            </ul>
-            <div class="tab-content" id="adSubscriptionTabContent">
-                <!-- Yearly Subscription -->
-                <div class="tab-pane fade show active" id="yearly" role="tabpanel" aria-labelledby="yearly-tab">
-                    <div class="pl-message">
-                        <h6 class="form-info-label text-center">
-                            <?php echo cl_translate('Create a Yearly Ad Plan'); ?></h6>
-                        <div class="pb-2 form-info-label text-center">
-                            <?php echo cl_translate("Your ad will be displayed for a full year. Perfect for long-term campaigns."); ?>
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-center text-center c2action-single">
-                        <button type="button" class="btn btn-custom main-inline lg btn-block  w-50"
-                            v-on:click="selectSubscription('yearly')">
-                            {{ selectYearlyText }}
-                        </button>
-                    </div>
+            <label><?php echo cl_translate("Ad Plan - Ads are approved in"); ?>
+                <span class="text-danger" style="font-size: 16px;"><?php echo cl_translate(" 48 hours"); ?></span>
+                <?php echo cl_translate(". If your Ad is not approved you will receive email for next step."); ?>
+            </label>
+            <div class="d-flex justify-content-between">
+                <!-- Radio button for Yearly Plan -->
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="yearlyPlan" v-model="selectedPlan" value="yearly">
+                    <label class="form-check-label" for="yearlyPlan">
+                        <?php echo cl_translate("Yearly Plan (365 days)"); ?> - {{ yearlyPrice }}/Year
+                    </label>
                 </div>
-                <!-- Monthly Subscription -->
-                <div class="tab-pane fade" id="monthly" role="tabpanel" aria-labelledby="monthly-tab">
-                    <div class="pl-message">
-                        <h6 class="form-info-label text-center">
-                            <?php echo cl_translate('Create a Monthly Ad Plan'); ?></h6>
-                        <div class="pb-2 form-info-label text-center">
-                            <?php echo cl_translate("Your ad will be displayed for one month. Ideal for short-term promotions."); ?>
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-center text-center c2action-single">
-                        <button type="button" class="btn btn-custom main-inline lg btn-block  w-50"
-                            v-on:click="selectSubscription('monthly')">
-                            {{ selectMonthlyText }}
-                        </button>
-                    </div>
+        
+                <!-- Radio button for Monthly Plan -->
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="monthlyPlan" v-model="selectedPlan" value="monthly">
+                    <label class="form-check-label" for="monthlyPlan">
+                        <?php echo cl_translate("Monthly Plan (30 days)"); ?> - {{ monthlyPrice }}/Month
+                    </label>
+                </div>
+            </div>
+        
+            <!-- Dynamic Description based on selected plan -->
+            <div v-if="selectedPlan === 'monthly'" class="pl-message">
+                <h6 class="form-info-label text-center">
+                    <?php echo cl_translate('Create a Monthly Ad Plan'); ?>
+                </h6>
+                <div class="pb-2 form-info-label text-center">
+                    <?php echo cl_translate("Your ad will be displayed for one month. Ideal for short-term promotions."); ?>
+                </div>
+            </div>
+        
+            <div v-if="selectedPlan === 'yearly'" class="pl-message">
+                <h6 class="form-info-label text-center">
+                    <?php echo cl_translate('Create a Yearly Ad Plan'); ?>
+                </h6>
+                <div class="pb-2 form-info-label text-center">
+                    <?php echo cl_translate("Your ad will be displayed for a full year. Perfect for long-term campaigns."); ?>
                 </div>
             </div>
         </div>
-        <h6 class="form-label text-dagner text-center mt-1 " style="color: red">
-            <?php echo cl_translate('Click above Plan to Select it'); ?>
-        </h6>
+    
         <!-- Show selected subscription if any -->
-        <div class="form-group" v-if="subscription_type">
+        <div class="form-group" v-if="selectedPlan">
             <label><?php echo cl_translate("Selected Plan"); ?></label>
-            <input type="text" class="form-control" :value="subscription_type" readonly>
-        </div>
+            <input type="text" class="form-control" :value="selectedPlan" readonly>
+        </div>  
         <!-- Subscription Section End -->
 		<div class="form-group">
 			<div class="form-tos">
