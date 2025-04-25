@@ -53,11 +53,11 @@
     </td>
     <td>
         <?php if ($cl['li']['status'] == "active"): ?>
-            <span class="badge bg-green">
+            <span data-an="active-status" class="badge bg-green">
             <?php echo cl_translate('Active'); ?>
             </span>
         <?php else: ?>
-            <span class="badge bg-grey">
+            <span data-an="active-status" class="badge bg-grey">
             <?php echo cl_translate('Inactive'); ?>
             </span>
         <?php endif; ?>
@@ -104,6 +104,17 @@
                     <?php echo cl_translate('Unapproved'); ?>
                     </a>
                 <?php endif; ?>
+                
+                <?php if ($cl['li']['status'] == "active"): ?>
+                    <a onclick="SMC_CPanel.PS.activate('<?php echo($cl['li']['id']); ?>');" href="javascript:void(0);" class="dropdown-item pt-ad-activate">
+                    <?php echo cl_translate('Inactivate'); ?>
+                    </a>
+                <?php else: ?>
+                    <a onclick="SMC_CPanel.PS.activate('<?php echo($cl['li']['id']); ?>');" href="javascript:void(0);" class="dropdown-item pt-ad-activate">
+                    <?php echo cl_translate('Activate'); ?>
+                    </a>
+                <?php endif; ?>
+                
                 <a href="javascript:void(0);" class="dropdown-item" onclick="SMC_CPanel.PS.delete('<?php echo($cl['li']['id']); ?>');">
                 <?php echo cl_translate('Delete'); ?>
                 </a>

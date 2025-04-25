@@ -133,7 +133,7 @@
         </h6>
 				<!-- Subscription Section Start keston -->
         <div class="form-group mb-0">
-            <label><?php echo cl_translate("Ad Plan - Ads are approved in"); ?>
+            <label><?php echo cl_translate("Ad Plans - Ads are approved in"); ?>
                 <span class="text-danger" style="font-size: 16px;"><?php echo cl_translate(" 48 hours"); ?></span>
                 <?php echo cl_translate(". If your Ad is not approved you will receive email for next step."); ?>
             </label>
@@ -142,7 +142,7 @@
                 <div class="form-check">
                     <input class="form-check-input" type="radio" id="yearlyPlan" v-model="selectedPlan" value="yearly">
                     <label class="form-check-label" for="yearlyPlan">
-                        <?php echo cl_translate("Yearly Plan (365 days)"); ?> - {{ yearlyPrice }}/Year
+                        <?php echo cl_translate("Yearly Plan (365 days)"); ?> - <span style="font-size: 16px; color: green;">{{ yearlyPrice }}/Year</span>
                     </label>
                 </div>
         
@@ -150,7 +150,7 @@
                 <div class="form-check">
                     <input class="form-check-input" type="radio" id="monthlyPlan" v-model="selectedPlan" value="monthly">
                     <label class="form-check-label" for="monthlyPlan">
-                        <?php echo cl_translate("Monthly Plan (30 days)"); ?> - {{ monthlyPrice }}/Month
+                        <?php echo cl_translate("Monthly Plan (30 days)"); ?> - <span style="font-size: 16px; color: green;">{{ monthlyPrice }}/Month</span>
                     </label>
                 </div>
             </div>

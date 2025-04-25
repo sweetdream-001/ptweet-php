@@ -210,6 +210,38 @@
                         SMC_CPanel.waitme();
                     });
                 }
+            },
+            activate: function(id = false) {
+                var _app_ = this.app;
+
+                if ($.isNumeric(id) && id) {
+                    $.ajax({
+                        url: '<?php echo cl_link("native_api/cpanel/active_user_ad"); ?>',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {id: id},
+                        beforeSend: function() {
+                            SMC_CPanel.waitme("show");
+                        }
+                    }).done(function(data) {
+                        if (data.status != 200) {
+                            SMC_CPanel.errorMSG();
+                        } else {
+                            if (data.ad_status == "active") {
+                                _app_.find("[data-ads-item='{0}']".format(id)).find('[data-an="active-status"]').replaceClass('bg-grey', 'bg-green');
+                                _app_.find("[data-ads-item='{0}']".format(id)).find('[data-an="active-status"]').text("Active");
+                                _app_.find(".pt-ad-activate").text("Active");
+                                
+                            } else if (data.ad_status == "inactive") {
+                                _app_.find("[data-ads-item='{0}']".format(id)).find('[data-an="active-status"]').replaceClass('bg-green', 'bg-grey');
+                                _app_.find("[data-ads-item='{0}']".format(id)).find('[data-an="active-status"]').text("Inactive");
+                                _app_.find(".pt-ad-activate").text("Inactive");
+                            }
+                        }
+                    }).always(function() {
+                        SMC_CPanel.waitme();
+                    });
+                }
             }
         });
 
