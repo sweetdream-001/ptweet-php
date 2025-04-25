@@ -1,4 +1,5 @@
 <?php 
+exit("Hello");
 # @*************************************************************************@
 # @ Software author: JOOJ Team (JOOJ.us)					        	   	@
 # @ Author_url 1: https://jooj.us                                           @

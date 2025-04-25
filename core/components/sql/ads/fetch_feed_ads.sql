@@ -34,6 +34,10 @@ SELECT a.`id`, a.`user_id`, a.`cover`, a.`company`, a.`target_url`, a.`timeleft`
 			AND (a.`audience` LIKE '%<?php echo($data["udata"]["country_id"]); ?>%')
 		<?php endif; ?>
 		
+		<?php if(!empty($_SESSION['shown_ads'])): ?>
+            AND a.id NOT IN (<?php echo implode(',', $_SESSION['shown_ads']); ?>)
+        <?php endif; ?>
+		
 	<?php endif; ?>
 
 ORDER BY RAND() LIMIT 1;

@@ -66,7 +66,7 @@ if ($spa_load == '1') {
 else {
 
 	$cl['json_data'] = $json_data;
-	$http_res = cl_template("main/content");
+    $http_res = cl_template("main/content");
 
 	echo $http_res;
 	mysqli_close($mysqli);

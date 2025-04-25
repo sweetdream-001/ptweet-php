@@ -130,7 +130,7 @@
 		
 		
 				<!-- Subscription Section Start keston -->
-        <div class="form-group">
+        <div class="form-group mb-0">
             <label><?php echo cl_translate("Ad Plan - Ads are approved in 48 hours. If your Ad is not approved you will receive email for next step."); ?></label>
             <ul class="nav nav-tabs nav-justified mb-3" id="adSubscriptionTab" role="tablist">
                 <li class="nav-item" role="presentation">
@@ -181,7 +181,7 @@
                 </div>
             </div>
         </div>
-        <h6 class="form-info-label text-center">
+        <h6 class="form-label text-dagner text-center mt-1 " style="color: red">
             <?php echo cl_translate('Click above Plan to Select it'); ?>
         </h6>
         <!-- Show selected subscription if any -->
@@ -195,13 +195,13 @@
 				<div class="form-check">
 					<input v-model="tos_agree" id="tos-agree" type="checkbox" class="form-check-input">
 					<label for="tos-agree" class="form-check-label">
-						<span>
-							<?php echo cl_translate("By continuing, you agree to {@site_name@}",array(
-								"site_name" => $cl["config"]["name"]
-							)); ?>
-						</span>
-						<a href="<?php echo cl_link('terms_of_use'); ?>"><?php echo cl_translate("Terms of Use"); ?></a> <?php echo cl_translate("And"); ?> <a href="<?php echo cl_link('privacy_policy'); ?>"><?php echo cl_translate("Privacy policy"); ?></a>
-					</label>
+					    <h6>
+    						<span>
+    							By continuing, you <span class="text-danger">agree</span> to <span class="text-danger">P-Tweets</span>
+    						</span>
+    						<a href="<?php echo cl_link('terms_of_use'); ?>"><?php echo cl_translate("Terms of Use"); ?></a> <?php echo cl_translate("And"); ?> <a href="<?php echo cl_link('privacy_policy'); ?>"><?php echo cl_translate("Privacy policy"); ?></a>
+				        </h6>	
+				    </label>
 				</div>
 			</div>
 		</div>

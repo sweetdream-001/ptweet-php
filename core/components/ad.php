@@ -52,16 +52,22 @@ function cl_get_timeline_ads($ad_id = false) {
     global $db, $cl;
 
     $udata        = ((not_empty($cl['is_logged'])) ? $cl['me'] : false);
+    
+    if (!isset($_SESSION['shown_ads'])) {
+        $_SESSION['shown_ads'] = array();
+    }
+    
     $sql          = cl_sqltepmlate('components/sql/ads/fetch_feed_ads', array(
         't_ads'   => T_ADS,
         't_users' => T_USERS,
         'udata'   => $udata,
-        'ad_id'   => $ad_id
+        'ad_id'   => $ad_id,
     ));
 
     $views   = cl_session('ad_views');
     $clicks  = cl_session('ad_clicks');
     $ad_data = $db->rawQueryOne($sql);
+    
     $data    = array();
 
     if (is_array($views) != true) {
@@ -126,11 +132,18 @@ function cl_get_timeline_ads($ad_id = false) {
                 'views' => ($ad_data['views'] += 1)
             ));
         }
+        
+        // Register ad as shown
+        if (!in_array($ad_data['id'], $_SESSION['shown_ads'])) {
+            $_SESSION['shown_ads'][] = $ad_data['id'];
+        }
 
         $data = $ad_data;
+    } else {
+        // All ads shown - reset
+        $_SESSION['shown_ads'] = array();
     }
-    // echo '<pre>';print_r($data);'</pre>';die;
-
+    
     return $data;
 }
 
