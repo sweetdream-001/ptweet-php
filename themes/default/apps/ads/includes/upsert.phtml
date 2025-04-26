@@ -134,15 +134,17 @@
 				<!-- Subscription Section Start keston -->
         <div class="form-group mb-0">
             <label><?php echo cl_translate("Ad Plans - Ads are approved in"); ?>
-                <span class="text-danger" style="font-size: 16px;"><?php echo cl_translate(" 48 hours"); ?></span>
-                <?php echo cl_translate(". If your Ad is not approved you will receive email for next step."); ?>
+                <span class="text-danger" style="font-size: 14px;">
+                    <?php echo cl_translate(" 48 hours"); ?>
+                </span>
+                <?php echo cl_translate(". If your Ad is not approved you will receive an email for the next step."); ?>
             </label>
             <div class="d-flex justify-content-between">
                 <!-- Radio button for Yearly Plan -->
                 <div class="form-check">
                     <input class="form-check-input" type="radio" id="yearlyPlan" v-model="selectedPlan" value="yearly">
                     <label class="form-check-label" for="yearlyPlan">
-                        <?php echo cl_translate("Yearly Plan (365 days)"); ?> - <span style="font-size: 16px; color: green;">{{ yearlyPrice }}/Year</span>
+                        <?php echo cl_translate("Yearly Plan (365 days)"); ?> - <span style="font-size: 14px; color: green;">{{ yearlyPrice }}/Year</span>
                     </label>
                 </div>
         
@@ -150,7 +152,7 @@
                 <div class="form-check">
                     <input class="form-check-input" type="radio" id="monthlyPlan" v-model="selectedPlan" value="monthly">
                     <label class="form-check-label" for="monthlyPlan">
-                        <?php echo cl_translate("Monthly Plan (30 days)"); ?> - <span style="font-size: 16px; color: green;">{{ monthlyPrice }}/Month</span>
+                        <?php echo cl_translate("Monthly Plan (30 days)"); ?> - <span style="font-size: 14px; color: green;">{{ monthlyPrice }}/Month</span>
                     </label>
                 </div>
             </div>
@@ -176,9 +178,8 @@
         </div>
     
         <!-- Show selected subscription if any -->
-        <div class="form-group" v-if="selectedPlan">
-            <label><?php echo cl_translate("Selected Plan"); ?></label>
-            <input type="text" class="form-control" :value="selectedPlan" readonly>
+        <div class="form-group text-center" v-if="selectedPlan">
+            <label><?php echo cl_translate("Selected Plan : "); ?><span class="highlighted-plan">{{selectedPlanText}}</span></label>
         </div>  
         <!-- Subscription Section End -->
 		<div class="form-group">
@@ -190,7 +191,7 @@
     						<span>
     							By continuing, you <span class="text-danger">agree</span> to <span class="text-danger">P-Tweets</span>
     						</span>
-    						<a href="<?php echo cl_link('terms_of_use'); ?>"><?php echo cl_translate("Terms of Use"); ?></a> <?php echo cl_translate("And"); ?> <a href="<?php echo cl_link('privacy_policy'); ?>"><?php echo cl_translate("Privacy policy"); ?></a>
+    						<a href="<?php echo cl_link('terms_of_use'); ?>" target="_blank"><?php echo cl_translate("Terms of Use"); ?></a> <?php echo cl_translate("And"); ?> <a href="<?php echo cl_link('privacy_policy'); ?>" target="_blank"><?php echo cl_translate("Privacy policy"); ?></a>
 				        </h6>	
 				    </label>
 				</div>

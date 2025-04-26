@@ -230,12 +230,12 @@
                             if (data.ad_status == "active") {
                                 _app_.find("[data-ads-item='{0}']".format(id)).find('[data-an="active-status"]').replaceClass('bg-grey', 'bg-green');
                                 _app_.find("[data-ads-item='{0}']".format(id)).find('[data-an="active-status"]').text("Active");
-                                _app_.find(".pt-ad-activate").text("Active");
+                                _app_.find(".pt-ad-activate").text("Inactive");
                                 
                             } else if (data.ad_status == "inactive") {
                                 _app_.find("[data-ads-item='{0}']".format(id)).find('[data-an="active-status"]').replaceClass('bg-green', 'bg-grey');
                                 _app_.find("[data-ads-item='{0}']".format(id)).find('[data-an="active-status"]').text("Inactive");
-                                _app_.find(".pt-ad-activate").text("Inactive");
+                                _app_.find(".pt-ad-activate").text("Active");
                             }
                         }
                     }).always(function() {

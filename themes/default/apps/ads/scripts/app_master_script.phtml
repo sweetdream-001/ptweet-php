@@ -44,6 +44,14 @@
 				},
 				computed: {
 
+                    selectedPlanText: function () {
+                        if (this.selectedPlan === "monthly") {
+                            return "Monthly - 30 day plan";
+                        } else if (this.selectedPlan === "yearly") {
+                            return "Yearly - 365 day plan";
+                        }
+                    },
+                    
 					is_invalid_company: function() {
 						if (this.$v.ad_data.company.required && this.$v.ad_data.company.$invalid) {
 

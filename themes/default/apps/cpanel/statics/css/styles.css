@@ -109,8 +109,8 @@ body.dark-only .modal.popup-ticket-modal div.text-message h5 {
     min-width: 190px!important;
 }
 span.badge {
-  padding: 5px 10px;
-  font-size: 11px;
+  padding: 3px 6px;
+  font-size: 9px !important;
   font-weight: normal; }
 a.dropdown-item {
     display: flex;

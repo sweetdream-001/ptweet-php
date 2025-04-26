@@ -27,9 +27,10 @@
 							
 						</span>
 					<?php else : ?>
-						<a href="<?php echo cl_link("ads/new"); ?>" data-spa="true" title="<?php echo cl_translate("New"); ?>">
+						<a href="<?php echo cl_link("ads/new"); ?>" data-spa="true" title="<?php echo cl_translate("New"); ?>" class="add-new-ad mb-2">
 							<?php echo cl_ikon('plus'); ?>
 						</a>
+						<span class="new-ad-label"><?php echo cl_translate('New Ad'); ?></span>
 					<?php endif; ?>
 				</div>
 			</div>
@@ -99,6 +100,30 @@
 			text-align: center;
 		}
 
+        .highlighted-plan {
+            display: inline-block;
+            padding: 5px 10px;
+            border: 2px solid #007bff;  /* Blue border */
+            background-color: #f0f8ff;  /* Light blue background */
+            border-radius: 5px;         /* Rounded corners */
+            font-weight: bold;          /* Bold text */
+        }
+
+        .add-new-ad {
+            display: block;
+            text-align: center;
+        }
+        
+        .new-ad-label {
+            display: block;
+            text-align: center;
+            font-size: 14px;
+            margin-top: 5px;
+            color: #333; /* You can adjust this to your desired text color */
+            margin-left: auto;
+            margin-right: auto;
+        }
+		
 		.terms {
 
 			font-size: 12px;
