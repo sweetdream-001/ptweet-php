@@ -1022,9 +1022,9 @@ else if ($action == 'update_admin_ad') {
     
     $new_cta = fetch_or_get($_POST['cta'], false);
     if (!empty($new_cta)) {
-        if (strlen($new_cta) > 32) {
+        if (strlen($new_cta) > 60) {
             $data['err_code'] = 'invalid_cta';
-            $data['message']  = 'CTA is too long.';
+            $data['message']  = 'Too long cta of the campaign entered. The maximum length is 60 characters!';
             return;
         }
         $update['cta'] = $new_cta;

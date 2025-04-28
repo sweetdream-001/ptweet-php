@@ -5,8 +5,8 @@
 		$('.pub-go-back').on('click', function() {
 			var postId = $(this).attr('post-id');
 			var url = 'https://p-tweets.com/talk/';
-// 			var fullUrl = url + '?' + 'post_id=' + postId;
-			window.location.href = url;
+			var fullUrl = url + '?' + 'post_id=' + postId;
+			window.location.href = fullUrl;
 		})
 	})
 	
@@ -109,8 +109,7 @@
 				ad_data: <?php echo cl_minify_js(json($cl['thread_data']['post'], 1)); ?>,
 				tos_agree: false,
 				submitting: false,
-				is_subscribed: false,
-				subscription_type: "",
+				selectedPlan: "", // 'yearly' or 'monthly'
 				monthlyPrice: "<?php echo cl_money(isset($cl['config']['advertisement_mprice']) ? $cl['config']['advertisement_mprice'] : 9.99); ?>",
 				yearlyPrice: "<?php echo cl_money(isset($cl['config']['advertisement_yprice']) ? $cl['config']['advertisement_yprice'] : 99.99); ?>",
 				wallet: <?php echo $me["wallet"]; ?>,
@@ -118,30 +117,24 @@
 				ads_subscription_yprice_val: <?php echo isset($cl['config']['advertisement_yprice']) ? $cl['config']['advertisement_yprice'] : 99.99; ?>
 			},
 			computed: {
-				selectMonthlyText: function() {
-					return "Select Monthly Plan - " + this.monthlyPrice + "/Month";
-				},
-				selectYearlyText: function() {
-					return "Select Yearly Plan - " + this.yearlyPrice + "/Year"; 
-				}
+			    selectedPlanText: function () {
+                        if (this.selectedPlan === "monthly") {
+                            return "Monthly - 30 day plan";
+                        } else if (this.selectedPlan === "yearly") {
+                            return "Yearly - 365 day plan";
+                        }
+                    },
 			},
 			methods: {
-			    selectPlan: function(plan) {
-			        // Save the selected subscription plan (e.g., 'monthly' or 'yearly' keston)
-						// You can extend this later to trigger payment flow for subscription if needed.
-						this.is_subscribed = true;
-						this.subscription_type = plan;
-						cl_bs_notify("<?php echo cl_translate('Plan selected:'); ?> " + plan);
-			    },
 
 				publish: function() {
 
 					var _app_ = this;
 					
 					let requiredAmount = 0;
-					if (this.subscription_type === "monthly") {
+					if (this.selectedPlan === "monthly") {
 						requiredAmount = parseFloat(this.ads_subscription_mprice_val);
-					} else if (this.subscription_type === "yearly") {
+					} else if (this.selectedPlan === "yearly") {
 						requiredAmount = parseFloat(this.ads_subscription_yprice_val);
 					}
 
@@ -157,14 +150,14 @@
 						data: {
 							id: this.ad_data.id,
 							requiredAmount: requiredAmount,
-							subscription_type: this.subscription_type
+							subscription_type: this.selectedPlan
 						},
 						beforeSend: function() {
 							_app_.loading   = true;
 						}
 					}).done(function(data) {
 						if (data.status == 200) {
-							cl_bs_notify("<?php echo cl_translate('Plan continued:'); ?> " + this.subscription_type);
+							cl_bs_notify("<?php echo cl_translate('Plan continued:'); ?> " + this.selectedPlan);
 							_app_.loading   = false;
 							window.location.reload();
 						} else {

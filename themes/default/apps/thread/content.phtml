@@ -35,13 +35,8 @@
 <div class="timeline-container" data-app="thread">
     <div class="timeline-header" data-el="tl-header">
         <div class="lp" style="display: inline-flex;">
-            <!--
-			<span class="go-back pub-go-back" onclick="SMColibri.go_back();" post-id="<?= $cl['thread_data']['post']['id']; ?>">
-			    -->
-            <span class="go-back" onclick="window.history.go(-2);">
-                <?php echo cl_ikon('arrow-left'); ?>
-            </span>
-
+            <!--onclick="SMColibri.go_back();"-->
+            <a  href="https://p-tweets.com/talk" class="go-back"><?php echo cl_ikon('arrow-left'); ?></a>
             <div class="nav-link-holder">
                 <a href="<?php echo $cl['thread_data']['post']['url']; ?>" data-spa="true">
                     <?php echo cl_translate("Publication"); ?>

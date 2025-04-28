@@ -109,7 +109,7 @@
 					is_invalid_cta: function() {
 						if (this.$v.ad_data.cta.required && this.$v.ad_data.cta.$invalid) {
 
-							this.fb.cs.cta = "<?php echo cl_translate("Too long cta of the campaign entered. The maximum length is 32 characters!"); ?>";
+							this.fb.cs.cta = "<?php echo cl_translate("Too long cta of the campaign entered. The maximum length is 60 characters!"); ?>";
 
 							return true;
 						}
@@ -180,7 +180,7 @@
 						cta: {
 							required: window.validators.required,
 							min_length: window.validators.minLength(1),
-							max_length: window.validators.maxLength(32)
+							max_length: window.validators.maxLength(60)
 						}
 					}
 				},
