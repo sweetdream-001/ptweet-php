@@ -58,7 +58,7 @@ $config        = cl_get_configurations();
                         // Deactivate ad if expired
                         $db->where('id', $ad['id'])->update(T_ADS, array('approved' => 'N', 'timeleft' => 0));
                         echo "Ad ID {$ad['id']} expired.\n";
-                        return;
+
                     } else {
                         // Update the timeleft in the database
                         $db->where('id', $ad['id'])->update(T_ADS, array('timeleft' => $new_timeleft));

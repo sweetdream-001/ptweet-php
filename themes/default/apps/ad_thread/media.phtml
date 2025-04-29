@@ -15,6 +15,22 @@
                     </div>
                 </div>
             <?php endif; ?>
+            <!--////////////////////////////////////////////-->
+			<?php if (not_empty($cl["random_ads"])): ?>
+				<div class="timeline-posts-container">
+					<div class="timeline-posts-ls szHomeTimeline" data-an="entry-list">
+						<?php foreach ($cl["random_ads"] as $cl['li']): ?>
+							<?php echo cl_template('timeline/right_ad'); ?>
+						<?php endforeach; ?>
+					</div>
+				</div>
+			<?php else: ?>
+                <div class="no-ads-message">
+                    <p>No ads available.</p>
+                </div>
+			<?php endif; ?>
+			
+			<!--///////////////////////-->
             <div class="publication--thread-data-holder media" data-an="thread-data">
                 <?php echo cl_template('thread/thread'); ?>
             </div>
@@ -163,4 +179,4 @@
 	 .guest_bottom {
 		display: none!important;
 	}
-	</style>
+</style>

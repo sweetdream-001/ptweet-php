@@ -782,6 +782,30 @@ define('APP_NAME','https://p-tweets.com/talk/');
             })
         }
     });
+    ///////////////////////////////////keston A///////////////////////////////
+    $(document).on('click', '.right-ad', function(event) {
+			var adLink = $(this).attr('pt-ad-link');
+			var adId = $(this).attr('data-ad');
+			if (adLink) {
+			    window.top.location.href = adLink;
+				$.ajax({
+					url: '<?php echo cl_link("native_api/ads/view_count_update"); ?>',
+					type: 'POST',
+					dataType: 'json',
+					data: {
+						ad_id: adId
+					},
+					success: function(response) {
+						if (response.status == 200) {
+							var viewButton = $('.pt-views[pt-ad-id="' + adId + '"]');
+							var spanElement = viewButton.find('span.num');
+							spanElement.text(response.views_count);
+							
+						}
+					}
+				})
+			}
+		});
 </script>
 
 </body>

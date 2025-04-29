@@ -137,8 +137,6 @@ else if ($action == 'signup') {
             }
         }
 
-       
-
         if (empty($data['err_code'])) {
             if ($cl['config']['acc_validation'] == 'off') {
                 $email_code       = sha1(time() + rand(111,999));
@@ -175,7 +173,11 @@ else if ($action == 'signup') {
                     'country_id'  => $cl['config']['country_id'],
                     'language'    => $cl['config']['language'],
                     'display_settings' => json(array("color_scheme" => $cl["config"]["default_color_scheme"], "background" => $cl["config"]["default_bg_color"]), true)
-                ); $user_id       =  $db->insert(T_USERS, $insert_data);
+                ); 
+                
+                
+                
+                $user_id       =  $db->insert(T_USERS, $insert_data);
 
                 if (is_posnum($user_id)) {
                     cl_create_user_session($user_id,'web');
@@ -191,7 +193,7 @@ else if ($action == 'signup') {
                 $user_email        = $user_data_fileds['email'];
                 $cl['email_data']  = array('name' => $user_name, 'code' => $rand_code);
                 $send_email_data   = array(
-                    'from_email'   => $cl['config']['email'],
+                    'from_email'   => $cl['config']['smtp_username'],
                     'from_name'    => $cl['config']['name'],
                     'to_email'     => $user_email,
                     'to_name'      => $user_name,
