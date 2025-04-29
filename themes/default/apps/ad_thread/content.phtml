@@ -681,6 +681,22 @@ body main.main-content-container div.main-content-container-inner div.timeline-c
 				</div>
 			<?php endif; ?>
 			<!--Hide reply thread holder 2025.04.11 by keston-->
+			<!--////////////////////////////////////////////-->
+			<?php if (not_empty($cl["random_ads"])): ?>
+				<div class="timeline-posts-container">
+					<div class="timeline-posts-ls szHomeTimeline" data-an="entry-list">
+						<?php foreach ($cl["random_ads"] as $cl['li']): ?>
+							<?php echo cl_template('timeline/ad'); ?>
+						<?php endforeach; ?>
+					</div>
+				</div>
+			<?php else: ?>
+                <div class="no-ads-message">
+                    <p>No ads available.</p>
+                </div>
+			<?php endif; ?>
+			
+			<!--///////////////////////-->
 			<div class="publication--thread-replys-holder">
 				<?php if (not_empty($cl['thread_data']['next'])): ?>
 					<!--<div class="timeline-posts-container">-->

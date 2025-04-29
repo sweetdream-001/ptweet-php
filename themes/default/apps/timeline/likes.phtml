@@ -1,13 +1,13 @@
 <div id="btn2" class="fancybox__bottom">
     <div class="icons_bottom">
-        <button class="ctrls-item chat">
-            <a href="<?php echo $cl['li']['url']; ?>">
-                <span class="icon">
-                    <?php echo cl_ikon('chat-post'); ?>
-                </span>
-                <span class="num"><?php echo $cl['li']['replys_count']; ?></span>
-            </a>
-        </button>
+        <!--<button class="ctrls-item chat">-->
+        <!--    <a href="<?php echo $cl['li']['url']; ?>">-->
+        <!--        <span class="icon">-->
+        <!--            <?php echo cl_ikon('chat-post'); ?>-->
+        <!--        </span>-->
+        <!--        <span class="num"><?php echo $cl['li']['replys_count']; ?></span>-->
+        <!--    </a>-->
+        <!--</button>-->
         <?php if (empty($cl['li']['has_reposted'])) : ?>
             <button onclick="SMColibri.repost(<?php echo $cl['li']['id']; ?>, this);" class="ctrls-item repost" data-an="repost-ctrl">
                 <span class="icon">

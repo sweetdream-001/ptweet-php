@@ -147,6 +147,66 @@ function cl_get_timeline_ads($ad_id = false) {
     return $data;
 }
 
+function cl_get_random_ads($exclude_ad_id  = false) {
+    global $db, $cl;
+    
+    $udata = ((not_empty($cl['is_logged'])) ? $cl['me'] : false);
+
+    $sql = cl_sqltepmlate('components/sql/ads/fetch_random_ads', array(
+        't_ads'      => T_ADS,
+        't_users'    => T_USERS,
+        'udata'      => $udata,
+        'exclude_id' => $exclude_ad_id
+    ));
+    
+    $views    = cl_session('ad_views') ?: array();
+    $clicks   = cl_session('ad_clicks') ?: array();
+    $ads_data = $db->rawQuery($sql);
+    $data     = array();
+    
+    if (cl_queryset($ads_data)) {
+        foreach ($ads_data as $ad_data) {
+            if (isset($ad_data['og_data']) && !empty($ad_data['og_data'])) {
+                $adYTData = json_decode($ad_data['og_data']);
+                $ad_data['og_data'] = $adYTData->og_data;
+            }
+            
+            $ad_data['is_conversed'] = in_array($ad_data['id'], $clicks);
+            $ad_data['advertising']  = true;
+            $ad_data['cover']        = cl_get_media($ad_data['cover']);
+            $ad_data['time']         = cl_time2str($ad_data['time']);
+            $ad_data["url"]          = cl_link(cl_strf("ad_thread/%d", $ad_data['id']));
+            $ad_data["url2"]         = cl_link(cl_strf("ad_tmedia/%d", $ad_data['id']));
+            $ad_data['description']  = cl_rn2br(cl_strip_brs(cl_linkify_urls(htmlspecialchars_decode(stripcslashes($ad_data['description']), ENT_QUOTES))));
+            $ad_data['company']      = htmlspecialchars_decode(stripcslashes($ad_data['company']), ENT_QUOTES);
+            $ad_data['cta']          = htmlspecialchars_decode(stripcslashes($ad_data['cta']), ENT_QUOTES);
+            $ad_data['show_stats']   = false;
+            $ad_data['is_owner']     = not_empty($udata) && ($ad_data['user_id'] == $udata['id']);
+            $ad_data['has_liked']    = false;
+            $ad_data['has_reposted'] = false;
+            $ad_data['has_viewed']   = in_array($ad_data['id'], $views);
+
+            if (!in_array($ad_data['id'], $views)) {
+                array_push($views, $ad_data['id']);
+                cl_session('ad_views', $views);
+                cl_update_ad_data($ad_data['id'], array('views' => ($ad_data['views'] += 1)));
+            }
+
+            $ad_data['owner'] = array(
+                'avatar'   => cl_get_media($ad_data['avatar']),
+                'name'     => $ad_data['name'],
+                'username' => $ad_data['username'],
+                'verified' => $ad_data['verified'],
+                'url'      => cl_link($ad_data['username'])
+            );
+
+            $data[] = $ad_data;
+        }
+    }
+
+    return $data;
+}
+
 function cl_ad_has_liked($user_id = false, $post_id = false) {
 	global $db, $cl;
 

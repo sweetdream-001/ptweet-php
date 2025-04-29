@@ -68,21 +68,21 @@
 					
 						<div class="publication-data-inner">
 							<div class="publication-footer-ctrls">
-								<?php if (not_empty($cl['thread_data']['can_reply'])): ?>
-									<button class="ctrls-item chat" onclick="SMColibri.pub_reply('<?php echo $cl['thread_data']['post']['id']; ?>');">
-										<span class="icon">
-											<?php echo cl_ikon('chat-post'); ?>
-										</span>
+								<!--<?php if (not_empty($cl['thread_data']['can_reply'])): ?>-->
+								<!--	<button class="ctrls-item chat" onclick="SMColibri.pub_reply('<?php echo $cl['thread_data']['post']['id']; ?>');">-->
+								<!--		<span class="icon">-->
+								<!--			<?php echo cl_ikon('chat-post'); ?>-->
+								<!--		</span>-->
 										
-									</button>
-								<?php else: ?>
-									<button class="ctrls-item chat" disabled="true">
-										<span class="icon">
-											<?php echo cl_ikon('chat-post'); ?>
-										</span>
+								<!--	</button>-->
+								<!--<?php else: ?>-->
+								<!--	<button class="ctrls-item chat" disabled="true">-->
+								<!--		<span class="icon">-->
+								<!--			<?php echo cl_ikon('chat-post'); ?>-->
+								<!--		</span>-->
 										
-									</button>
-								<?php endif; ?>
+								<!--	</button>-->
+								<!--<?php endif; ?>-->
 
 								<?php if (empty($cl['thread_data']['post']['has_liked'])): ?>
 									<button class="ctrls-item likes" onclick="SMColibri.like_post('<?php echo $cl['thread_data']['post']['id']; ?>', this);">

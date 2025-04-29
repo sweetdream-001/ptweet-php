@@ -56,41 +56,17 @@
 		</div>
 		<?php if (not_empty($cl['li']['og_data'])): ?>
 
-		<?php
-		 /*
-		?>		
-
-			<div class="lozad-media">
-	<div class="publication-image">
-		<a href="https://www.youtube.com/embed/<?php echo $cl['li']['link_src']; ?>"
-			data-type="html5video" class="fbox-media2"
-			data-btn='<?php echo cl_template('timeline/likes'); ?>' data-fancybox="gallery"
-			data-info='<?php echo cl_template('timeline/right_col'); ?>'>
-			<img class="lozad pt-prevent-click pt-post-view-count"
-				src="<?php echo cl_get_media(fetch_or_get($cl['li']['media'][0]['x']['poster_thumb'], '')); ?>"
-				alt="Video">
-			<div class="video-icon">
-				<span>
-					<?php echo cl_ikon("play"); ?>
-				</span>
-			</div>
-		</a>
-	</div>
-</div>
-<?php
-*/
-?>
-<style>
-    body main.main-content-container div.main-content-container-inner div.timeline-container-wrapper div.timeline-container-inner div.timeline-container div.timeline-posts-container div.timeline-posts-ls div.post-list-item div.post-list-item-content div.publication-data div.publication-data-inner div.publication-content div.publication-og-data div.publication-og-data-inner.embeded-iframe div.og-image a div.og-icon span {
-    width: 45px;
-    height: 45px;
-    background: var(--smc-main-uiel-color);
-    border-radius: 10em;
-    padding: 5px;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 10px 0px;
-    border: 3px solid #fff;
-}
-</style>
+        <style>
+            body main.main-content-container div.main-content-container-inner div.timeline-container-wrapper div.timeline-container-inner div.timeline-container div.timeline-posts-container div.timeline-posts-ls div.post-list-item div.post-list-item-content div.publication-data div.publication-data-inner div.publication-content div.publication-og-data div.publication-og-data-inner.embeded-iframe div.og-image a div.og-icon span {
+            width: 45px;
+            height: 45px;
+            background: var(--smc-main-uiel-color);
+            border-radius: 10em;
+            padding: 5px;
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 10px 0px;
+            border: 3px solid #fff;
+        }
+        </style>
             <script>
                 try {
                     document.querySelector('.lozad-media').addEventListener('click', function() {
@@ -127,15 +103,6 @@
                         allowfullscreen> 
                     </iframe>
 
-                  <!--  <iframe-->
-                  <!--  class="youtube-ad-video pt-prevent-click pt-post-view-count"-->
-                  <!--  data-src="https://www.youtube.com/embed/<?php echo $cl['li']['link_src'] ?>?enablejsapi=1"-->
-                  <!--  frameborder="0"-->
-                  <!--  style="width:100%; height:300px; pointer-events: none;"-->
-                  <!--  loading="lazy"-->
-                  <!--  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"-->
-                  <!--  allowfullscreen autoplay-->
-                  <!--></iframe>-->
                     <div class="og-icon pt-prevent-click" pt-post-id="<?php echo $cl['li']['id']; ?>"> 
                         <span class="pt-prevent-click pt-post-view-count" 
                               pt-post-id="<?php echo $cl['li']['id']; ?>" 

@@ -23,6 +23,7 @@ if (empty($cl['thread_data']['post'])) {
 	cl_redirect("404");
 }
 
+$cl['random_ads'] = cl_get_random_ads($ad_id);
 $cl["page_title"] = cl_translate("post_seo_title", array("user_name" => $cl['thread_data']['post']['owner']['name'], "site_name" => $cl["config"]["name"], "post_url" => $cl['thread_data']['post']["url"]));
 $cl["page_desc"]  = $cl['thread_data']['post']['og_text'];
 $cl["page_kw"]    = $cl["config"]["keywords"];

@@ -7313,7 +7313,7 @@ body
   div.left-sb-container
   div.sidebar__inner
   div.user-info {
-  width: 100%;
+  /*width: 100%;*/
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;

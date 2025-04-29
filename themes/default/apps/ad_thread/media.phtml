@@ -18,10 +18,7 @@
             <div class="publication--thread-data-holder media" data-an="thread-data">
                 <?php echo cl_template('thread/thread'); ?>
             </div>
-            <div class="reply_button">
-                <button onclick="SMColibri.pub_reply('<?php echo $cl['thread_data']['post']['id']; ?>');" class="btn-custom reply main-inline md post-pub-btn">
-                    <?php echo cl_translate("Tweet Your Reply"); ?></button>
-            </div>
+
             <?php if (empty($cl['thread_data']['can_reply']) && not_empty($cl['thread_data']['post']['can_see'])) : ?>
                 <?php if ($cl['thread_data']["post"]["priv_wcr"] == "followers") : ?>
                     <div class="publication--thread-reply-privacy">
@@ -63,76 +60,6 @@
                     </div>
                 <?php endif; ?>
             <?php endif; ?>
-            <div class="publication--thread-replys-holder">
-                <?php if (not_empty($cl['thread_data']['next'])) : ?>
-                    <div class="timeline-posts-container">
-                        <div class="timeline-posts-ls" data-an="replys-list">
-                            <?php foreach ($cl['thread_data']['next'] as $cl["li"]) : ?>
-                                <?php if (empty($cl["li"]["replys"])) : ?>
-                                    <?php echo cl_template('timeline/post'); ?>
-                                <?php else : ?>
-                                    <div class="timeline-posts-ls-group">
-                                        <div class="timeline-posts-ls-group-inner">
-                                            <?php echo cl_template('timeline/post'); ?>
-                                            <?php
-                                            $parent_thread = $cl['li'];
-                                            $post_replys   = $parent_thread['replys'];
-                                            $post_replys   = array_reverse($post_replys);
-
-                                            foreach ($post_replys as $cl['li']) {
-                                                echo cl_template('timeline/post');
-                                            }
-                                            ?>
-                                        </div>
-                                        <a class="show-thread" href="<?php echo ($parent_thread["url"]); ?>" data-spa="true">
-                                            <span class="txt-label">
-                                                (<?php echo ($parent_thread["replys_count"]); ?>) <?php echo cl_translate("Show this thread"); ?>
-                                            </span>
-                                            <span class="icon">
-                                                <?php echo cl_ikon('arrow-right'); ?>
-                                            </span>
-                                        </a>
-                                    </div>
-                                <?php endif; ?>
-                            <?php endforeach; ?>
-                        </div>
-                    </div>
-                    <?php if (count($cl['thread_data']['next']) == 30) : ?>
-                        <div class="load-more">
-                            <button class="btn btn-custom main-outline lg" data-an="load-more">
-                                <?php echo cl_translate("Show more"); ?>
-                            </button>
-                        </div>
-                    <?php else : ?>
-                        <div class="load-more">
-                            <button disabled="true" class="btn btn-custom main-outline lg" data-an="load-more">
-                                <?php echo cl_translate("That is all for now!"); ?>
-                            </button>
-                        </div>
-                    <?php endif; ?>
-                <?php else : ?>
-                    <div class="no-thread-replys">
-                        <div class="icon">
-                            <?php echo cl_ikon('chat-post'); ?>
-                        </div>
-                        <div class="pl-message">
-                            <h4>
-                                <?php echo cl_translate("No replys yet!"); ?>
-                            </h4>
-                            <p>
-                                <?php echo cl_translate("It seems that this publication does not yet have any comments. In order to respond to this publication from {@publisher_name@}, click on at the button above", array(
-                                    "svg_icon" => cl_html_el("span", cl_ikon('chat-post')),
-                                    "publisher_name" => cl_html_el('a', $cl['thread_data']['post']['owner']['name'], array(
-                                        "href" => $cl['thread_data']['post']['owner']['url'],
-                                        'target' => '_parent',
-                                        'onclick' => 'parent.$.fancybox.close();'
-                                    ))
-                                )); ?>
-                            </p>
-                        </div>
-                    </div>
-                <?php endif; ?>
-            </div>
         </div>
     </div>
 
