@@ -78,11 +78,11 @@
                 }
             </script>  
             
-          <div class="og-image pt-prevent-click musa" style="text-align: center; position: relative; background-image:url('https://img.youtube.com/vi/<?php echo $cl['li']['link_src']; ?>/hqdefault.jpg');background-size: contain;"> 
+        <div class="og-image pt-prevent-click musa" style="text-align: center; position: relative; background-image:url('https://img.youtube.com/vi/<?php echo $cl['li']['link_src']; ?>/hqdefault.jpg');background-size: contain;"> 
             <div class="lozad-media pt-post-view-count pt-prevent-click fbox-media2" pt-post-id="<?php echo $cl['li']['id']; ?>"
                    data-btn='<?php echo cl_template('timeline/likes'); ?>' 
                    data-fancybox="gallery" 
-                   data-src="https://www.youtube.com/embed/<?php echo $cl['li']['link_src'] ?>?autoplay=1&mute=1"
+                   data-src="https://www.youtube.com/embed/<?php echo $cl['li']['link_src'] ?>?autoplay=1&mute=1&loop=1"
                    data-info='<?php echo cl_template('timeline/right_col'); ?>'> 
                 <a href="https://www.youtube-nocookie.com/embed/<?php echo $cl['li']['link_src']; ?>" 
                    class="fbox-media2" 
@@ -102,7 +102,7 @@
                         class="pt-prevent-click pt-post-view-count" 
                         allowfullscreen> 
                     </iframe>
-
+                    
                     <div class="og-icon pt-prevent-click" pt-post-id="<?php echo $cl['li']['id']; ?>"> 
                         <span class="pt-prevent-click pt-post-view-count" 
                               pt-post-id="<?php echo $cl['li']['id']; ?>" 

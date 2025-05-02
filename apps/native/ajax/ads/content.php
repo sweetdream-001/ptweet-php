@@ -130,8 +130,8 @@ else if($action == 'save_ad_data' && not_empty($cl['is_logged'])) {
                 }
     
                 else if ($field_name == 'cta') {
-                    if (empty($field_val) || len_between($field_val, 1, 32) != true) {
-                        $data['err_code'] = "invalid_cta"; break;
+                    if (empty($field_val) || len_between($field_val, 1, 60) != true) {
+                        $data['err_code'] = "invalid_cta, cta is too long!"; break;
                     }
                 }
             }

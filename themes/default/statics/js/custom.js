@@ -14,7 +14,7 @@ $(document).ready(function() {
                     // Check if autoplay and mute parameters are already present
                     if (iframeSrc.indexOf('autoplay=1') === -1 && iframeSrc.indexOf('mute=1') === -1) {
                         var separator = iframeSrc.indexOf('?') === -1 ? '?' : '&';
-                        var iframeSrcNew = iframeSrc + separator + 'autoplay=1&mute=1';
+                        var iframeSrcNew = iframeSrc + separator + 'autoplay=1&mute=1&loop=1';
                         iframe.attr('src', iframeSrcNew);
                     } else {
                         
@@ -55,7 +55,7 @@ $(document).ready(function() {
                     // Check if autoplay and mute parameters are already present
                     if (iframeSrc.indexOf('autoplay=1') === -1 && iframeSrc.indexOf('mute=1') === -1) {
                         var separator = iframeSrc.indexOf('?') === -1 ? '?' : '&';
-                        var iframeSrcNew = iframeSrc + separator + 'autoplay=1&mute=1';
+                        var iframeSrcNew = iframeSrc + separator + 'autoplay=1&mute=1&loop=1';
                         iframe.attr('src', iframeSrcNew);
                     } else {
                         

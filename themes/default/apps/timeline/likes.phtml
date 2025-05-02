@@ -8,25 +8,25 @@
         <!--        <span class="num"><?php echo $cl['li']['replys_count']; ?></span>-->
         <!--    </a>-->
         <!--</button>-->
-        <?php if (empty($cl['li']['has_reposted'])) : ?>
-            <button onclick="SMColibri.repost(<?php echo $cl['li']['id']; ?>, this);" class="ctrls-item repost" data-an="repost-ctrl">
-                <span class="icon">
-                    <?php echo cl_ikon('repost'); ?>
-                </span>
-                <span class="num" data-an="reposts-count">
-                    <?php echo $cl['li']['reposts_count']; ?>
-                </span>
-            </button>
-        <?php else : ?>
-            <button onclick="SMColibri.repost(<?php echo $cl['li']['id']; ?>, this);" class="ctrls-item reposted2" data-an="repost-ctrl">
-                <span class="icon">
-                    <?php echo cl_ikon('repost'); ?>
-                </span>
-                <span class="num" data-an="reposts-count">
-                    <?php echo $cl['li']['reposts_count']; ?>
-                </span>
-            </button>
-        <?php endif; ?>
+        <!--<?php if (empty($cl['li']['has_reposted'])) : ?>-->
+        <!--    <button onclick="SMColibri.repost(<?php echo $cl['li']['id']; ?>, this);" class="ctrls-item repost" data-an="repost-ctrl">-->
+        <!--        <span class="icon">-->
+        <!--            <?php echo cl_ikon('repost'); ?>-->
+        <!--        </span>-->
+        <!--        <span class="num" data-an="reposts-count">-->
+        <!--            <?php echo $cl['li']['reposts_count']; ?>-->
+        <!--        </span>-->
+        <!--    </button>-->
+        <!--<?php else : ?>-->
+        <!--    <button onclick="SMColibri.repost(<?php echo $cl['li']['id']; ?>, this);" class="ctrls-item reposted2" data-an="repost-ctrl">-->
+        <!--        <span class="icon">-->
+        <!--            <?php echo cl_ikon('repost'); ?>-->
+        <!--        </span>-->
+        <!--        <span class="num" data-an="reposts-count">-->
+        <!--            <?php echo $cl['li']['reposts_count']; ?>-->
+        <!--        </span>-->
+        <!--    </button>-->
+        <!--<?php endif; ?>-->
         <?php if (empty($cl['li']['has_liked'])) : ?>
             <button class="ctrls-item likes" onclick="SMColibri.like_post(<?php echo $cl['li']['id']; ?>, this);">
                 <span class="icon">

@@ -50,7 +50,10 @@
     <?php endif; ?>
     <!-- Bottom icons -->
     <div class="media_liked">
-        <span class="num"><?php echo $cl['li']['replys_count']; ?> <span><?php echo cl_translate('Replies'); ?></span></span>
+        <?php if ($cl['li']['advertising'] == false): ?>
+            <span class="num"><?php echo $cl['li']['replys_count']; ?> <span><?php echo cl_translate('Replies'); ?></span></span>
+        <?php endif; ?>
+        
         <span class="num" data-an="reposts-count">
             <?php echo $cl['li']['reposts_count']; ?>
             <span><?php echo cl_translate('Reposts'); ?></span>

@@ -593,7 +593,7 @@ echo $string;
 											<img class="lozad pt-prevent-click pt-post-view-count" data-src="<?php echo ($cl['li']['og_data']['image']); ?>"
 												alt="Video" pt-post-id="<?php echo $cl['li']['id']; ?>" style="display:none">
 												<iframe
-                        							src="<?php echo $cl['li']['og_data']['video_embed'] ?>?autoplay=1&mute=1"
+                        							src="<?php echo $cl['li']['og_data']['video_embed'] ?>?autoplay=1&mute=1&loop=1&playlist=<?php echo $cl['li']['link_src'] ?>"
                         							style="width:100%; height:300px;"
                         							title="YouTube video player" frameborder="0"
                         							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

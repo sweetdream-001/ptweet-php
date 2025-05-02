@@ -31,51 +31,9 @@
 			<?php endif; ?>
 			
 			<!--///////////////////////-->
-            <div class="publication--thread-data-holder media" data-an="thread-data">
-                <?php echo cl_template('thread/thread'); ?>
-            </div>
 
-            <?php if (empty($cl['thread_data']['can_reply']) && not_empty($cl['thread_data']['post']['can_see'])) : ?>
-                <?php if ($cl['thread_data']["post"]["priv_wcr"] == "followers") : ?>
-                    <div class="publication--thread-reply-privacy">
-                        <div class="info-message">
-                            <div class="d-flex align-items-center flex-wn">
-                                <div class="flex-item">
-                                    <div class="icon">
-                                        <?php echo cl_ikon("people"); ?>
-                                    </div>
-                                </div>
-                                <div class="flex-item">
-                                    <p>
-                                        <?php echo cl_translate("Only followers of ({@uname@}) can respond to this publication", array(
-                                            "uname" => cl_html_el("a", $cl['thread_data']['post']['owner']['username'], array("href" => $cl['thread_data']['post']['owner']['url']))
-                                        )); ?>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                <?php else : ?>
-                    <div class="publication--thread-reply-privacy">
-                        <div class="info-message">
-                            <div class="d-flex align-items-center flex-wn">
-                                <div class="flex-item">
-                                    <div class="icon">
-                                        <?php echo cl_ikon("ear"); ?>
-                                    </div>
-                                </div>
-                                <div class="flex-item">
-                                    <p>
-                                        <?php echo cl_translate("Only people mentioned by {@uname@} in this post can reply", array(
-                                            "uname" => cl_html_el("a", $cl['thread_data']['post']['owner']['username'], array("href" => $cl['thread_data']['post']['owner']['url']))
-                                        )); ?>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                <?php endif; ?>
-            <?php endif; ?>
+
+            
         </div>
     </div>
 

@@ -18,12 +18,13 @@ require_once(cl_full_path("core/apps/ad_thread/app_ctrl.php"));
 $ad_id         		= fetch_or_get($_GET["ad_id"], false);
 $ad_id         		= cl_text_secure($ad_id);
 $cl['thread_data']  = cl_get_thread_data($ad_id);
-
+$cl['current_ad']   = cl_get_timeline_ads($ad_id);
 if (empty($cl['thread_data']['post'])) {
 	cl_redirect("404");
 }
 
 $cl['random_ads'] = cl_get_random_ads($ad_id);
+// array_unshift($cl['random_ads'], $cl['current_ad']);  // prepend
 $cl["page_title"] = cl_translate("post_seo_title", array("user_name" => $cl['thread_data']['post']['owner']['name'], "site_name" => $cl["config"]["name"], "post_url" => $cl['thread_data']['post']["url"]));
 $cl["page_desc"]  = $cl['thread_data']['post']['og_text'];
 $cl["page_kw"]    = $cl["config"]["keywords"];
