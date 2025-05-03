@@ -4,22 +4,22 @@
     </div>
     <div class="publication--thread-container">
         <div class="publication--thread-container-inner">
-            <?php if (not_empty($cl['thread_data']['parent'])) : ?>
-                <div class="publication--thread-chain-holder">
-                    <div class="timeline-posts-container">
-                        <div class="timeline-posts-ls" data-an="chain-list">
-                            <?php foreach ($cl['thread_data']['parent'] as $cl["li"]) : ?>
-                                <?php echo cl_template('timeline/post'); ?>
-                            <?php endforeach; ?>
-                        </div>
-                    </div>
-                </div>
-            <?php endif; ?>
+            <!--<?php if (not_empty($cl['thread_data']['parent'])) : ?>-->
+            <!--    <div class="publication--thread-chain-holder">-->
+            <!--        <div class="timeline-posts-container">-->
+            <!--            <div class="timeline-posts-ls" data-an="chain-list">-->
+            <!--                <?php foreach ($cl['thread_data']['parent'] as $cl["li"]) : ?>-->
+            <!--                    <?php echo cl_template('timeline/post'); ?>-->
+            <!--                <?php endforeach; ?>-->
+            <!--            </div>-->
+            <!--        </div>-->
+            <!--    </div>-->
+            <!--<?php endif; ?>-->
             <!--////////////////////////////////////////////-->
-			<?php if (not_empty($cl["random_ads"])): ?>
+			<?php if (not_empty($cl["random_ads_main"])): ?>
 				<div class="timeline-posts-container">
 					<div class="timeline-posts-ls szHomeTimeline" data-an="entry-list">
-						<?php foreach ($cl["random_ads"] as $cl['li']): ?>
+						<?php foreach ($cl["random_ads_main"] as $cl['li']): ?>
 							<?php echo cl_template('timeline/right_ad'); ?>
 						<?php endforeach; ?>
 					</div>

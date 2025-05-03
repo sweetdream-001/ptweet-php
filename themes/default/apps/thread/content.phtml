@@ -304,33 +304,47 @@
                                     </div>
                                 <?php elseif (not_empty($cl['thread_data']['post']['og_data'])): ?>
                                     <?php if (not_empty($cl['thread_data']['post']['og_data']['video_embed'])): ?>
-                                        <div class="publication-og-data">
-                                            <div class="publication-og-data-inner embeded-iframe">
-                                                <div class="og-image">
-                                                    <div class="lozad-media ahsanx">
-                                                        <a href="<?php echo ($cl['thread_data']['post']['og_data']['video_embed']); ?>"
-                                                           class="fbox-media">
-                                                            <img class="lozad"
-                                                                 data-src="<?php echo ($cl['thread_data']['post']['og_data']['image']); ?>"
-                                                                 alt="Video">
-                                                            <div class="og-icon">
-																<span>
-																	<?php echo cl_ikon("play"); ?>
-																</span>
-                                                            </div>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="og-url-data">
-                                                    <h5>
-                                                        <?php echo ($cl['thread_data']['post']['og_data']['title']); ?>
-                                                    </h5>
-                                                    <p>
-                                                        <?php echo ($cl['thread_data']['post']['og_data']['description']); ?>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
+                                            <div class="publication-og-data pt-prevent-click" pt-post-id="<?php echo $cl['thread_data']['post']['id']; ?>">
+                    							<div class="publication-og-data-inner embeded-iframe">
+                    								<div class="og-image pt-prevent-click" style="background-image:url('https://img.youtube.com/vi/<?php echo $cl['thread_data']['post']['link_src']; ?>/hqdefault.jpg');">
+                    									<div class="lozad-media pt-post-view-count pt-prevent-click" pt-post-id="<?php echo $cl['li']['id']; ?>">
+                    										<a href="<?php echo ($cl['thread_data']['post']['og_data']['video_embed']); ?>" class="fbox-media">
+                    											<img class="lozad pt-prevent-click pt-post-view-count" data-src="<?php echo ($cl['thread_data']['post']['og_data']['image']); ?>"
+                    												alt="Video" pt-post-id="<?php echo $cl['thread_data']['post']['id']; ?>" style="display:none">
+                    												<iframe
+                                            							src="<?php echo $cl['thread_data']['post']['og_data']['video_embed'] ?>?autoplay=1&mute=1&loop=1&playlist=<?php echo $cl['thread_data']['post']['link_src'] ?>"
+                                            							style="width:100%; height:300px;"
+                                            							title="YouTube video player" frameborder="0"
+                                            							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                            							class="pt-prevent-click pt-post-view-count"
+                                            							allowfullscreen autoplay>
+                                        							</iframe>
+                    											<div class="og-icon pt-prevent-click" pt-post-id="<?php echo $cl['thread_data']['post']['id']; ?>">
+                    												<span class="pt-prevent-click pt-post-view-count" pt-post-id="<?php echo $cl['thread_data']['post']['id']; ?>">
+                    													<?php echo cl_ikon("play"); ?>
+                    												</span>
+                    											</div>
+                    										</a>
+                    									</div>
+                    								</div>
+                    								<div class="og-url-data pt-post-read-more" pt-post-id="<?php echo $cl['thread_data']['post']['id']; ?>">
+                    									<h5 class="">
+                    										<?php echo ($cl['thread_data']['post']['og_data']['title']); ?>
+                    									</h5>
+                    									<?php if (not_empty($cl['thread_data']['post']['og_data']['description'])): ?>
+                    									<p class="">
+                    										<?php echo ($cl['thread_data']['post']['og_data']['description']); ?>
+                    									</p>
+                    									<?php else: ?>
+                    										<p class="">
+                    											<a target="_blank" href="<?php echo ($cl['thread_data']['post']['og_data']['video_embed']); ?>">
+                    												<?php echo ($cl['thread_data']['post']['og_data']['video_embed']); ?>
+                    											</a>
+                    										</p>
+                    									<?php endif;?>
+                    								</div>
+                    							</div>
+                    						</div>
                                     <?php elseif (not_empty($cl['thread_data']['post']['og_data']['google_maps_embed'])): ?>
                                         <div class="publication-og-data">
                                             <div class="publication-og-data-inner embeded-iframe">
