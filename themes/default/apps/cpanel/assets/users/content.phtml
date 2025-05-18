@@ -222,10 +222,19 @@
                             <h5>
                                 <?php echo cl_translate('Manage site users'); ?> - <label class="badge badge-primary">({{total_users}}) </label>
                             </h5>
+                            <div class="records-per-page mr-2">
+                            <label for="limit" class="mr-2">Show:</label>
+                            <select  class="form-control form-control-sm w-auto" id="recordsPerPage">
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                        </div>
                         </div>
                         <div class="card-body">
                             <div class="regular-table">
-                                <table class="table table-hover">
+                                <table class="table table-hover" id="userDataTable">
                                     <thead>
                                         <tr>
                                             <th>ID</th>
@@ -257,9 +266,18 @@
                                             </th>
                                         </tr>
                                     </thead>
-                                    <tbody data-an="users-list">
+                                    
+                                    <tbody data-an="users-list" id="pagination-data">
                                         <?php if (not_empty($cl['site_users'])) : ?>
-                                            <?php foreach ($cl['site_users'] as $cl['li']) : ?>
+                                        <?php 
+                                            $total_users = $cl['total_users']; // Pass this from backend
+                                            $offset = (isset($_POST['offset_gt']) && is_numeric($_POST['offset_gt'])) ? intval($_POST['offset_gt']) : 0;
+                                            $start_number = $total_users - $offset; 
+                                        ?>
+                                        <?php $offset = isset($offset_gt) ? intval($offset_gt) : 0;
+                                             foreach ($cl['site_users'] as $row => $cl['li']) : 
+                                                $cl['li']['row_number'] = $start_number - $row;
+                                             ?>
                                                 <?php echo cl_template('cpanel/assets/users/includes/list_item'); ?>
                                             <?php endforeach; ?>
                                         <?php else : ?>
@@ -267,6 +285,42 @@
                                         <?php endif; ?>
                                     </tbody>
                                 </table>
+                                
+                                <?php 
+                                $input = ($_SERVER['REQUEST_METHOD'] === 'POST') ? $_POST : $_GET;
+                                $total_items = $cl['total_users'] ?? 0;
+                                $items_per_page = 10;
+                                $current_page = isset($input['page']) ? max(1, (int)$input['page']) : 1;
+                                $totalPages = ceil($total_items / $items_per_page);
+                                $offset = ($current_page - 1) * $items_per_page;
+
+                                ?>
+                                <!--<div class="pagination-container mt-2">-->
+                                <!--    <nav aria-label="Page navigation">-->
+                                <!--        <ul class="pagination justify-content-center">-->
+                                <!--            <?php if ($current_page > 1): ?>-->
+                                <!--                <li class="page-item">-->
+                                <!--                    <a class="page-link" data-page="<?= $current_page - 1 ?>">&laquo; Prev</a>-->
+                                <!--                </li>-->
+                                <!--            <?php endif; ?>-->
+                                
+                                <!--            <?php for ($i = 1; $i <= $total_pages; $i++): ?>-->
+                                <!--                <li class="page-item <?= ($i == $current_page) ? 'active' : '' ?>">-->
+                                <!--                    <a class="page-link" href="?page=<?= $i; ?>" data-page="<?= $i ?>"><?= $i ?></a>-->
+                                <!--                </li>-->
+                                <!--            <?php endfor; ?>-->
+                                
+                                <!--            <?php if ($current_page < $total_pages): ?>-->
+                                <!--                <li class="page-item">-->
+                                <!--                    <a class="page-link" href="?page=<?= $cl['current_page'] + 1; ?>" data-page="<?= $current_page + 1 ?>">Next &raquo;</a>-->
+                                <!--                </li>-->
+                                <!--            <?php endif; ?>-->
+                                <!--        </ul>-->
+                                <!--    </nav>-->
+                                <!--</div>-->
+
+
+
 
                                 <div class="table-pagination">
                                     <a v-if="show_ctrls" v-bind:class="{'disabled': dis_prev_ctrl}" v-on:click="paginate('up')" href="javascript:void(0);" class="pagination-ctrls prev">
@@ -277,6 +331,8 @@
                                         <?php echo cl_ikon("chevron-right"); ?>
                                     </a>
                                 </div>
+                                
+                                
                             </div>
                         </div>
                     </div>

@@ -15,19 +15,29 @@ function cl_admin_get_users($args = array()) {
     $args           = (is_array($args)) ? $args : array();
     $options        = array(
         "offset"    => false,
-        "limit"     => 10,
+        "limit"     => 7,
         "offset_to" => false,
         "order"     => 'DESC',
         "filter"    => array(),
     );
 
     $args           = array_merge($options, $args);
-    $offset         = $args['offset'];
+    $offset         =  isset($args['offset']) ? $args['offset'] : 0;
     $limit          = $args['limit'];
     $order          = $args['order'];
     $filter         = $args['filter'];
     $offset_to      = $args['offset_to'];
     $data           = array();
+    
+        // Calculate the correct offset based on page number
+    $page_number = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+    $offset = ($page_number - 1) * $limit;
+
+    // Ensure that the page number is not negative or zero
+    if ($offset < 0) {
+        $offset = 0;
+    }
+    
     $t_users        = T_USERS;
     $sql            = cl_sqltepmlate('apps/cpanel/users/sql/fetch_site_users',array(
         'offset'    => $offset,
@@ -55,4 +65,11 @@ function cl_admin_get_users($args = array()) {
     }
 
     return $data;
+}
+
+// User Count
+
+function cl_admin_get_total_user_count() {
+    global $db;
+    return $db->getValue(T_USERS, "COUNT(*)");
 }

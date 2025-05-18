@@ -1,8 +1,10 @@
-<div class="post-list-advert" data-ad="<?php echo $cl['li']['id']; ?>" pt-ad-link="<?php echo(cl_link('ad_thread/'.$cl['li']['id'])); ?>">
+
+
+<div class="post-list-advert <?php echo (not_empty($cl['is_logged'])) ? 'logged-in' : 'login-required'; ?>" data-ad="<?php echo $cl['li']['id']; ?>" pt-ad-link="<?php echo(cl_link('ad_thread/'.$cl['li']['id'])); ?>">
 	<div class="post-list-advert__header">
 	<div class="publisher-avatar">
 			<div class="avatar-holder">
-				<img class="lozad pt-prevent-click pt-post-view-count" data-src="<?php echo($cl['li']['owner']['avatar']); ?>">
+				<img src="<?php echo($cl['li']['owner']['avatar']); ?>" class="lozad pt-prevent-click pt-post-view-count" data-src="<?php echo($cl['li']['owner']['avatar']); ?>">
 			</div> 
 		</div>
 		<div class="post-list-advert__sponsor">
@@ -21,13 +23,41 @@
 				</span>
 			</a>
 		</div>
+		
+		<?php 
+		
+		$current_url = $_SERVER['REQUEST_URI']; // e.g. /talk/ad_thread/242
+        $segments = explode('/', trim($current_url, '/'));
+        
+        $lastSegment = basename($current_url);  // 'ads'
+        $allowAds = strpos($current_url, 'ads') !== false;
+        $today = new DateTime(); // today's date
+        $futureDate = new DateTime('+7 days'); // 7 days from today
+        
+        $interval = $today->diff($futureDate);
+        //echo $interval->days . ' days left'; // Output: 7 days left
+		
+		?>
+		
 		<?php if (not_empty($cl["is_logged"])) : ?>
+    		<?php if ($cl['li']['user_id'] == $me['id']) : ?>
+    		<?php if (($cl['li']['timeleft'] <= $interval->days) && ($segments[1] == 'ad_thread')) : ?>
+    			<div class="post-list-advert__time text-end">
+    				<b><?php echo $cl['li']['timeleft']; ?></b> Days Left
+    			</div>
+    		<?php endif; ?>
+    		<?php endif; ?>
+		<?php endif; ?>
+		
+		
+		<?php if (not_empty($cl["is_logged"]) && ($allowAds == 1) ) : ?>
     		<?php if ($cl['li']['user_id'] == $me['id']) : ?>
     			<div class="post-list-advert__time text-end">
     				<b><?php echo $cl['li']['timeleft']; ?></b> Days Left
     			</div>
     		<?php endif; ?>
 		<?php endif; ?>
+		
 		
 		<div class="post-list-advert__time">
 			<?php echo $cl['li']['time']; ?>
@@ -72,6 +102,8 @@
                     document.querySelector('.lozad-media').addEventListener('click', function() {
                         const iframe = document.querySelector('iframe');
                         iframe.style.pointerEvents = 'auto';
+                        
+                        console.log(iframe)
                     });
                 } catch(e){
                     console.log(e);
@@ -123,7 +155,7 @@
 			<div class="lozad-media">
 				<div class="post-list-advert__image pt-post-view-count" pt-post-id="<?php echo $cl['li']['id']; ?>">
 					<a href="<?php echo fetch_or_get($cl['li']['cover'], ''); ?>" class="fbox-media2" data-btn='<?php echo cl_template('timeline/likes'); ?>' data-fancybox="gallery" data-info='<?php echo cl_template('timeline/right_col'); ?>'>
-						<img class="lozad pt-prevent-click pt-post-view-count" data-src="<?php echo fetch_or_get($cl['li']['cover'], ''); ?>" alt="Picture" style="width: 100%; object-fit: cover;">
+						<img src="<?php echo fetch_or_get($cl['li']['cover'], ''); ?>" class="lozad pt-prevent-click pt-post-view-count" data-src="<?php echo fetch_or_get($cl['li']['cover'], ''); ?>" alt="Picture" style="width: 100%; object-fit: cover;">
 					</a>
 				</div>
 			</div>

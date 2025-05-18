@@ -56,6 +56,8 @@
 				methods: {
 					submit_form: function(_self = false) {
 						_self.preventDefault();
+						
+						var redirectUrl = $('.redirect_url').val();
 
 						var _app_ = this;
 
@@ -71,7 +73,13 @@
 									_app_.done = true;
 
 									delay(function() {
-										cl_redirect("<?php echo cl_link("home"); ?>");
+									    if(redirectUrl){
+									        cl_redirect(redirectUrl);
+									        $('.redirect_url').val();
+									    }else{
+                                            cl_redirect("<?php echo cl_link("home"); ?>");
+									    }
+									  
 									}, 1000);
 								}
 

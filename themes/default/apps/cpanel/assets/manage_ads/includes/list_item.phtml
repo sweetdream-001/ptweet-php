@@ -1,10 +1,21 @@
 <tr data-ads-item="<?php echo($cl['li']['id']); ?>">
     <td scope="row">
         <?php 
-            $total_items = $cl['total_ads']; // Make sure this is passed from your controller
-            $items_per_page = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
-            $current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-            $position = $total_items - (($current_page - 1) * $items_per_page + $cl['i'] - 1);
+            $total_items = $cl['total_ads'];
+            $regular_limit = $cl['regular_limit'];
+            $first_page_limit = $cl['first_page_limit'];
+            $current_page = $cl['current_page'];
+            
+            // Calculate the correct position for descending order
+            if ($current_page == 1) {
+                // For first page, start from total and subtract index
+                $position = $total_items - ($cl['i'] - 1);
+            } else {
+                // For subsequent pages, account for variable first page size
+                $previous_items = $first_page_limit + ($current_page - 2) * $regular_limit;
+                $position = $total_items - ($previous_items + ($cl['i'] - 1));
+            }
+            
             echo $position;
         ?>
     </td>
@@ -114,6 +125,17 @@
                     <?php echo cl_translate('Activate'); ?>
                     </a>
                 <?php endif; ?>
+                
+                <!--Edit Date-->
+                
+                <a href="javascript:void(0);" class="dropdown-item open-date-modal" data-id="<?php echo($cl['li']['id']); ?>">
+                    <?php echo cl_translate('Date'); ?>
+                </a>
+                
+                <!--Edit Time Left-->
+                <a href="javascript:void(0);" class="dropdown-item open-time-modal" data-id="<?php echo($cl['li']['id']); ?>">
+                    <?php echo cl_translate('Time Left'); ?>
+                </a>
                 
                 <a href="javascript:void(0);" class="dropdown-item" onclick="SMC_CPanel.PS.delete('<?php echo($cl['li']['id']); ?>');">
                 <?php echo cl_translate('Delete'); ?>

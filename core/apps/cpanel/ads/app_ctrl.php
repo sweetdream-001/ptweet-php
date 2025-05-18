@@ -27,14 +27,14 @@ function cl_admin_get_user_ads($args = array()) {
     $offset_to      =  $args['offset_to'];
     $data           =  array();
 
-    // Calculate the correct offset based on page number
-    $page_number = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-    $offset = ($page_number - 1) * $limit;
+    // // Calculate the correct offset based on page number
+    // $page_number = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+    // $offset = ($page_number - 1) * $limit;
 
-    // Ensure that the page number is not negative or zero
-    if ($offset < 0) {
-        $offset = 0;
-    }
+    // // Ensure that the page number is not negative or zero
+    // if ($offset < 0) {
+    //     $offset = 0;
+    // }
 
     // Get the search term from the URL
     $search = $_GET['search'] ?? '';
@@ -90,3 +90,4 @@ function cl_admin_get_user_ads($args = array()) {
     
     return $data;
 }
+

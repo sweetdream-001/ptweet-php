@@ -1,7 +1,9 @@
-<tr data-list-item="<?php echo ($cl['li']['id']); ?>" data-user-id="<?php echo ($cl['li']['id']); ?>">
+<tr data-list-item="<?php echo ($cl['li']['id']); ?>" data-user-id="<?php echo ($cl['li']['id']); ?>" >
     <td>
         <a href="<?php echo ($cl['li']['url']); ?>">
-            #<?php echo ($cl['li']['id']); ?>
+            <!--<?php echo $cl['li']['id']; ?>-->
+            <!--{{totalPosts - ((currentPage - 1) * perPage ) + index }}-->
+            <?php echo $cl['li']['row_number'] ?? $cl['li']['id']; ?>
         </a>
     </td>
     <td>

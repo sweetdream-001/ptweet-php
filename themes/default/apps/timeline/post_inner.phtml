@@ -72,7 +72,7 @@
 		<div class="publisher-avatar">
 			<a class="block-link pt-prevent-click" href="<?php echo ($cl['li']['owner']['url']); ?>" data-spa="true">
 				<div class="avatar-holder">
-					<img class="lozad pt-prevent-click" data-src="<?php echo ($cl['li']['owner']['avatar']); ?>">
+					<img src="<?php echo ($cl['li']['owner']['avatar']); ?>" class="lozad pt-prevent-click" data-src="<?php echo ($cl['li']['owner']['avatar']); ?>">
 				</div>
 			</a>
 		</div>
@@ -138,9 +138,9 @@
 								<?php
 $catId = isset($cl['li']['cat_id']) ? $cl['li']['cat_id'] : '';
 $catName = isset($cl['li']['cat_name']) ? $cl['li']['cat_name'] : '';
-?>
 
-								<a href="/talk/?cat_id=<?php echo ($catId); ?>"> <?php echo ($catName); ?> </a>	- <?php echo ($cl['li']['time']); ?>
+?>
+								<a href="/talk/?cat_id=<?php echo ($catId); ?>"> <?php echo ($catName); ?> </a> - </b> <?php echo ($cl['li']['time']); ?>
 							</time>
 							<?php if (not_empty($cl['li']['edited'])): ?>
 								<span
@@ -438,7 +438,7 @@ echo $string;
 							<div class="lozad-media">
 								<div class="publication-image pt-post-view-count" pt-post-id="<?php echo $cl['li']['id']; ?>">
 									<a href="<?php echo cl_get_media(fetch_or_get($cl['li']['media'][0]['src'], '')); ?>" class="fbox-media2" data-btn='<?php echo cl_template('timeline/likes'); ?>' data-fancybox="gallery" data-info='<?php echo cl_template('timeline/right_col'); ?>'>
-										<img class="lozad pt-prevent-click pt-post-view-count" data-src="<?php echo cl_get_media(fetch_or_get($cl['li']['media'][0]['src'], '')); ?>" alt="Picture">
+										<img src="<?php echo cl_get_media(fetch_or_get($cl['li']['media'][0]['src'], '')); ?>" class="lozad pt-prevent-click pt-post-view-count" data-src="<?php echo cl_get_media(fetch_or_get($cl['li']['media'][0]['src'], '')); ?>" alt="Picture">
 									</a>
 								</div>
 							</div>
@@ -535,7 +535,7 @@ echo $string;
 							<a href="<?php echo fetch_or_get($cl['li']['media'][0]['src'], ''); ?>" class="fbox-media2"
 								data-btn='<?php echo cl_template('timeline/likes'); ?>' data-fancybox="gallery"
 								data-info='<?php echo cl_template('timeline/right_col'); ?>'>
-								<img class="lozad pt-prevent-click pt-post-view-count" data-src="<?php echo fetch_or_get($cl['li']['media'][0]['src'], ''); ?>"
+								<img src="<?php echo fetch_or_get($cl['li']['media'][0]['src'], ''); ?>" class="lozad pt-prevent-click pt-post-view-count" data-src="<?php echo fetch_or_get($cl['li']['media'][0]['src'], ''); ?>"
 									alt="GIF-Image">
 							</a>
 						</div>
@@ -583,7 +583,7 @@ echo $string;
 										<a href="<?php echo ($cl['li']['og_data']['video_embed']); ?>" class="fbox-media2"
 											data-btn='<?php echo cl_template('timeline/likes'); ?>' data-fancybox="gallery"
 											data-info='<?php echo cl_template('timeline/right_col'); ?>'>
-											<img class="lozad pt-prevent-click pt-post-view-count" data-src="<?php echo ($cl['li']['og_data']['image']); ?>"
+											<img src="<?php echo ($cl['li']['og_data']['image']); ?>" class="lozad pt-prevent-click pt-post-view-count" data-src="<?php echo ($cl['li']['og_data']['image']); ?>"
 												alt="Video" pt-post-id="<?php echo $cl['li']['id']; ?>" style="display:none">
 												<iframe
                         							src="<?php echo $cl['li']['og_data']['video_embed'] ?>?autoplay=1&mute=1&loop=1&playlist=<?php echo $cl['li']['link_src'] ?>"
@@ -682,23 +682,23 @@ echo $string;
 					<?php endif;?>
 				</div>
 				<div class="publication-footer-ctrls pt-prevent-click">
-					<button class="ctrls-item chat pt-prevent-click">
-						<a href="<?php echo $cl['li']['url']; ?>">
-							<span class="icon pt-prevent-click">
-								<?php echo cl_ikon('chat-post'); ?>
-							</span>
-							<span class="num pt-prevent-click ahsanff">
-							    <?php 
-							        // $abc =  $db->rawQuery("CALL `GetCommentTree`(197);"); 
-							    ?>
-								<?php
-								    echo $cl['li']['replys_count'];
-								   // echo count($abc) - 1;
-								    // echo ($cl['li']['replys_count'] == 1 ? 0 : $cl['li']['replys_count']); 
-								?>
-							</span>
-						</a>
-					</button>
+				    
+	
+					<!--If Login First After That Access Chat Otherwise Not Open Or Access-->
+					
+					<button class="ctrls-item chat pt-prevent-click <?php echo (not_empty($cl['is_logged'])) ? 'logged-in' : 'login-required'; ?>" 
+                            data-url="<?php echo $cl['li']['url']; ?>">
+                        <a href="javascript:void(0);">
+                            <span class="icon pt-prevent-click">
+                                <?php echo cl_ikon('chat-post'); ?>
+                            </span>
+                            <span class="num pt-prevent-click ahsanff">
+                                <?php echo $cl['li']['replys_count']; ?>
+                            </span>
+                        </a>
+                    </button>
+					
+					
 					<?php if (empty($cl['li']['has_reposted'])): ?>
 					<button onclick="SMColibri.repost('<?php echo $cl['li']['id']; ?>', this);"
 						class="ctrls-item repost pt-prevent-click" data-an="repost-ctrl">

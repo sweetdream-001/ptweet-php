@@ -1,3 +1,70 @@
+<?php error_reporting(E_ALL & ~E_NOTICE); ?>
+<style>
+    .chart_data_left .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart svg .ct-series-a .ct-point,
+    .chart_data_left .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart svg .ct-series-a .ct-line,
+    .chart_data_left .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart svg .ct-series-a .ct-bar,
+    .chart_data_left .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart svg .ct-series-a .ct-slice-donut,
+    .chart_data_left .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart2 svg .ct-series-a .ct-point,
+    .chart_data_left .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart2 svg .ct-series-a .ct-line,
+    .chart_data_left .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart2 svg .ct-series-a .ct-bar,
+    .chart_data_left .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart2 svg .ct-series-a .ct-slice-donut,
+    .chart_data_left .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart4 svg .ct-series-a .ct-point,
+    .chart_data_left .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart4 svg .ct-series-a .ct-line,
+    .chart_data_left .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart4 svg .ct-series-a .ct-bar,
+    .chart_data_left .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart4 svg .ct-series-a .ct-slice-donut,
+    .chart_data_right .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart svg .ct-series-a .ct-point,
+    .chart_data_right .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart svg .ct-series-a .ct-line,
+    .chart_data_right .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart svg .ct-series-a .ct-bar,
+    .chart_data_right .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart svg .ct-series-a .ct-slice-donut,
+    .chart_data_right .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart2 svg .ct-series-a .ct-point,
+    .chart_data_right .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart2 svg .ct-series-a .ct-line,
+    .chart_data_right .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart2 svg .ct-series-a .ct-bar,
+    .chart_data_right .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart2 svg .ct-series-a .ct-slice-donut
+    .chart_data_right .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart4 svg .ct-series-a .ct-point,
+    .chart_data_right .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart4 svg .ct-series-a .ct-line,
+    .chart_data_right .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart4 svg .ct-series-a .ct-bar,
+    .chart_data_right .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart4 svg .ct-series-a .ct-slice-donut {
+        stroke: var(--theme-deafult)
+    }
+    
+    .chart_data_left .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart svg .ct-series-b .ct-point,
+    .chart_data_left .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart svg .ct-series-b .ct-line,
+    .chart_data_left .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart svg .ct-series-b .ct-bar,
+    .chart_data_left .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart svg .ct-series-b .ct-slice-donut,
+    .chart_data_left .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart2 svg .ct-series-b .ct-point,
+    .chart_data_left .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart2 svg .ct-series-b .ct-line,
+    .chart_data_left .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart2 svg .ct-series-b .ct-bar,
+    .chart_data_left .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart2 svg .ct-series-b .ct-slice-donut,
+    .chart_data_left .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart4 svg .ct-series-b .ct-point,
+    .chart_data_left .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart4 svg .ct-series-b .ct-line,
+    .chart_data_left .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart4 svg .ct-series-b .ct-bar,
+    .chart_data_left .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart4 svg .ct-series-b .ct-slice-donut,
+    .chart_data_right .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart svg .ct-series-b .ct-point,
+    .chart_data_right .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart svg .ct-series-b .ct-line,
+    .chart_data_right .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart svg .ct-series-b .ct-bar,
+    .chart_data_right .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart svg .ct-series-b .ct-slice-donut,
+    .chart_data_right .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart2 svg .ct-series-b .ct-point,
+    .chart_data_right .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart2 svg .ct-series-b .ct-line,
+    .chart_data_right .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart2 svg .ct-series-b .ct-bar,
+    .chart_data_right .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart2 svg .ct-series-b .ct-slice-donut 
+    .chart_data_right .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart4 svg .ct-series-b .ct-point,
+    .chart_data_right .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart4 svg .ct-series-b .ct-line,
+    .chart_data_right .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart4 svg .ct-series-b .ct-bar,
+    .chart_data_right .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart4 svg .ct-series-b .ct-slice-donut {
+        stroke: rgba(115, 102, 255, 0.1)
+    }
+    
+    .chart_data_left .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart .chartist-tooltip .chartist-tooltip-value,
+    .chart_data_left .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart2 .chartist-tooltip .chartist-tooltip-value,
+    .chart_data_left .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart4 .chartist-tooltip .chartist-tooltip-value,
+    .chart_data_right .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart .chartist-tooltip .chartist-tooltip-value,
+    .chart_data_right .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart2 .chartist-tooltip .chartist-tooltip-value,
+    .chart_data_right .card-body .chart-main .media .hospital-small-chart .small-bar .small-chart4 .chartist-tooltip .chartist-tooltip-value {
+        background-color: var(--theme-deafult);
+        -webkit-box-shadow: 1px 1.732px 8px 0px rgba(115, 102, 255, 0.5);
+        box-shadow: 1px 1.732px 8px 0px rgba(115, 102, 255, 0.5)
+    }
+</style>
 <div class="cp-app-container" data-app="dashboard">
   <div class="container-fluid">
     <div class="page-title">
@@ -38,7 +105,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-xl-3 col-md-6 col-sm-6 p-0 box-col-6">
+              <div class="col-xl-2 col-md-6 col-sm-6 p-0 box-col-6">
                 <div class="media align-items-center">
                   <div class="hospital-small-chart">
                     <div class="small-bar">
@@ -52,11 +119,25 @@
                   </div>
                 </div>
               </div>
-              <div class="col-xl-3 col-md-6 col-sm-6 p-0 box-col-6">
+              <div class="col-xl-2 col-md-6 col-sm-6 p-0 box-col-6">
                 <div class="media align-items-center">
                   <div class="hospital-small-chart">
                     <div class="small-bar">
-                      <div class="small-chart2 flot-chart-container"></div>
+                      <div class="small-chart4 flot-chart-container"></div>
+                    </div>
+                  </div>
+                  <div class="media-body">
+                    <div class="right-chart-content">
+                      <h4><?php echo ($cl['total_replies']); ?></h4><span><?php echo cl_translate('Replies'); ?></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-2 col-md-6 col-sm-6 p-0 box-col-6">
+                <div class="media align-items-center">
+                  <div class="hospital-small-chart">
+                    <div class="small-bar">
+                      <div class="small-chart3 flot-chart-container"></div>
                     </div>
                   </div>
                   <div class="media-body">
@@ -70,7 +151,7 @@
                 <div class="media border-none align-items-center">
                   <div class="hospital-small-chart">
                     <div class="small-bar">
-                      <div class="small-chart3 flot-chart-container"></div>
+                      <div class="small-chart2 flot-chart-container"></div>
                     </div>
                   </div>
                   <div class="media-body">

@@ -295,10 +295,15 @@ else if ($action == 'get_users') {
 	$offset_to        = fetch_or_get($_POST['dir'], 'none');
 	$offset_lt        = ((is_posnum($_POST['offset_lt'])) ? intval($_POST['offset_lt']) : 0);
 	$offset_gt        = ((is_posnum($_POST['offset_gt'])) ? intval($_POST['offset_gt']) : 0);
+	$page  = isset($_POST['page']) ? max(1, intval($_POST['page'])) : 1;
 	$users            = array();
 	$data['status']   = 404;
 	$data['err_code'] = 0;
 	$html_arr         = array();
+	
+	$total_users  = cl_admin_get_total_user_count();
+	
+	$totalPages = ceil($total_users / $limit);
 
 	if ($offset_to == 'up' && $offset_lt) {
 		$users          = cl_admin_get_users(array(
@@ -321,6 +326,9 @@ else if ($action == 'get_users') {
 			'filter'    => $filter_data
 		));
 	}
+	
+	 $cl['page']        = $page;
+            $cl['totalPages']  = $totalPages;
 
 	if (not_empty($users)) {
 		foreach ($users as $cl['li']) {
@@ -331,6 +339,90 @@ else if ($action == 'get_users') {
 		$data['html']   = implode('', $html_arr);
 	}
 }
+
+else if ($action == 'get_users_pagination'){
+    require_once(cl_full_path("core/apps/cpanel/users/app_ctrl.php"));
+        $html_arr         = array();
+	    $offset_gt        = ((is_posnum($_POST['offset_gt'])) ? intval($_POST['offset_gt']) : 0);
+	    $data['status']   = 404;
+	    $data['err_code'] = 0;
+	    
+	    
+		$users          = cl_admin_get_users(array(
+			'limit'     => $_POST['page_size'],
+			'offset_to' => 'lt',
+			'offset'    => $offset_gt,
+			'order'     => 'DESC',
+		));
+
+// 		$users = array_reverse($users);
+
+                $total_users = cl_admin_get_total_user_count();
+                
+                $offset = (isset($_POST['offset_gt']) && is_numeric($_POST['offset_gt'])) ? intval($_POST['offset_gt']) : 0;
+                $start_number = $total_users - 0; 
+               
+	if (not_empty($users)) {
+		foreach ($users as $row => $cl['li']) {
+		    $cl['li']['total_user'] = $total_users;
+		    $cl['li']['row_number'] = $start_number - $row;
+			array_push($html_arr, cl_template('cpanel/assets/users/includes/list_item'));
+		}
+
+		$data['status'] = 200;
+		$data['html']   = implode('', $html_arr);
+	}
+}
+
+else if ($action == 'get_pagination') {
+    	require_once(cl_full_path("core/apps/cpanel/users/app_ctrl.php"));
+$offset_lt        = ((is_posnum($_POST['offset_lt'])) ? intval($_POST['offset_lt']) : 0);
+	$offset_gt        = ((is_posnum($_POST['offset_gt'])) ? intval($_POST['offset_gt']) : 0);
+	$page  = isset($_POST['page']) ? max(1, intval($_POST['page'])) : 1;
+    $limit = isset($_POST['limit']) ? intval($_POST['limit']) : 10;
+    $offset = ($page - 1) * $limit;
+    $html_arr         = array();
+    
+
+		$users          = cl_admin_get_users(array(
+			'limit'     => $limit,
+			'offset'    => $offset_gt,
+			'offset_to' => 'lt',
+			'order'     => 'DESC',
+			
+		));
+	
+	
+	$total_users  = cl_admin_get_total_user_count();
+	
+	$totalPages = ceil($total_users / $limit);
+	$cl['page']        = $page;
+    $cl['totalPages']  = $totalPages;
+	
+		foreach ($users as $index => $cl['li']) {
+		    $row_number = $total_users - (($page - 1) * $limit + $index);
+            $cl['li']['row_number'] = $row_number;
+			array_push($html_arr, cl_template('cpanel/assets/users/includes/list_item'));
+		}
+
+		$data['status'] = 200;
+		$data['html']   = implode('', $html_arr);
+
+    
+    
+    // Optional: Add pagination info (total count, pages)
+    
+    $data['pagination'] = [
+        'current_page' => $page,
+        'total_pages' => $totalPages,
+        'total_posts' => $total_users,
+        'limit' => $limit,
+    ];
+    
+}
+
+
+
 
 else if ($action == 'search_users') {
 
@@ -1141,6 +1233,60 @@ else if($action == 'delete_user_ad') {
     }
 }
 
+// Get Ads Date
+
+else if($action == 'get_ad_data') {
+
+    $data['err_code'] = 0;
+    $data['status']   = 200;
+    $ad_id            = fetch_or_get($_POST['id'], false);
+    $ad_data          = cl_raw_ad_data($ad_id);
+	
+    $data['data'] = $ad_data;
+	$data['url'] = $site_url;
+}
+
+// Update Ads Date
+
+else if($action == 'updated_ads_data') {
+
+    $data['err_code'] = 0;
+    $data['status']   = 200;
+    $ad_id            = fetch_or_get($_POST['id'], false);
+    $ad_data          = cl_raw_ad_data($ad_id); 
+    
+        if (not_empty($ad_data)) {
+        $data['status'] = 200;
+        
+        $date = new DateTime($_POST['ads_date'], new DateTimeZone("UTC"));
+        $timestamp = $date->getTimestamp();
+
+		cl_update_ad_data($ad_id, array(
+				"time" => $timestamp
+		));
+		}
+        $data['data'] = $ad_data;
+    }
+    
+//  Tmie Left Ads 
+
+else if($action == 'updated_ads_lefttime') {
+
+    $data['err_code'] = 0;
+    $data['status']   = 200;
+    $ad_id            = fetch_or_get($_POST['id'], false);
+    $ad_data          = cl_raw_ad_data($ad_id); 
+    
+        if (not_empty($ad_data)) {
+        $data['status'] = 200;
+
+		cl_update_ad_data($ad_id, array(
+				"timeleft" => $_POST['ads_time']
+		));
+		}
+        $data['data'] = $ad_data;
+    }
+	
 else if($action == 'approve_user_ad') {
     global $cl;
 	$data['err_code'] = 0;
@@ -2381,43 +2527,126 @@ else if ($action == 'get_posts_comments_admin') {
         'limit' => 0,
     ];
 }
+// else if ($action == 'get_all_posts_admin') {
+//     $data['status'] = 200;
+
+
+//     $pubs = $db->rawQuery("select * from cl_publications");  
+//     foreach($pubs as $pub) {
+//         $publicationId = $pub['id'];
+//         $thrds = $db->rawQuery("CALL GetCommentTree($publicationId);");
+//         $cng = count($thrds) - 1;
+//         $count = ($cng < 1 ? 0 : $cng);
+        
+    
+//     	$db = $db->where('id',$pub['id']);
+//         $up = $db->update(T_PUBS,array(
+//             'replys_count' => $count
+//         ));
+//     }
+//     // echo 'done';die;
+
+//     // Set the page and limit values (you can adjust these dynamically via user input)
+//     $page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Default to page 1 if not provided
+//     $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10; // Default to 10 posts per page if not provided
+//     $offset = ($page - 1) * $limit;
+    
+//     $totalPosts = $db->rawQueryOne("SELECT COUNT(*) as count FROM cl_publications WHERE text IS NOT NULL and thread_id = 0");
+
+//     // Modify the query to add LIMIT and OFFSET for pagination
+//     $words = $db->rawQuery("
+//         SELECT cl_publications.*, cl_pubmedia.src, cl_categories.name as category_name, cl_users.username as username 
+//         FROM cl_publications 
+//         LEFT JOIN cl_categories ON cl_publications.category_id = cl_categories.id
+//         INNER JOIN cl_users ON cl_publications.user_id = cl_users.id
+//         LEFT JOIN cl_pubmedia ON cl_publications.id = cl_pubmedia.pub_id
+//         WHERE text IS NOT NULL and thread_id = 0
+//         ORDER BY id DESC 
+//         LIMIT $limit OFFSET $offset;
+//     ");
+    
+    
+//     $posts = [];
+//     foreach ($words as $word) {
+//         if ($word['og_data'] != '') {
+//             $og_data_array = json_decode($word['og_data']);
+//             if (array_key_exists('og_data', $word)) {
+//                 $word['og_data'] = $og_data_array;
+//             }
+//         }
+//         $id = $word['id'];
+//         $word['replies_count'] = count($db->rawQuery("CALL GetCommentTree($id);")) - 1;
+//         $posts[] = $word;
+//     }
+//     $date['numberOfPost'] = $totalPosts;
+//     $data['data'] = $posts;
+//     // Optional: Add pagination info (total count, pages)
+    
+//     $totalPages = ceil($totalPosts['count'] / $limit);
+//     $data['pagination'] = [
+//         'current_page' => $page,
+//         'total_pages' => $totalPages,
+//         'total_posts' => $totalPosts['count'],
+//         'limit' => $limit,
+//     ];
+// }
+
 else if ($action == 'get_all_posts_admin') {
     $data['status'] = 200;
 
-
-    $pubs = $db->rawQuery("select * from cl_publications");  
-    foreach($pubs as $pub) {
+    // 1. Update replies_count for all publications (unchanged)
+    $pubs = $db->rawQuery("SELECT * FROM cl_publications");
+    foreach ($pubs as $pub) {
         $publicationId = $pub['id'];
         $thrds = $db->rawQuery("CALL GetCommentTree($publicationId);");
         $cng = count($thrds) - 1;
         $count = ($cng < 1 ? 0 : $cng);
-        
-    
-    	$db = $db->where('id',$pub['id']);
-        $up = $db->update(T_PUBS,array(
+
+        $db = $db->where('id', $pub['id']);
+        $up = $db->update(T_PUBS, array(
             'replys_count' => $count
         ));
     }
-    // echo 'done';die;
 
-    // Set the page and limit values (you can adjust these dynamically via user input)
-    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Default to page 1 if not provided
-    $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10; // Default to 10 posts per page if not provided
-    $offset = ($page - 1) * $limit;
+    // 2. Get total post count
+    $totalPostsRow = $db->rawQueryOne("SELECT COUNT(*) as count FROM cl_publications WHERE text IS NOT NULL AND thread_id = 0");
+    $totalPosts = $totalPostsRow['count'];
 
-    // Modify the query to add LIMIT and OFFSET for pagination
+    // 3. Get current page and standard limit
+    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+    $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
+
+    // 4. Dynamic first page size
+    $firstPageLimit = $totalPosts % $limit;
+    if ($firstPageLimit == 0 && $totalPosts > 0) {
+        $firstPageLimit = $limit; // if evenly divisible, full page
+    }
+
+    // 5. Calculate total pages
+    $totalPages = ($totalPosts == 0) ? 1 : ceil($totalPosts / $limit);
+
+    // 6. Determine limit and offset for this page
+    if ($page == 1) {
+        $customLimit = $firstPageLimit;
+        $customOffset = 0;
+    } else {
+        $customLimit = $limit;
+        $customOffset = $firstPageLimit + ($limit * ($page - 2));
+    }
+
+    // 7. Fetch posts
     $words = $db->rawQuery("
         SELECT cl_publications.*, cl_pubmedia.src, cl_categories.name as category_name, cl_users.username as username 
         FROM cl_publications 
         LEFT JOIN cl_categories ON cl_publications.category_id = cl_categories.id
         INNER JOIN cl_users ON cl_publications.user_id = cl_users.id
         LEFT JOIN cl_pubmedia ON cl_publications.id = cl_pubmedia.pub_id
-        WHERE text IS NOT NULL and thread_id = 0
-        ORDER BY id DESC 
-        LIMIT $limit OFFSET $offset;
+        WHERE cl_publications.text IS NOT NULL AND cl_publications.thread_id = 0
+        ORDER BY cl_publications.id DESC
+        LIMIT $customLimit OFFSET $customOffset
     ");
-    
-    
+
+    // 8. Prepare posts
     $posts = [];
     foreach ($words as $word) {
         if ($word['og_data'] != '') {
@@ -2430,19 +2659,18 @@ else if ($action == 'get_all_posts_admin') {
         $word['replies_count'] = count($db->rawQuery("CALL GetCommentTree($id);")) - 1;
         $posts[] = $word;
     }
-    
-    $data['data'] = $posts;
 
-    // Optional: Add pagination info (total count, pages)
-    $totalPosts = $db->rawQueryOne("SELECT COUNT(*) as count FROM cl_publications WHERE text IS NOT NULL");
-    $totalPages = ceil($totalPosts['count'] / $limit);
+    // 9. Response data
+    $data['data'] = $posts;
     $data['pagination'] = [
         'current_page' => $page,
         'total_pages' => $totalPages,
-        'total_posts' => $totalPosts['count'],
-        'limit' => $limit,
+        'total_posts' => $totalPosts,
+        'limit' => $customLimit, // Actual posts shown on this page
     ];
 }
+
+
 else if ($action == 'search_all_posts_admin') {
     $data['status']    = 200;
     $username = $_GET['username'];
@@ -2453,7 +2681,9 @@ select cl_publications.*, cl_pubmedia.src, cl_categories.name as category_name, 
 inner join cl_categories on cl_publications.category_id = cl_categories.id
 inner join cl_users on cl_publications.user_id = cl_users.id
 left join cl_pubmedia on cl_publications.id = cl_pubmedia.pub_id
-where text is not null and thread_id = 0";
+where text is not null and thread_id = 0
+ORDER BY id DESC 
+LIMIT $limit OFFSET $offset";
     
     if(!empty($username) && !empty($text)){
         $query .= " and text like '%".$text."%' OR username like '%".$username."%'";

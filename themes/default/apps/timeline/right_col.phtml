@@ -50,7 +50,7 @@
     <?php endif; ?>
     <!-- Bottom icons -->
     <div class="media_liked">
-        <?php if ($cl['li']['advertising'] == false): ?>
+        <?php if (($cl['li']['advertising'] == false)): ?>
             <span class="num"><?php echo $cl['li']['replys_count']; ?> <span><?php echo cl_translate('Replies'); ?></span></span>
         <?php endif; ?>
         

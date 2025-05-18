@@ -2,6 +2,7 @@
 	"use strict";
 
 	$(document).ready(function($) {
+	    
 		var _app      = $('[data-app="users"]');
         SMC_CPanel.PS = new Vue({
             el: "#vue-cpanel-users-app",
@@ -10,6 +11,12 @@
                 loading: false,
                 prev_ctrl: true,
                 next_ctrl: true,
+                usersData : [],
+                currentPage: 1,
+    			limit: 10,
+    			perPage: 10, // Items per page
+    			totalPages: 0,
+    			totalPosts: 0,
                 init_data: "",
                 search_404: false,
                 sorting: {
@@ -334,13 +341,88 @@
                             }
                         });
                     }
-                }
+                },
             },
             mounted: function() {
+                this.getAllUser()
                 var _app_       = this;
                 var users_list  = _app.find('[data-an="users-list"]');
                 _app_.init_data = users_list.html();
             }
         });
+        
 	});
+	
+	
+	$(document).ready(function() {
+	    
+    let recordsPerPage = '';
+
+    // Load initial data
+
+    $('#recordsPerPage').on('change', function() {
+        var _app      = $('[data-app="users"]');
+        var users_list  = _app.find('[data-an="users-list"]');
+        var offset_gt   = users_list.find('[data-list-item]').last().data('list-item');
+        recordsPerPage = parseInt($(this).val());
+        updateUrlParameter(recordsPerPage , offset_gt);
+    });
+    
+        function updateUrlParameter(pageSize , offset_gt) {
+        $.ajax({
+            url: '<?php echo cl_link("native_api/cpanel/get_users_pagination"); ?>',
+            method: 'POST',
+            data: {
+                page_size: pageSize,
+                offset_gt: offset_gt,
+            },
+            success: function(response) {
+                // Assume response contains HTML and pagination metadata
+                // Example structure: { html: "...", current_page: 1, total: 120 }
+                $('#userDataTable tbody').html(response.html);
+            }
+        });
+    }
+
+	});
+	
+	
+	function loadPosts(page = 1) {
+	const usersList = $('[data-an="users-list"]');
+    const offset_lt = usersList.find('[data-list-item]').first().data('list-item') || 0;
+    const offset_gt = usersList.find('[data-list-item]').last().data('list-item') || 0;
+    $.ajax({
+        url: '<?php echo cl_link("native_api/cpanel/get_pagination"); ?>',
+        method: 'POST',
+        dataType: 'json',
+        data: {
+            page: page,
+            limit: 10,
+            offset_gt : offset_gt,
+            offset_lt : offset_lt,
+        },
+        success: function(response) {
+            if (response.status === 200) {
+                // Update posts table
+                $('[data-an="posts-list"]').html(response.html);
+
+                // Update pagination bar
+                $('.pagination-container').html(response.pagination);
+            }
+        }
+    });
+}
+
+$(document).on('click', '.pagination a', function(e) {
+    e.preventDefault();
+    const page = $(this).data('page');
+    loadPosts(page);
+});
+
+// Initial load
+$(document).ready(function() {
+    loadPosts();
+});
+
+
 </script>

@@ -1,11 +1,12 @@
 <form class="form" id="cl-login-vue-app" v-on:submit="submit_form($event)" autocomplete="off">
+    <h6><a href="https://p-tweets.com/old_p-tweets/index.php" target="_blank"> Old P-Tweets users click here to retrive your data. </a></h6>
 	<div class="form-title">
 		<h2>
 			<?php echo cl_translate("sign_in "); ?> P-Tweets
 		</h2>
 	</div>
 	<div class="form-group">
-
+       <input name="redirect_url" type="hidden" value="" class="redirect_url">
 		<input name="email" v-model.trim.lazy="$v.email.$model" type="text" class="form-control" placeholder="<?php echo cl_translate("Email address or username"); ?>">
 		<div class="invalid-main-feedback" v-if="is_valid_email">
 			{{invalid_feedback_email}}

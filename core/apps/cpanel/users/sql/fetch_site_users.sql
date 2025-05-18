@@ -72,6 +72,7 @@ SELECT `id`, `email`, `wallet`, `active`, `avatar`, `admin`, `active`, `verified
 
 	ORDER BY `id` <?php echo($data['order']); ?> 
 
-<?php if($data['limit']): ?>	
+    <?php if($data['limit']): ?>	
 	LIMIT <?php echo($data['limit']); ?>
-<?php endif; ?>
+    <?php endif; ?>
+    OFFSET <?php echo($data['offset']); ?>;

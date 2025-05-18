@@ -96,6 +96,12 @@ define('APP_NAME','https://p-tweets.com/talk/');
     <link rel="stylesheet" href="{%config theme_url%}/statics/js/libs/plyr/lite-youtube/lite-yt-embed.css?v={%config version%}">
 
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+    
+    <!-- jQuery + DataTables JS (before </body>) -->
+<!--<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+<!--<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>-->
+
+
 
     <?php if ($cl["server_mode"] == 'dev'): ?>
         <script>
@@ -148,6 +154,7 @@ define('APP_NAME','https://p-tweets.com/talk/');
     <main class="main-content-container <?php echo (($cl["is_logged"]) ? "" : "guest-mode"); ?>">
 
         <div class="main-content-container-inner">
+            
 
             <?php if ($cl["pn"] == "guest"): ?>
                 <?php echo $cl["http_res"]; ?>
@@ -261,6 +268,16 @@ define('APP_NAME','https://p-tweets.com/talk/');
     <?php echo (cl_get_custom_code("footerjs")); ?>
 </script>
 <style>
+
+    .fancybox__backdrop {
+        position: inherit !important;
+    }
+    img.lozad.pt-prevent-click.pt-post-view-count {
+        visibility: visible !important;
+    }
+    img.lozad.pt-prevent-click {
+        visibility: visible !important;    
+    }
     .top {
         height: 39px;
         background: url(<?php echo APP_NAME . '/img/nav.png'; ?>) no-repeat;
@@ -570,6 +587,37 @@ define('APP_NAME','https://p-tweets.com/talk/');
         transform: translateY(0px);
         transition: transform 0.5s ease 0s;
     }
+    
+    
+    /* The Modal Background */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    background-color: rgba(0, 0, 0, 0.5); /* Black with opacity */
+}
+
+
+/* For the background shadow to be clickable but not close modal */
+.modal:before {
+    content: "";
+    position: inherit;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+
+
+
+    
 </style>
 <script>
     $(document).ready(function () {
@@ -733,6 +781,8 @@ define('APP_NAME','https://p-tweets.com/talk/');
             })
         }
     }
+    
+    <?php if(not_empty(($cl["is_logged"]))) : ?>
 
     $(document).on('click', '.post-list-advert', function(event) {
         if (!$(event.target).hasClass('pt-prevent-click') && !$(event.target).is('svg') && !$(event.target).is('path')) {
@@ -760,6 +810,8 @@ define('APP_NAME','https://p-tweets.com/talk/');
             }
         }
     });
+    
+    <?php endif ?>
 
     $(document).on('click', '.pt-ad-view-count', function(event) {
         var adLink = $(this).attr('pt-ad-link');
@@ -806,6 +858,43 @@ define('APP_NAME','https://p-tweets.com/talk/');
 				})
 			}
 		});
+		
+		
+// 		Open Login Model Click On Chat Button.
+		
+		
+		$(document).on('click', '.ctrls-item.chat', function (e) {
+            e.preventDefault();
+            const url = $(this).data('url');
+        
+            if ($(this).hasClass('logged-in')) {
+                // User is logged in, go to the URL
+               // window.location.href = url;
+            } else {
+                // Show login modal and save redirect URL
+                $('#loginModal').modal('show');
+                $('.redirect_url').val(url);
+            }
+        });
+        
+        $(document).on('click', '.post-list-advert', function (e) {
+            e.preventDefault();
+            const url = $(this).attr('pt-ad-link');
+        
+            if ($(this).hasClass('logged-in')) {
+                // User is logged in, go to the URL
+               // window.location.href = url;
+            } else {
+                // Show login modal and save redirect URL
+                $('#loginModal').modal('show');
+               $('.redirect_url').val(url);
+
+            }
+        });
+        
+
+	
+		
 </script>
 
 </body>

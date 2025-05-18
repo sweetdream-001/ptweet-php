@@ -63,6 +63,7 @@ $(document).ready(function($) {
 			limit: 10,
 			perPage: 10, // Items per page
 			totalPages: 0,
+			totalPosts: 0,
 			videoLink: null,
 			loading: false,
 			name: "ahsan",
@@ -74,6 +75,16 @@ $(document).ready(function($) {
 			searchLdr: false,
 			clearsearch: false
 		},
+		computed: {
+            firstPageLimit() {
+              let rem = this.totalPosts % this.perPage;
+              return rem === 0 && this.totalPosts > 0 ? this.perPage : rem;
+            },
+            pageOffset() {
+              if (this.currentPage === 1) return 0;
+              return this.firstPageLimit + this.perPage * (this.currentPage - 2);
+            }
+          },
 		methods: {
 			// new code 4 april
 
@@ -113,6 +124,7 @@ $(document).ready(function($) {
 				this.limit = limit;
 				this.getAllPosts()
 			},
+			
 			getAllPosts(page = 1) {
 				this.loading = true;
 				this.currentPage = page;
@@ -121,8 +133,8 @@ $(document).ready(function($) {
 
 					this.posts = data.data;
 					this.totalPages = data.pagination.total_pages;
+					this.totalPosts = data.pagination.total_posts;
 					this.perPage = data.pagination.limit;
-
 					this.loading = false;
 
 					window.scrollTo({

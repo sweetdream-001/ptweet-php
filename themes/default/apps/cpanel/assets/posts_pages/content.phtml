@@ -12,19 +12,6 @@
   }
 </style>
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f5f8fa;
-        display: flex;
-        justify-content: center;
-        margin-top: 50px;
-    }
-    .main-container {
-        width: auto;
-        margin-top: 40px;
-        height: 320px;
-        overflow: scroll;
-    }
     .tweet-container {
         background-color: #e8f5fd;
         border-radius: 8px;
@@ -168,12 +155,13 @@
               </button>
             </div>
           </div>
-          <div class="row">
-            <table class="table table-bordered">
+          <div class="row" style="overflow-y: auto;">
+            <table class="table table-hover">
               <thead>
                 <tr>
                   <th>#</th>
                   <th>Update</th>
+                
                   <th>Image</th>
                   <th>Username</th>
                   <th>Category</th>
@@ -189,9 +177,12 @@
                     <i class="fa fa-spinner fa-spin"></i>
                   </td>
                 </tr>
+             
                 <tr v-for="(cat, id) in posts">
+                     
                   <!--<td style="width:60px; max-width: 60px !important;" data-toggle="modal" data-target="#editModal" @mouseover="editUserPost(cat)">{{ (currentPage - 1) * perPage + id + 1  }}</td>-->
-                  <td style="width:60px; max-width: 60px !important;" data-toggle="modal" data-target="#editModal">{{ (currentPage - 1) * perPage + id + 1  }}</td>
+                  <td style="width:60px; max-width: 60px !important;" data-toggle="modal" data-target="#editModal">{{ totalPosts - (pageOffset + id) }} </td>
+                  <!--<td style="width:60px; max-width: 60px !important;" data-toggle="modal" data-target="#editModal">{{ (currentPage - 1) * perPage + id + 1  }} </td>-->
                   <td style="max-width:260px !important;
                             overflow: hidden;
                             text-overflow: ellipsis;

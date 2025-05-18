@@ -28,6 +28,7 @@ function cl_admin_total_posts($type = false) {
 
 	$db  = $db->where('status', array('active','inactive','delete'), 'IN');
 	$db  = (($type && in_array($type, array('image', 'video'))) ? $db->where('type', $type) : $db);
+	$db  = $db->where('thread_id', 0);
 	$qr  = $db->getValue(T_PUBS, 'COUNT(*)');
 	$num = 0;
 
@@ -36,6 +37,67 @@ function cl_admin_total_posts($type = false) {
 	}
 
 	return $num;
+}
+
+/**
+ * Count total replies in the system
+ * 
+ * @return int Number of replies
+ */
+function cl_admin_total_replies() {
+    global $db, $cl;
+
+    // Get replies (where thread_id is not 0)
+    $db  = $db->where('status', array('active', 'inactive', 'delete'), 'IN');
+    $db  = $db->where('thread_id', 0, '!=');  // This is the main difference from posts
+    $qr  = $db->getValue(T_PUBS, 'COUNT(*)');
+    $num = 0;
+
+    if (is_posnum($qr)) {
+        $num = $qr;
+    }
+
+    return $num;
+}
+
+
+/**
+ * Count total image posts in the system
+ * 
+ * @return int Number of image posts
+ */
+function cl_admin_total_images() {
+    global $db, $cl;
+
+    // Get image posts
+    $db  = $db->where('status', array('active', 'inactive', 'delete'), 'IN');
+    $db  = $db->where('type', 'image');  // Filter by image type
+    $qr  = $db->getValue(T_PUBS, 'COUNT(*)');
+    $num = 0;
+
+    if (is_posnum($qr)) {
+        $num = $qr;
+    }
+
+    return $num;
+}
+
+/**
+ * Count total video posts in the system
+ * 
+ * @return int Number of video posts
+ */
+function cl_admin_total_videos() {
+    global $db, $cl;
+    
+    $db  = $db->where('status', array('active', 'inactive', 'delete'), 'IN');
+    $db  = $db->where('og_data', NULL, 'IS NOT');
+    $qr = $db->getValue(T_PUBS, 'COUNT(*)');
+    
+    // You can choose which method to use based on your database structure:
+    $num = (is_posnum($qr)) ? $qr : 0;  // Option 2
+
+    return $num;
 }
 
 function cl_admin_annual_main_stats() {

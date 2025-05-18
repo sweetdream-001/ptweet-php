@@ -269,6 +269,42 @@ new Chartist.Bar('.small-chart3', {
     }
 });
 
+// small-5-reply
+new Chartist.Bar('.small-chart4', {
+    labels: ['Q1', 'Q2', 'Q3', 'Q4', 'Q5', 'Q6', 'Q7'],
+    series: [
+        [1100, 900, 600, 1000, 700, 1200, 300],
+        [300, 500, 800, 400, 700, 200, 1100]
+    ]
+}, {
+    plugins: [
+        Chartist.plugins.tooltip({
+            appendToBody: false,
+            className: "ct-tooltip"
+        })
+    ],
+    stackBars: true,
+    axisX: {
+        showGrid: false,
+        showLabel: false,
+        offset: 0
+    },
+    axisY: {
+        low: 0,
+        showGrid: false,
+        showLabel: false,
+        offset: 0,
+        labelInterpolationFnc: function (value) {
+            return (value / 1000) + 'k';
+        }
+    }
+}).on('draw', function (data) {
+    if (data.type === 'bar') {
+        data.element.attr({
+            style: 'stroke-width: 3px'
+        });
+    }
+});
 // right-side-small-chart
 
 (function ($) {

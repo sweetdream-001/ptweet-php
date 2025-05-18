@@ -243,6 +243,7 @@
                     });
                 }
             }
+        
         });
 
         
@@ -462,6 +463,112 @@
                 $("#clearYoutubeBtn").hide();
             }
         });
+        
     });
+    
+    // Date Change Methods
+    
+    $(document).ready(function() {
+        
+        // Click on Close button
+        
+        $('#date-close-modal-button').on('click', function() {
+            $('#dateModal').modal('hide');
+            $("#dateAdForm")[0].reset();
+        });
+        
+    // When clicking on the date menu item
+    $('.open-date-modal').on('click', function() {
+        let adId = $(this).data('id');
+
+        // Set the hidden input for ad_id
+        $('#ad_date_id').val(adId);
+
+        // Optional: Load the current date via AJAX from PHP
+        $.ajax({
+            url: '<?= cl_link("native_api/cpanel/get_ad_data"); ?>',
+            type: 'POST',
+            dataType: 'json',
+            data: { id: adId },
+            success: function(response) {
+                if (response.status === 200 && response.data) {
+        
+                    $('#ads_date').text(JSON.stringify(response.data.time)); // Populate date input
+                }
+            }
+        });
+
+        // Show modal
+        $('#dateModal').modal('show');
+    });
+
+    // When clicking "Save changes"
+        $('#saveAdDateChanges').on('click', function() {
+            let adId = $('#ad_date_id').val();
+            let date = $('#ads_date').val();
+            const now = new Date();
+            const currentTime = now.toLocaleTimeString('en-US', { hour12: false });
+            const updatedDateTime = (date +" "+ currentTime);
+            
+            $.ajax({
+                url: '<?= cl_link("native_api/cpanel/updated_ads_data"); ?>',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    id: adId,
+                    ads_date: updatedDateTime
+                },
+                success: function(response) {
+                    if (response.status === 200) {
+                        $('#dateModal').modal('hide');
+                         window.location.reload();
+                        // Optionally refresh table or update UI here
+                    } else {
+                        alert('Failed to update date');
+                    }
+                }
+            });
+        });
+        
+    // Time Change Method
+        
+    // When clicking on the date menu item
+    $('.open-time-modal').on('click', function() {
+        let adId = $(this).data('id');
+
+        // Set the hidden input for ad_id
+        $('#ad_time_id').val(adId);
+
+        // Show modal
+        $('#timeLeftModal').modal('show');
+    });
+    
+        // When clicking "Save changes"
+        $('#saveAdTimeChanges').on('click', function() {
+            let adId = $('#ad_time_id').val();
+            let leftTime = $('#ads_time').val();
+          
+            $.ajax({
+                url: '<?= cl_link("native_api/cpanel/updated_ads_lefttime"); ?>',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    id: adId,
+                    ads_time: leftTime
+                },
+                success: function(response) {
+                    if (response.status === 200) {
+                        $('#timeLeftModal').modal('hide');
+                         window.location.reload();
+                        // Optionally refresh table or update UI here
+                    } else {
+                        alert('Failed to update date');
+                    }
+                }
+            });
+        });
+    });
+    
+
 
 </script>
