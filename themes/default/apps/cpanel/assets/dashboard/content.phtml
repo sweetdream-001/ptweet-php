@@ -64,6 +64,23 @@
         -webkit-box-shadow: 1px 1.732px 8px 0px rgba(115, 102, 255, 0.5);
         box-shadow: 1px 1.732px 8px 0px rgba(115, 102, 255, 0.5)
     }
+    
+    .svg-control-css {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 36px;  /* Adjust width as needed */
+    height: 36px; /* Adjust height as needed */
+    border-radius: 4px; /* Optional rounded corners */
+    margin-right: 10px; /* Spacing from the text */
+}
+
+.svg-control-css svg {
+    width: 36px;  /* Increased size */
+    height: 36px; /* Increased size */
+    stroke-width: 1.5; /* Slightly thicker lines for clarity */
+    color: black; /* SVG color */
+}
 </style>
 <div class="cp-app-container" data-app="dashboard">
   <div class="container-fluid">
@@ -123,7 +140,7 @@
                 <div class="media align-items-center">
                   <div class="hospital-small-chart">
                     <div class="small-bar">
-                      <div class="small-chart4 flot-chart-container"></div>
+                      <div class="small-chart3 flot-chart-container"></div>
                     </div>
                   </div>
                   <div class="media-body">
@@ -137,7 +154,7 @@
                 <div class="media align-items-center">
                   <div class="hospital-small-chart">
                     <div class="small-bar">
-                      <div class="small-chart3 flot-chart-container"></div>
+                      <div class="small-chart4 flot-chart-container"></div>
                     </div>
                   </div>
                   <div class="media-body">
@@ -166,6 +183,71 @@
         </div>
       </div>
 
+    <div class="col-xl-9 xl-100 chart_data_left box-col-12">
+      <div class="card">
+        <div class="card-body p-0">
+          <div class="row m-0 chart-main">
+            <!-- Requests Stats -->
+            <div class="col-xl-4 col-md-6 col-sm-6 p-0 box-col-6">
+              <div class="media align-items-center">
+                <div class="svg-control-css">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 2H4a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z"></path>
+                    <path d="M9 22v-4h6v4"></path>
+                    <path d="M8 10h.01"></path>
+                    <path d="M12 10h.01"></path>
+                    <path d="M16 10h.01"></path>
+                  </svg>
+                </div>
+                <div class="media-body">
+                  <div class="right-chart-content">
+                    <h6 id="request-count">0 / 0</h6>
+                    <span><?php echo cl_translate('Requests'); ?></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Transferred Stats -->
+            <div class="col-xl-4 col-md-6 col-sm-6 p-0 box-col-6">
+              <div class="media align-items-center">
+                <div class="svg-control-css">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                  </svg>
+                </div>
+                <div class="media-body">
+                  <div class="right-chart-content">
+                    <h6 id="transferred">0 kB / 0 kB</h6>
+                    <span><?php echo cl_translate('Transferred'); ?></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Resources Stats -->
+            <div class="col-xl-4 col-md-6 col-sm-6 p-0 box-col-6">
+              <div class="media border-none align-items-center">
+                <div class="svg-control-css">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                    <polyline points="13 2 13 9 20 9"></polyline>
+                  </svg>
+                </div>
+                <div class="media-body">
+                  <div class="right-chart-content">
+                    <h6 id="resources">0 kB / 0 kB</h6>
+                    <span><?php echo cl_translate('Resources'); ?></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
       <!-- Cod Box Copy begin -->
       <div class="col-xl-6 box-col-6 col-md-6">
         <div class="card o-hidden" style="max-height: 265px;">
@@ -407,11 +489,134 @@
 
     </div>
   </div>
-
-
-
-
-
 </div>
+
+<script>
+  // Initialize tracking variables
+  let previousEntries = new Set();
+  let stats = {
+    total: {
+      requests: 0,
+      transferred: 0,
+      resources: 0
+    },
+    xhr: {
+      requests: 0,
+      transferred: 0,
+      resources: 0
+    }
+  };
+  
+  // Function to check if an entry is an XHR/fetch request
+  function isXhrOrFetch(entry) {
+    return entry.initiatorType === 'xmlhttprequest' || 
+           entry.initiatorType === 'fetch';
+  }
+  
+  // Function to update network statistics
+  function updateNetworkStats() {
+    const entries = performance.getEntriesByType('resource');
+    
+    entries.forEach(entry => {
+      if (!previousEntries.has(entry.name)) {
+        previousEntries.add(entry.name);
+        
+        // Update total counters
+        stats.total.requests++;
+        stats.total.transferred += entry.transferSize || 0;
+        stats.total.resources += entry.decodedBodySize || 0;
+        
+        // Update XHR counters if it's an XHR/fetch request
+        if (isXhrOrFetch(entry)) {
+          stats.xhr.requests++;
+          stats.xhr.transferred += entry.transferSize || 0;
+          stats.xhr.resources += entry.decodedBodySize || 0;
+        }
+        
+        // Update the display with formatted values
+        updateDisplay();
+      }
+    });
+  }
+  
+  // Function to update the display with formatted values
+//   function updateDisplay() {
+//     // Format requests
+//     document.getElementById('request-count').textContent = 
+//       `${stats.xhr.requests} / ${stats.total.requests}`;
+    
+//     // Format transferred size in kB with comma separators
+//     const xhrTransferredKB = formatNumber((stats.xhr.transferred / 1024).toFixed(1));
+//     const totalTransferredKB = formatNumber((stats.total.transferred / 1024).toFixed(1));
+//     document.getElementById('transferred').textContent = 
+//       `${xhrTransferredKB} kB / ${totalTransferredKB} kB`;
+    
+//     // Format resources size in kB with comma separators
+//     const xhrResourcesKB = formatNumber((stats.xhr.resources / 1024).toFixed(0));
+//     const totalResourcesKB = formatNumber((stats.total.resources / 1024).toFixed(0));
+//     document.getElementById('resources').textContent = 
+//       `${xhrResourcesKB} kB / ${totalResourcesKB} kB`;
+//   }
+  
+  // Helper function to format numbers with comma separators
+//   function formatNumber(num) {
+//     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+//   }
+
+
+function updateDisplay() {
+  // Format requests
+  document.getElementById('request-count').textContent = 
+    `${stats.xhr.requests} / ${stats.total.requests}`;
+
+  // Transferred size
+  const xhrTransferred = stats.xhr.transferred / 1024;
+  const totalTransferred = stats.total.transferred / 1024;
+  document.getElementById('transferred').textContent = 
+    `${formatSize(xhrTransferred)} / ${formatSize(totalTransferred)}`;
+
+  // Resource size
+  const xhrResources = stats.xhr.resources / 1024;
+  const totalResources = stats.total.resources / 1024;
+  document.getElementById('resources').textContent = 
+    `${formatSize(xhrResources)} / ${formatSize(totalResources)}`;
+}
+
+// Format number and choose KB or MB based on size
+function formatSize(kb) {
+  if (kb >= 1024) {
+    return `${formatNumber((kb / 1024).toFixed(2))} MB`;
+  } else {
+    return `${formatNumber(kb.toFixed(1))} kB`;
+  }
+}
+
+// Comma formatting helper
+function formatNumber(num) {
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+  
+  // Set up a periodic checker for new requests
+  setInterval(updateNetworkStats, 500);
+  
+  // Initial call
+  updateNetworkStats();
+  
+  // Set up observer for navigation events to reset counters on page changes
+  const navigationObserver = new PerformanceObserver((entries) => {
+    if (entries.getEntries()[0].type === 'navigate') {
+      previousEntries.clear();
+      stats = { 
+        total: { requests: 0, transferred: 0, resources: 0 },
+        xhr: { requests: 0, transferred: 0, resources: 0 }
+      };
+      updateDisplay();
+    }
+  });
+  
+  navigationObserver.observe({ type: 'navigation', buffered: true });
+</script>
+
 
 <?php echo cl_template('cpanel/assets/dashboard/scripts/app_master_script'); ?>

@@ -12,11 +12,6 @@
                 prev_ctrl: true,
                 next_ctrl: true,
                 usersData : [],
-                currentPage: 1,
-    			limit: 10,
-    			perPage: 10, // Items per page
-    			totalPages: 0,
-    			totalPosts: 0,
                 init_data: "",
                 search_404: false,
                 sorting: {
@@ -344,7 +339,6 @@
                 },
             },
             mounted: function() {
-                this.getAllUser()
                 var _app_       = this;
                 var users_list  = _app.find('[data-an="users-list"]');
                 _app_.init_data = users_list.html();
@@ -355,8 +349,15 @@
 	
 	
 	$(document).ready(function() {
+	    var _app      = $('[data-app="users"]');
+        var users_list  = _app.find('[data-an="users-list"]');
+        var offset_gt   = users_list.find('[data-list-item]').last().data('list-item');
 	    
-    let recordsPerPage = '';
+    let recordsPerPage =  $('#recordsPerPage').val();
+    if(recordsPerPage){
+        updateUrlParameter(recordsPerPage , offset_gt);
+    }
+
 
     // Load initial data
 
@@ -364,8 +365,9 @@
         var _app      = $('[data-app="users"]');
         var users_list  = _app.find('[data-an="users-list"]');
         var offset_gt   = users_list.find('[data-list-item]').last().data('list-item');
-        recordsPerPage = parseInt($(this).val());
+        recordsPerPage = parseInt($('#recordsPerPage').val());
         updateUrlParameter(recordsPerPage , offset_gt);
+        loadPosts(1 , recordsPerPage)
     });
     
         function updateUrlParameter(pageSize , offset_gt) {
@@ -383,46 +385,81 @@
             }
         });
     }
-
-	});
+    
+    	function loadPosts(page = 1 , l = 10) {
 	
-	
-	function loadPosts(page = 1) {
-	const usersList = $('[data-an="users-list"]');
-    const offset_lt = usersList.find('[data-list-item]').first().data('list-item') || 0;
-    const offset_gt = usersList.find('[data-list-item]').last().data('list-item') || 0;
     $.ajax({
         url: '<?php echo cl_link("native_api/cpanel/get_pagination"); ?>',
         method: 'POST',
         dataType: 'json',
         data: {
             page: page,
-            limit: 10,
-            offset_gt : offset_gt,
-            offset_lt : offset_lt,
+            limit: l,
         },
         success: function(response) {
             if (response.status === 200) {
+                // $('#user-list').html(response.html);
+                renderPagination(response.pagination.current_page, response.pagination.total_pages);
                 // Update posts table
-                $('[data-an="posts-list"]').html(response.html);
+                $('[data-an="users-list"]').html(response.html);
 
                 // Update pagination bar
-                $('.pagination-container').html(response.pagination);
+                // $('.pagination-container').html(response.pagination);
             }
         }
     });
 }
 
+function renderPagination(currentPage, totalPages) {
+    let html = '<ul class="pagination justify-content-center">';
+
+    // Prev Button
+    if (currentPage > 1) {
+        html += `<li class="page-item">
+            <a class="page-link" href="#" data-page="${currentPage - 1}">&laquo; Prev</a>
+        </li>`;
+    }
+
+    // Page numbers
+    for (let i = 1; i <= totalPages; i++) {
+        let active = i === currentPage ? 'active' : '';
+        html += `<li class="page-item ${active}">
+            <a class="page-link" href="#" data-page="${i}">${i}</a>
+        </li>`;
+    }
+
+    // Next Button
+    if (currentPage < totalPages) {
+        html += `<li class="page-item">
+            <a class="page-link" href="#" data-page="${currentPage + 1}">Next &raquo;</a>
+        </li>`;
+    }
+
+    html += '</ul>';
+
+    $('.pagination-container').html(html);
+}
+
+
 $(document).on('click', '.pagination a', function(e) {
     e.preventDefault();
-    const page = $(this).data('page');
-    loadPosts(page);
+    const page = parseInt($(this).data('page'));
+    if (!isNaN(page)) {
+        loadPosts(page , 10); // Your function to fetch page data
+    }
 });
+
 
 // Initial load
 $(document).ready(function() {
     loadPosts();
 });
+
+	});
+	
+	
+
+
 
 
 </script>

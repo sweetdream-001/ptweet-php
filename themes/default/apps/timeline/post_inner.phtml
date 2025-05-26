@@ -496,8 +496,8 @@ echo $string;
 								</audio>
 							</div>
 						</div>
-
 					<?php elseif ($cl['li']['type'] == 'yt' && not_empty($cl['li']['media'])): ?>
+					<?php print_r($cl['li']['type']); ?>
 					<div class="publication-yt pt-prevent-click" style="margin-top:15px;">
 						<div class="yt-content" style="height: 25rem;">
 
@@ -575,13 +575,16 @@ echo $string;
 						</div>
 					</div>
 					<?php elseif (not_empty($cl['li']['og_data'])): ?>
+					
 						<?php if (not_empty($cl['li']['og_data']['video_embed'])): ?>
 						<div class="publication-og-data pt-prevent-click" pt-post-id="<?php echo $cl['li']['id']; ?>">
 							<div class="publication-og-data-inner embeded-iframe">
 								<div class="og-image pt-prevent-click" style="background-image:url('https://img.youtube.com/vi/<?php echo $cl['li']['link_src']; ?>/hqdefault.jpg');">
-									<div class="lozad-media pt-post-view-count pt-prevent-click" pt-post-id="<?php echo $cl['li']['id']; ?>">
+									<div class="lozad-media 
+									pt-prevent-click" pt-post-id="<?php echo $cl['li']['id']; ?>">
 										<a href="<?php echo ($cl['li']['og_data']['video_embed']); ?>" class="fbox-media2"
-											data-btn='<?php echo cl_template('timeline/likes'); ?>' data-fancybox="gallery"
+											data-btn='<?php echo cl_template('timeline/likes'); ?>' 
+											data-fancybox="gallery"
 											data-info='<?php echo cl_template('timeline/right_col'); ?>'>
 											<img src="<?php echo ($cl['li']['og_data']['image']); ?>" class="lozad pt-prevent-click pt-post-view-count" data-src="<?php echo ($cl['li']['og_data']['image']); ?>"
 												alt="Video" pt-post-id="<?php echo $cl['li']['id']; ?>" style="display:none">
@@ -747,9 +750,12 @@ echo $string;
 						<span class="icon view-post-count pt-prevent-click">
 							<?php echo cl_icon('preview'); ?>
 						</span>
-						<span class="num pt-prevent-click">
-							<?php echo $cl['li']['views']; ?>
-						</span>
+						<span class="num post_view_count post_view_count-<?php echo $cl['li']['id']; ?>">
+                			<?php echo $cl['li']['views']; ?>
+                		</span> 
+						<!--<span class="num pt-prevent-click">-->
+						<!--	<?php echo $cl['li']['views']; ?>-->
+						<!--</span>-->
 					</button>
 					<!-- show post views -->
 					<button class="ctrls-item chat pt-prevent-click"

@@ -5,6 +5,11 @@
 		jQuery(document).ready(function($) {
 			Vue.use(window.vuelidate.default);
 
+            const wordLimit = function(value) {
+              if (!value) return true;
+              const wordCount = value.trim().split(/\s+/).filter(Boolean).length;
+              return wordCount <= 100;
+            };
 			var _app = $('[data-app="advertisements"]');
 			new Vue({
 				el: "#vue-ads-upsert-app",
@@ -40,7 +45,8 @@
 							description: "",
 							cta: ""
 						}
-					}
+					},
+					wordCount: 0 // Add this to track word count
 				},
 				computed: {
 
@@ -92,19 +98,50 @@
 				// 			return false;
 				// 		}
 				// 	},
+				 // Count words in description
+                      descriptionWordCount: function() {
+                        if (!this.ad_data.description) return 0;
+                        return this.ad_data.description.trim().split(/\s+/).filter(Boolean).length;
+                      },
+                      
+                      // Calculate remaining words
+                      remainingWords: function() {
+                        return 100 - this.descriptionWordCount;
+                      },
+                      
+                      // Check if over word limit
+                      isOverWordLimit: function() {
+                        return this.descriptionWordCount > 100;
+                      },
 					is_invalid_description: function() {
-						if (this.$v.ad_data.description.required && this.$v.ad_data.description.$invalid) {
+				// 		if (this.$v.ad_data.description.required && this.$v.ad_data.description.$invalid) {
 
-							this.fb.cs.description = "<?php echo cl_translate("The entered ad description is too long. Max length 550 characters!"); ?>";
+				// 			this.fb.cs.description = "<?php echo cl_translate("The entered ad description is too long. Max length 550 characters!"); ?>";
 
-							return true;
-						}
-						else {
+				// 			return true;
+				// 		}
+				// 		else {
 
-							this.fb.cs.description = "";
+				// 			this.fb.cs.description = "";
 
-							return false;
-						}
+				// 			return false;
+				// 		}
+				// Update word count (for display purposes)
+                        this.wordCount = this.descriptionWordCount;
+                        
+                        if (this.$v.ad_data.description.$invalid) {
+                          if (!this.$v.ad_data.description.word_limit) {
+                            this.fb.cs.description = "<?php echo cl_translate('The description cannot exceed 100 words!'); ?>";
+                          } else if (!this.$v.ad_data.description.required) {
+                            this.fb.cs.description = "<?php echo cl_translate('Description is required!'); ?>";
+                          } else if (!this.$v.ad_data.description.max_length) {
+                            this.fb.cs.description = "<?php echo cl_translate('The entered ad description is too long. Max length 550 characters!'); ?>";
+                          }
+                          return true;
+                        } else {
+                          this.fb.cs.description = "";
+                          return false;
+                        }
 					},
 					is_invalid_cta: function() {
 						if (this.$v.ad_data.cta.required && this.$v.ad_data.cta.$invalid) {
@@ -175,12 +212,14 @@
 						description: {
 							required: window.validators.required,
 							min_length: window.validators.minLength(1),
-							max_length: window.validators.maxLength(550)
+							max_length: window.validators.maxLength(550),
+							
+							word_limit: wordLimit
 						},
 						cta: {
 							required: window.validators.required,
 							min_length: window.validators.minLength(1),
-							max_length: window.validators.maxLength(60)
+							max_length: window.validators.maxLength(60),
 						}
 					}
 				},

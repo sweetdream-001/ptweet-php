@@ -51,35 +51,69 @@
 		});
 		
 		if(postId){
-			
-			$.ajax({
+		    
+		    
+		  //  26-05-2025
+		  
+		  $.ajax({
+            	url: '<?php echo cl_link("native_api/thread/view_count_update"); ?>',
+            	type: 'POST',
+            	dataType: 'json',
+            	data: {
+            		post_id: postId
+            	}
+            }).done(function(data) {
+            
+            	if (data.status === 200 && data.data !== undefined) {
+            		const newCount = data.data; // actual view count value
+            
+            		// ✅ Plain JS update
+            		const viewCountElement = document.querySelector(`.post_view_count-${postId}`);
+            		if (viewCountElement) {
+            			viewCountElement.textContent = newCount;
+            		} else {
+            			console.warn(`View count element not found for post_id: ${postId}`);
+            		}
+            
+            		// ✅ jQuery updates (if multiple instances)
+            		$(`.num.post_view_count-${postId}`).text(newCount);
+            		$('.ctrls-item').find(`span.num.post_view_count-${postId}`).text(newCount);
+            	} else {
+            		console.error("Invalid response or view count data missing:", data);
+            	}
+            });
 
-					url: '<?php echo cl_link("native_api/thread/view_count_update"); ?>',
-					type: 'POST',
-					dataType: 'json',
-					data: {
-						post_id: postId
-					},
-				}).done(function(data) {
+		    
+		
+// 			$.ajax({
 
-                    console.log("post-id",postId);
-					console.log("like_count",data.data);
-					if (data.status == 200) {
+// 					url: '<?php echo cl_link("native_api/thread/view_count_update"); ?>',
+// 					type: 'POST',
+// 					dataType: 'json',
+// 					data: {
+// 						post_id: postId
+// 					},
+// 				}).done(function(data) {
 
-					    const viewCountElement = document.querySelector(`.post_view_count-${postId}`);
-  if (viewCountElement) {
-    viewCountElement.textContent = ""; // or set the desired value
-  } else {
-    console.error(`Element with class 'num post_view_count-${postId}' not found.`);
-  }
-					    console.log("come",data.data);
-					           // document.querySelector('.num.post_view_count').textContent = 10;
+//                     console.log("post-id",postId);
+// 					console.log("like_count",data.data);
+// 					if (data.status == 200) {
 
-					   $(`.num.post_view_count-${postId}`).text("");
+// 					    const viewCountElement = document.querySelector(`.post_view_count-${postId}`);
+					  
+//   if (viewCountElement) {
+//     viewCountElement.textContent = ""; // or set the desired value
+//   } else {
+//     // console.error(`Element with class num post_view_count-${postId} not found.`);
+//   }
+// 					    console.log("come",data.data);
+// 					           // document.querySelector('.num.post_view_count').textContent = 10;
+
+// 					   $(`.num.post_view_count-${postId}`).text("");
 					   
-                       $('.ctrls-item').find(`span.num.post_view_count-${postId}`).text(10);
-					}
-				});
+//                       $('.ctrls-item').find(`span.num.post_view_count-${postId}`).text(10);
+// 					}
+// 				});
 		}
 		
 		
@@ -112,7 +146,7 @@
 				selectedPlan: "", // 'yearly' or 'monthly'
 				monthlyPrice: "<?php echo cl_money(isset($cl['config']['advertisement_mprice']) ? $cl['config']['advertisement_mprice'] : 9.99); ?>",
 				yearlyPrice: "<?php echo cl_money(isset($cl['config']['advertisement_yprice']) ? $cl['config']['advertisement_yprice'] : 99.99); ?>",
-				wallet: <?php echo $me["wallet"]; ?>,
+				wallet: <?php echo isset($me["wallet"]) ? floatval($me["wallet"]) : 0; ?>,
 				ads_subscription_mprice_val: <?php echo isset($cl['config']['advertisement_mprice']) ? $cl['config']['advertisement_mprice'] : 9.99; ?>,
 				ads_subscription_yprice_val: <?php echo isset($cl['config']['advertisement_yprice']) ? $cl['config']['advertisement_yprice'] : 99.99; ?>
 			},

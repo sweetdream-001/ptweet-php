@@ -1,5 +1,5 @@
 <div class="timeline-container" data-app="notifications">
-<div class="timeline-header" data-el="tl-header">
+    <div class="timeline-header" data-el="tl-header">
 		<div class="timeline-header__botline" style="display: flex;width: 100%;justify-content: space-between;">
 			<div class="lp">
 			<div class="nav-link-holder" style="display: flex;justify-content: center;align-items: center;">
@@ -144,3 +144,49 @@ position: absolute;
 	</div>
 	<?php echo cl_template('notifications/scripts/app_master_script'); ?>
 </div>
+<style>
+
+
+/* Fix 2: Proper sticky positioning for sidebars */
+.right-sb-container.sidebar .inner-wrapper-sticky,
+.left-sb-container .inner-wrapper-sticky {
+    position: sticky;
+    top: 20px;
+    height: calc(100vh - 40px); /* Maintain height within viewport */
+    overflow-y: auto;
+}
+
+/* Fix 3: Ensure content area maintains proper structure */
+.timeline-container-wrapper {
+    overflow-x: hidden;
+    height: 100%;
+    position: relative;
+}
+
+/* Fix 4: Ensure timeline container takes full height */
+.timeline-container {
+    min-height: 100%;
+    position: relative;
+}
+
+/* Fix 5: Fix z-index stacking */
+body main.main-content-container div.main-content-container-inner div.left-sb-container {
+    left: 0px;
+    z-index: 10 !important; /* Increase z-index to prevent overlap issues */
+}
+
+/* Fix 6: Make sure responsive layouts also use grid */
+@media only screen and (max-width: 1200px) {
+    .main-content-container-inner {
+        display: grid !important;
+        grid-template-columns: 55px 2fr 0fr;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .main-content-container-inner {
+        display: grid !important;
+        grid-template-columns: 1fr;
+    }
+}
+</style>

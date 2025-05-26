@@ -114,7 +114,14 @@
 				<?php echo cl_translate("Campaign description"); ?>
 			</label>
 			<textarea v-model="$v.ad_data.description.$model" class="form-control" rows="4" placeholder="<?php echo cl_translate("Enter the description of your ad"); ?>"></textarea>
-			<div v-if="is_invalid_description" class="invalid-main-feedback">
+			<!-- Add word counter below textarea -->
+              <div class="word-counter mt-3" style="text-align: right;" v-bind:class="{ 'text-danger': isOverWordLimit }">
+                <small>{{descriptionWordCount}}/100 words 
+                  <span v-if="!isOverWordLimit">({{remainingWords}} words remaining)</span>
+                  <span v-else>({{Math.abs(remainingWords)}} words over limit)</span>
+                </small>
+              </div>
+			<div v-if="is_invalid_description" class="invalid-main-feedback" style="text-align: right;">
 				{{fb.cs.description}}
 			</div>
 		</div>

@@ -299,6 +299,7 @@ else if ($action == 'get_users') {
 	$users            = array();
 	$data['status']   = 404;
 	$data['err_code'] = 0;
+	$limit = 10;
 	$html_arr         = array();
 	
 	$total_users  = cl_admin_get_total_user_count();
@@ -327,13 +328,12 @@ else if ($action == 'get_users') {
 		));
 	}
 	
-	 $cl['page']        = $page;
-            $cl['totalPages']  = $totalPages;
 
 	if (not_empty($users)) {
 		foreach ($users as $cl['li']) {
 			array_push($html_arr, cl_template('cpanel/assets/users/includes/list_item'));
 		}
+
 
 		$data['status'] = 200;
 		$data['html']   = implode('', $html_arr);
@@ -375,31 +375,49 @@ else if ($action == 'get_users_pagination'){
 }
 
 else if ($action == 'get_pagination') {
-    	require_once(cl_full_path("core/apps/cpanel/users/app_ctrl.php"));
-$offset_lt        = ((is_posnum($_POST['offset_lt'])) ? intval($_POST['offset_lt']) : 0);
-	$offset_gt        = ((is_posnum($_POST['offset_gt'])) ? intval($_POST['offset_gt']) : 0);
+    require_once(cl_full_path("core/apps/cpanel/users/app_ctrl.php"));
 	$page  = isset($_POST['page']) ? max(1, intval($_POST['page'])) : 1;
     $limit = isset($_POST['limit']) ? intval($_POST['limit']) : 10;
     $offset = ($page - 1) * $limit;
     $html_arr         = array();
     
-
-		$users          = cl_admin_get_users(array(
-			'limit'     => $limit,
-			'offset'    => $offset_gt,
-			'offset_to' => 'lt',
-			'order'     => 'DESC',
-			
-		));
-	
-	
-	$total_users  = cl_admin_get_total_user_count();
+    $total_users  = cl_admin_get_total_user_count();
 	
 	$totalPages = ceil($total_users / $limit);
-	$cl['page']        = $page;
-    $cl['totalPages']  = $totalPages;
+
+
+    $sql = "
+        SELECT id, email, wallet, active, avatar, admin, verified, last_active,
+               username, country_id, ip_address, CONCAT(fname) AS name
+        FROM cl_users
+        WHERE active IN ('1', '2')
+        ORDER BY id DESC
+        LIMIT $limit OFFSET $offset
+    ";
+    
+    $users = $db->rawQuery($sql);
+
+    
+
+    // // Fetch paginated user list
+    // $users = cl_admin_get_users([
+    //     'limit'  => $limit,
+    //     'offset' => $offset,
+    //     'order'  => 'DESC',
+    //     'offset_to' => 'lt',
+    //     // No need for 'offset_to' in offset-based pagination
+    // ]);
+	
 	
 		foreach ($users as $index => $cl['li']) {
+		  //  print_r($cl['li']);
+            $cl['li']['url'] = cl_link($cl['li']['username']);
+            $cl['li']['wallet'] = cl_money($cl['li']['wallet']);    
+            $cl['li']['avatar'] = cl_get_media($cl['li']['avatar']);
+            $cl['li']['last_active'] = date('d M, Y h:m',$cl['li']['last_active']);
+            $banner_code        = fetch_or_get($cl['country_codes'][$cl['li']['country_id']], 'us');
+            $cl['li']['banner']      = cl_banner($banner_code);
+            
 		    $row_number = $total_users - (($page - 1) * $limit + $index);
             $cl['li']['row_number'] = $row_number;
 			array_push($html_arr, cl_template('cpanel/assets/users/includes/list_item'));
@@ -409,6 +427,7 @@ $offset_lt        = ((is_posnum($_POST['offset_lt'])) ? intval($_POST['offset_lt
 		$data['html']   = implode('', $html_arr);
 
     
+    $data['users'] = $users;
     
     // Optional: Add pagination info (total count, pages)
     
@@ -418,7 +437,7 @@ $offset_lt        = ((is_posnum($_POST['offset_lt'])) ? intval($_POST['offset_lt
         'total_posts' => $total_users,
         'limit' => $limit,
     ];
-    
+
 }
 
 
@@ -2655,6 +2674,9 @@ else if ($action == 'get_all_posts_admin') {
                 $word['og_data'] = $og_data_array;
             }
         }
+
+        $word['text'] = stripcslashes($word['text']);
+
         $id = $word['id'];
         $word['replies_count'] = count($db->rawQuery("CALL GetCommentTree($id);")) - 1;
         $posts[] = $word;
@@ -2671,34 +2693,76 @@ else if ($action == 'get_all_posts_admin') {
 }
 
 
-else if ($action == 'search_all_posts_admin') {
-    $data['status']    = 200;
-    $username = $_GET['username'];
-    $text = $_GET['text'];
+// else if ($action == 'search_all_posts_admin') {
+//     $data['status']    = 200;
+//     $username = $_GET['username'];
+//     $text = $_GET['text'];
+//     $page  = isset($_POST['page']) ? max(1, intval($_POST['page'])) : 1;
+//     $limit = isset($_POST['limit']) ? intval($_POST['limit']) : 10;
+//     $offset = ($page - 1) * $limit;
     
-    $query = "
-select cl_publications.*, cl_pubmedia.src, cl_categories.name as category_name, cl_users.username as username from cl_publications 
-inner join cl_categories on cl_publications.category_id = cl_categories.id
-inner join cl_users on cl_publications.user_id = cl_users.id
-left join cl_pubmedia on cl_publications.id = cl_pubmedia.pub_id
-where text is not null and thread_id = 0
-ORDER BY id DESC 
-LIMIT $limit OFFSET $offset";
+//     $query = "
+// select cl_publications.*, cl_pubmedia.src, cl_categories.name as category_name, cl_users.username as username from cl_publications 
+// inner join cl_categories on cl_publications.category_id = cl_categories.id
+// inner join cl_users on cl_publications.user_id = cl_users.id
+// left join cl_pubmedia on cl_publications.id = cl_pubmedia.pub_id
+// where text is not null and thread_id = 0
+// ORDER BY id DESC 
+// LIMIT $limit OFFSET $offset";
     
-    if(!empty($username) && !empty($text)){
-        $query .= " and text like '%".$text."%' OR username like '%".$username."%'";
-    } else if(!empty($username)){
-        $query .= " and username like '%".$username."%'";
-    } else if(!empty($text)){
-        $query .= " and text like '%".$text."%'";
-    }
-    $query .= " order by id DESC";
+//     if(!empty($username) && !empty($text)){
+//         $query .= " and text like '%".$text."%' OR username like '%".$username."%'";
+//     } else if(!empty($username)){
+//         $query .= " and username like '%".$username."%'";
+//     } else if(!empty($text)){
+//         $query .= " and text like '%".$text."%'";
+//     }
+//     $query .= " order by id DESC";
     
     
-    $words = $db->rawQuery($query);
+//     $words = $db->rawQuery($query);
 
-    $data['data'] = $words;  
+//     $data['data'] = $words;  
+// }
+
+else if ($action == 'search_all_posts_admin') {
+    $data['status'] = 200;
+    $username = $_GET['username'] ?? '';
+    $text = $_GET['text'] ?? '';
+    $page  = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
+    $limit = isset($_GET['limit']) ? intval($_GET['limit']) : 10;
+    $offset = ($page - 1) * $limit;
+
+    $conditions = ["text IS NOT NULL", "thread_id = 0"];
+
+    // Add dynamic conditions
+    if (!empty($username)) {
+        $conditions[] = "cl_users.username LIKE '%" . $db->escape($username) . "%'";
+    }
+
+    if (!empty($text)) {
+        $conditions[] = "cl_publications.text LIKE '%" . $db->escape($text) . "%'";
+    }
+
+    // Combine all conditions
+    $whereClause = implode(" AND ", $conditions);
+
+    // Final query
+    $query = "
+        SELECT cl_publications.*, cl_pubmedia.src, cl_categories.name AS category_name, cl_users.username AS username 
+        FROM cl_publications 
+        INNER JOIN cl_categories ON cl_publications.category_id = cl_categories.id
+        INNER JOIN cl_users ON cl_publications.user_id = cl_users.id
+        LEFT JOIN cl_pubmedia ON cl_publications.id = cl_pubmedia.pub_id
+        WHERE $whereClause
+        ORDER BY cl_publications.id DESC 
+        LIMIT $limit OFFSET $offset
+    ";
+
+    $words = $db->rawQuery($query);
+    $data['data'] = $words;
 }
+
 
 // IP RESTRICTION CODE
 else if ($action == 'add_restricted_ip') {

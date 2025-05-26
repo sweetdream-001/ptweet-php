@@ -731,15 +731,20 @@
     <hr>
     <div class="timeline-posts-container">
         <div class="timeline-posts-ls szHomeTimeline" data-an="entry-list">
-
-
-            <?php if (!empty($cl["feed"]) && is_array($cl["feed"])): ?>
-                <?php foreach ($cl["feed"] as $cl['li']): ?>
-                    <?php echo cl_template('timeline/post'); ?>
-                <?php endforeach; ?>
-            <?php endif; ?>
-
-
+                <?php
+        		// echo "<pre>";
+        		// print_r($cl["feed"]);
+        		foreach ($cl["feed"] as $cl['li']): ?>
+                    <?
+                    // echo json_encode($cl['li']);die;
+                    ?>
+        			<?php echo cl_template('timeline/post'); ?>
+        
+        
+        		<?php
+        	 	endforeach;
+        	 
+        		 ?>
 
         </div>
         <?php if (is_array($cl["feed"]) && count($cl["feed"]) >= 4000): ?>

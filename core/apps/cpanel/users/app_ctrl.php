@@ -15,7 +15,7 @@ function cl_admin_get_users($args = array()) {
     $args           = (is_array($args)) ? $args : array();
     $options        = array(
         "offset"    => false,
-        "limit"     => 7,
+        "limit"     => 10,
         "offset_to" => false,
         "order"     => 'DESC',
         "filter"    => array(),
@@ -34,9 +34,9 @@ function cl_admin_get_users($args = array()) {
     $offset = ($page_number - 1) * $limit;
 
     // Ensure that the page number is not negative or zero
-    if ($offset < 0) {
-        $offset = 0;
-    }
+     if ($offset < 0) {
+         $offset = 0;
+     }
     
     $t_users        = T_USERS;
     $sql            = cl_sqltepmlate('apps/cpanel/users/sql/fetch_site_users',array(
@@ -49,6 +49,11 @@ function cl_admin_get_users($args = array()) {
     ));
 
     $data  = array();
+    
+    
+//     print_r($sql);
+// exit;
+
     
     $users = $db->rawQuery($sql);
 

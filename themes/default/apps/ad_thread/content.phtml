@@ -226,30 +226,16 @@ body main.main-content-container div.main-content-container-inner div.timeline-c
 	<!--keston plan add-->
 	<div class="publication--thread-container">
 		<div class="publication--thread-container-inner">
-			<?php if (not_empty($cl['thread_data']['parent'])): ?>
-				<div class="publication--thread-chain-holder">
-					<div class="timeline-posts-container">
-						<div class="timeline-posts-ls" data-an="chain-list">
-							<?php foreach ($cl['thread_data']['parent'] as $cl["li"]): ?>
-								<?php echo cl_template('timeline/post'); ?>
-							<?php endforeach; ?>
-						</div>
-					</div>
-				</div>
-			<?php endif; ?>
-			
-			<?php if (not_empty($cl["gads_horiz"])): ?>
-				<div class="cl-google-ads centered">
-					<?php echo $cl["gads_horiz"]; ?>
-				</div>
-			<?php endif; ?>
+
 			<!--Hide reply thread holder 2025.04.11 by keston-->
 			<!--////////////////////////////////////////////-->
-			<?php if (not_empty($cl["random_ads"])): ?>
+			<?php if (not_empty($cl['feed_adpage'])): ?>
 				<div class="timeline-posts-container">
-					<div class="timeline-posts-ls szHomeTimeline" data-an="entry-list">
-						<?php foreach ($cl["random_ads"] as $cl['li']): ?>
-							<?php echo cl_template('timeline/ad'); ?>
+					<div class="timeline-posts-ls szHomeTimeline" data-an="entry-list" >
+						<?php foreach ($cl['feed_adpage'] as $cl['li']): ?>
+						<div style="<?php echo (!isset($cl['li']['advertising']) || empty($cl['li']['advertising'])) ? 'display: none;' : ''; ?>">
+						    <?php echo cl_template('timeline/post'); ?>
+						</div>
 						<?php endforeach; ?>
 					</div>
 				</div>
@@ -261,63 +247,7 @@ body main.main-content-container div.main-content-container-inner div.timeline-c
 			
 			<!--///////////////////////-->
 			<div class="publication--thread-replys-holder">
-				<?php if (not_empty($cl['thread_data']['next'])): ?>
-					<!--<div class="timeline-posts-container">-->
-					<!--	<div class="timeline-posts-ls" data-an="replys-list">-->
-					<!--		<?php foreach ($cl['thread_data']['next'] as $cl["li"]): ?>-->
-					<!--			<?php if (empty($cl["li"]["replys"])): ?>-->
-					<!--				<?php echo cl_template('timeline/post'); ?>-->
-					<!--			<?php else: ?>-->
-					<!--				<div class="timeline-posts-ls-group">-->
-					<!--					<div class="timeline-posts-ls-group-inner">-->
-					<!--						<?php echo cl_template('timeline/post'); ?>-->
-
-					<!--						<?php $parent_thread = $cl['li']; $post_replys = $parent_thread['replys']; $post_replys = array_reverse($post_replys); foreach ($post_replys as $cl['li']) { echo cl_template('timeline/post');} ?>-->
-					<!--					</div>-->
-
-					<!--					<a class="show-thread" href="<?php echo ($parent_thread["url"]); ?>" data-spa="true">-->
-					<!--						<span class="txt-label">-->
-					<!--							(-->
-					<!--							<?php echo ($parent_thread["replys_count"]); ?>)-->
-					<!--							<?php echo cl_translate("Show this thread"); ?>-->
-					<!--						</span>-->
-					<!--						<span class="icon">-->
-					<!--							<?php echo cl_ikon('arrow-right'); ?>-->
-					<!--						</span>-->
-					<!--					</a>-->
-					<!--				</div>-->
-					<!--			<?php endif; ?>-->
-					<!--		<?php endforeach; ?>-->
-					<!--	</div>-->
-					<!--</div>-->
-					<?php if (count($cl['thread_data']['next']) == 30): ?>
-						<!--<div class="load-more">-->
-						<!--	<button class="btn btn-custom main-outline lg" data-an="load-more">-->
-						<!--		<?php echo cl_translate("Show more"); ?>-->
-						<!--	</button>-->
-						<!--</div>-->
-					<?php else: ?>
-						<!--<div class="load-more">-->
-						<!--	<button disabled="true" class="btn btn-custom main-outline lg" data-an="load-more">-->
-						<!--		<?php echo cl_translate("That is all for now!"); ?>-->
-						<!--	</button>-->
-						<!--</div>-->
-					<?php endif; ?>
-				<?php else: ?>
-					<!--<div class="no-thread-replys">-->
-					<!--	<div class="icon">-->
-					<!--		<?php echo cl_ikon('chat-post'); ?>-->
-					<!--	</div>-->
-					<!--	<div class="pl-message">-->
-					<!--		<h4>-->
-					<!--			<?php echo cl_translate("No replys yet!"); ?>-->
-					<!--		</h4>-->
-							<!--<p>-->
-								<!--<?php echo cl_translate("It seems that this publication does not yet have any comments. In order to respond to this publication from {@publisher_name@}, click on at the button above", array("svg_icon" => cl_html_el("span", cl_ikon('chat-post')), "publisher_name" => cl_html_el('a', $cl['thread_data']['post']['owner']['name'], array("href" => $cl['thread_data']['post']['owner']['url'],"data-spa" => "true")))); ?>-->
-							<!--</p>-->
-					<!--	</div>-->
-					<!--</div>-->
-				<?php endif; ?>
+				
 			</div>
 		</div>
 	</div>

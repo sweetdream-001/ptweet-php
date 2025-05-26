@@ -569,6 +569,89 @@
         });
     });
     
+$(document).ready(function() {
+    // Word count variables
+    const maxWords = 100;
+    
+    // Function to count words
+    function countWords(text) {
+        // First trim the text to avoid counting spaces at the beginning or end
+        text = text.trim();
+        
+        // If the text is empty, return 0
+        if (text === '') {
+            return 0;
+        }
+        
+        // Replace multiple spaces with a single space and split by spaces
+        return text.replace(/\s+/g, ' ').split(' ').length;
+    }
+    
+    // Function to update word count display
+    function updateWordCount() {
+        const text = $('#ad_description').val();
+        const wordCount = countWords(text);
+        
+        // Update the word count display
+        $('#word_count').text(wordCount + '/100 words');
+        
+        // Change the color based on the word count
+        if (wordCount > maxWords) {
+            $('#word_count').removeClass('text-muted text-warning').addClass('text-danger');
+            $('#saveAdChanges').prop('disabled', true);
+        } else if (wordCount >= 90) {
+            $('#word_count').removeClass('text-muted text-danger').addClass('text-warning');
+            $('#saveAdChanges').prop('disabled', false);
+        } else {
+            $('#word_count').removeClass('text-warning text-danger').addClass('text-muted');
+            $('#saveAdChanges').prop('disabled', false);
+        }
+        
+        return wordCount;
+    }
+    
+    // Event handler for typing in the textarea
+    $('#ad_description').on('input', function() {
+        updateWordCount();
+    });
+    
+    // Event handler for pasting text
+    $('#ad_description').on('paste', function(e) {
+        // Wait a brief moment for the paste to complete
+        setTimeout(function() {
+            const wordCount = updateWordCount();
+            
+            // If the pasted content exceeds the limit, trim it
+            if (wordCount > maxWords) {
+                const text = $('#ad_description').val();
+                const words = text.trim().replace(/\s+/g, ' ').split(' ');
+                const trimmedText = words.slice(0, maxWords).join(' ');
+                $('#ad_description').val(trimmedText);
+                updateWordCount();
+                
+                // Alert the user that their text was trimmed
+                alert('Your text has been trimmed to 100 words.');
+            }
+        }, 10);
+    });
+    
+    // Also update word count when modal is opened
+    $('#editModal').on('shown.bs.modal', function() {
+        updateWordCount();
+    });
+    
+    // Add validation before saving
+    $('#saveAdChanges').on('click', function(e) {
+        const wordCount = updateWordCount();
+        
+        if (wordCount > maxWords) {
+            e.preventDefault();
+            alert('Please reduce your description to 100 words or less.');
+            $('#ad_description').focus();
+            return false;
+        }
+    });
+});
 
 
 </script>

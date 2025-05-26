@@ -1,6 +1,4 @@
-
-
-<div class="post-list-advert <?php echo (not_empty($cl['is_logged'])) ? 'logged-in' : 'login-required'; ?>" data-ad="<?php echo $cl['li']['id']; ?>" pt-ad-link="<?php echo(cl_link('ad_thread/'.$cl['li']['id'])); ?>">
+<div class="post-list-advert" data-ad="<?php echo $cl['li']['id']; ?>" pt-ad-link="<?php echo(cl_link('ad_thread/'.$cl['li']['id'])); ?>" >
 	<div class="post-list-advert__header">
 	<div class="publisher-avatar">
 			<div class="avatar-holder">
@@ -114,19 +112,18 @@
             <div class="lozad-media pt-post-view-count pt-prevent-click fbox-media2" pt-post-id="<?php echo $cl['li']['id']; ?>"
                    data-btn='<?php echo cl_template('timeline/likes'); ?>' 
                    data-fancybox="gallery" 
-                   data-src="https://www.youtube.com/embed/<?php echo $cl['li']['link_src'] ?>?autoplay=1&mute=1&loop=1"
+                   data-src="https://www.youtube.com/embed/<?php echo $cl['li']['link_src'] ?>?autoplay=1"
                    data-info='<?php echo cl_template('timeline/right_col'); ?>'> 
                 <a href="https://www.youtube-nocookie.com/embed/<?php echo $cl['li']['link_src']; ?>" 
                    class="fbox-media2" 
                    data-btn='<?php echo cl_template('timeline/likes'); ?>' 
-                   data-fancybox="gallery" 
                    data-info='<?php echo cl_template('timeline/right_col'); ?>'> 
                     <img style="width: 613.34px; height: 345px; border-radius: 16px; display:none" 
                          class="lozad pt-prevent-click pt-post-view-count" 
                          data-src="https://img.youtube.com/vi/<?php echo $cl['li']['link_src']; ?>/hqdefault.jpg" 
                          alt="Video" pt-post-id="<?php echo $cl['li']['id']; ?>"> 
                     <iframe 
-                        src="https://www.youtube.com/embed/<?php echo $cl['li']['link_src'] ?>?autoplay=1&mute=1&loop=1&playlist=<?php echo $cl['li']['link_src'] ?>" 
+                        src="https://www.youtube.com/embed/<?php echo $cl['li']['link_src'] ?>?autoplay=1&loop=1&mute=1&playlist=<?php echo $cl['li']['link_src'] ?>" 
                         style="width:100%; height:300px; pointer-events: none;" 
                         title="YouTube video player" 
                         frameborder="0" 
@@ -161,34 +158,14 @@
 			</div>
 		<?php endif; ?>
 		<div class="post-list-advert__ctrl">
-			<?php if (isset($cl['li']['is_conversed'])):
-				if (not_empty($cl['li']['is_owner']) || not_empty($cl['li']['is_conversed'])): ?>
-					<a target="_blank" href="<?php echo $cl['li']['target_url']; ?>" class="block-link">
-						<button class="btn target-url-btn btn-custom main-outline lg btn-block pt-prevent-click">
-							<?php echo $cl['li']['cta']; ?>
-						</button>
-					</a>
-				<?php else: ?>
-					<button onclick="SMColibri.ad_conversion(this);" data-ad-id="<?php echo $cl['li']['id']; ?>" data-ad-url="<?php echo $cl['li']['target_url']; ?>" class="btn target-url-btn btn-custom main-outline lg btn-block pt-prevent-click">
+			<?php if (isset($cl['li']['is_conversed'])): ?>
+                    <button onclick="SMColibri.ad_conversion(this);" data-ad-id="<?php echo $cl['li']['id']; ?>" data-ad-url="<?php echo $cl['li']['target_url']; ?>" class="btn target-url-btn btn-custom main-outline lg btn-block pt-prevent-click">
 						<?php echo $cl['li']['cta']; ?>
 					</button>
-				<?php endif;
-			endif;  ?>
+			<?php endif;  ?>
 		</div>
 	</div>
-	<?php //if (not_empty($cl['li']['show_stats'])): ?>
-	<?php //endif; ?>
 	<div class="post-list-advert__footer pt-prevent-click">
-		<!--<button class="ctrls-item pt-prevent-click">-->
-		<!--	<a href="<?php echo $cl['li']['url']; ?>">-->
-		<!--		<span class="icon ctrls-item__icon pt-prevent-click">-->
-		<!--			<?php echo cl_ikon('chat-post'); ?>-->
-		<!--		</span>-->
-		<!--		<span class="num pt-prevent-click">-->
-		<!--			<?php echo $cl['li']['replys_count']; ?>-->
-		<!--		</span>-->
-		<!--	</a>-->
-		<!--</button>-->
 		<?php if (empty($cl['li']['has_liked'])): ?>
 		<button class="ctrls-item pt-reshare pt-prevent-click" onclick="share_ad('<?php echo $cl['li']['id']; ?>', this);" pt-ad-id="<?php echo $cl['li']['id']; ?>">
 			<span class="icon ctrls-item__icon pt-prevent-click">
