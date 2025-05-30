@@ -1637,7 +1637,7 @@
 	};
 </script>
 
-<!-- <script src="{%config theme_url%}/apps/timeline/scripts/js/fancyapps.js"></script> -->
+ <!--<script src="{%config theme_url%}/apps/timeline/scripts/js/fancyapps.js"></script> -->
 
 <script>
 	Fancybox.Plugins.Toolbar.defaults.items.rate = {
@@ -1654,21 +1654,30 @@
 	};
 
 	Fancybox.bind('[data-fancybox="gallery"]', {
-		dragToClose: false,
-		click: false,
-		Toolbar: false,
-		Thumbs: false,
-		closeButton: "top",
-
-
-		Toolbar: {
-			display: ["rate"],
-		},
-		Image: {
-			zoom: false,
-
-
-		},
+		    dragToClose: false,
+            click: false,
+            Toolbar: false,
+            Thumbs: false,
+            closeButton: "top",
+            
+            // Add fixed dimensions
+            width: "auto",
+            height: "auto",
+            
+            Toolbar: {
+                display: ["rate"],
+            },
+            Image: {
+                zoom: false,
+                initialSize: "fit", // Ensures images fit within container
+                 // Add these options for better control
+                Panzoom: {
+                    maxScale: 1,
+                    minScale: 1,
+                },
+            },
+            width: 800,  // Fixed width
+            height: 600, // Fixed height    
 
 		on: {
 			initLayout: (fancybox) => {
@@ -1737,7 +1746,8 @@
 			},
 
 			initCarousel: (fancybox) => {
-				const slide = fancybox.Carousel.slides[fancybox.Carousel.page];
+			    
+			const slide = fancybox.Carousel.slides[fancybox.Carousel.page];
 
 				fancybox.$container.style.setProperty(
 					"--bg-image",

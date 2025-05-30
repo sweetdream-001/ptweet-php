@@ -1478,7 +1478,7 @@
     "is_your_follower_and_has_follower_you_know": "{@user_name@} is your follower and has {@common_follows@} follower you know",
     "less": "Less",
     "like_posts_image_videos_share": "Like posts, image, videos & share",
-    "sign_in": "Sign in to",
+    "sign_in": "Sign into",
     "they": "They",
     "in_response_to_their": "In response {@uname@} to their {@post_url@}",
     "my_profile": "My profile",

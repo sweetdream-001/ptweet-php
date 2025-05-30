@@ -84,8 +84,7 @@ define('APP_NAME','https://p-tweets.com/talk/');
     <script src="{%config theme_url%}/statics/js/master.script.js?v={%config version%}"></script>
     <script src="{%config theme_url%}/statics/js/custom.js?v={%config version%}"></script>
     <script src="{%config theme_url%}/statics/js/libs/clipboard.min.js?v={%config version%}"></script>
-    <script
-            src="{%config theme_url%}/statics/js/libs/jquery-plugins/jquery.fancybox.min.js?v={%config version%}"></script>
+    <script src="{%config theme_url%}/statics/js/libs/jquery-plugins/jquery.fancybox.min.js?v={%config version%}"></script>
     <script src="{%config theme_url%}/statics/js/libs/lozad.min.js"></script>
     <script src="{%config theme_url%}/statics/js/libs/waitme/waitMe.min.js"></script>
     <script src="{%config theme_url%}/statics/js/libs/txt.autoresize.min.js"></script>
@@ -96,6 +95,7 @@ define('APP_NAME','https://p-tweets.com/talk/');
     <link rel="stylesheet" href="{%config theme_url%}/statics/js/libs/plyr/lite-youtube/lite-yt-embed.css?v={%config version%}">
 
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fullscreen.umd.js"></script>
     
     <!-- jQuery + DataTables JS (before </body>) -->
 <!--<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
@@ -268,6 +268,8 @@ define('APP_NAME','https://p-tweets.com/talk/');
     <?php echo (cl_get_custom_code("footerjs")); ?>
 </script>
 <style>
+ 
+    /*Patel*/
 
     .fancybox__backdrop {
         position: inherit !important;
@@ -278,6 +280,12 @@ define('APP_NAME','https://p-tweets.com/talk/');
     img.lozad.pt-prevent-click {
         visibility: visible !important;    
     }
+    .logo_login {
+        margin-left: 200px;
+    }
+    
+    /*Patel*/
+    
     .top {
         height: 39px;
         background: url(<?php echo APP_NAME . '/img/nav.png'; ?>) no-repeat;
@@ -613,11 +621,19 @@ define('APP_NAME','https://p-tweets.com/talk/');
     z-index: 0;
     background: rgba(0, 0, 0, 0.5);
 }
+.fancybox__slide .fancybox__content {
+    width: 800px !important;
+    height: 600px !important;
+    max-width: 90vw;
+    max-height: 90vh;
+}
 
+.fancybox__slide .fancybox__content img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover; /* or 'contain' to maintain aspect ratio */
+}
 
-
-
-    
 </style>
 <script>
     $(document).ready(function () {

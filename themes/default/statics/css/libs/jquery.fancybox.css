@@ -167,6 +167,8 @@ body.compensate-for-scrollbar {
 }
 
 .fancybox-content {
+    min-width: 1000px !important;
+    min-height: 1000px !important;
     background: #fff;
     display: inline-block;
     margin: 0;
@@ -226,6 +228,7 @@ body.compensate-for-scrollbar {
 
 .fancybox-image,
 .fancybox-spaceball {
+    min-height:500px !important;
     background: transparent;
     border: 0;
     height: 100%;

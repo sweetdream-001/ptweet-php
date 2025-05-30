@@ -401,8 +401,8 @@ $cl['li']['text'] = cl_strip_brs($cl['li']['text']);
 						<div class="publication-text pt-prevent-click">
 							<p class="pub-text">
 								<?php
-
-$string = $cl['li']['text'];
+$string = str_replace("â€™" , "’", $cl['li']['text']);
+// $string = $cl['li']['text'];
 if (strlen($string) > 300) {
     $stringCut = substr($string, 0,
         300);
@@ -594,6 +594,7 @@ echo $string;
                         							title="YouTube video player" frameborder="0"
                         							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         							class="pt-prevent-click pt-post-view-count"
+                        							loading="lazy"
                         							allowfullscreen autoplay>
                     							</iframe>
 											<div class="og-icon pt-prevent-click" pt-post-id="<?php echo $cl['li']['id']; ?>">

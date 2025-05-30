@@ -26,7 +26,7 @@ function cl_create_orphan_post($user_id = null, $type = "text") {
 }
 
 function cl_get_orphan_post($id = null) {
-	//exit("Here1");
+// 	exit("Here1");
 	global $db;
 
 	if (not_num($id)) {
@@ -571,7 +571,6 @@ function cl_raw_post_data($post_id = 0) {
     if (empty($post_data)) {
         return false;
     }
-
     return $post_data;
 }
 

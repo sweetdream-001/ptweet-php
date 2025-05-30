@@ -46,8 +46,10 @@ and cl_users.active = "1"
 	<?php if(not_empty($data['post_id'])): ?>
 		AND <?php echo($data['t_pubs']); ?>.id NOT IN (<?php echo($data['post_id']); ?>)
 	<?php endif; ?>
+	
+	ORDER BY RAND()
 
-    ORDER BY `<?php echo($data['t_pubs']); ?>`.`id` ASC
+    -- ORDER BY `<?php echo($data['t_pubs']); ?>`.`id` ASC
 -- 	ORDER BY `likes_count` DESC, `replys_count` DESC, `reposts_count` DESC
 
 <?php if(is_posnum($data['limit'])): ?>

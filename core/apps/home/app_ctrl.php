@@ -95,7 +95,7 @@ function cl_get_timeline_feed($limit = false, $offset = false, $onset = false) {
 		}
 	}
 	
-	return $data;
+// 	return $data;
 }
 
 function cl_timeline_swifts() {

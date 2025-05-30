@@ -1,9 +1,9 @@
 <form class="form" id="cl-login-vue-app" v-on:submit="submit_form($event)" autocomplete="off">
-    <h6><a href="https://p-tweets.com/old_p-tweets/p-t_data_transfer.php" target="_blank"> Old P-Tweets users click here to retrive your data. </a></h6>
+    <h2 style="padding-bottom: 15px;"><a href="https://p-tweets.com/old_p-tweets/p-t_data_transfer.php" style="text-decoration: none;font-family: none;font-size: 29px;" target="_blank"><b>Welcome back! If you used P-Tweets before, click here to set up your account and restore your data.</b></a></h2>
 	<div class="form-title">
-		<h2>
-			<?php echo cl_translate("sign_in "); ?> P-Tweets
-		</h2>
+		<p style="font-size: 21px;">
+		<b><?php echo cl_translate("sign_in "); ?> P-Tweets</b>
+		</p>
 	</div>
 	<div class="form-group">
        <input name="redirect_url" type="hidden" value="" class="redirect_url">

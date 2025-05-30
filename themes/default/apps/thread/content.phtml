@@ -204,10 +204,10 @@
                                 <?php if ($cl['thread_data']['post']['type'] == 'image' && not_empty($cl['thread_data']['post']['media'])): ?>
                                     <?php if (count($cl['thread_data']['post']['media']) == 1): ?>
                                         <div class="lozad-media">
-                                            <div class="publication-image">
+                                            <div class="publication-image pt-post-view-count" pt-post-id="<?php echo $cl['thread_data']['post']['id']; ?>">
                                                 <a href="<?php echo cl_get_media(fetch_or_get($cl['thread_data']['post']['media'][0]['src'], '')); ?>"
-                                                   class="fbox-media">
-                                                    <img class="lozad"
+                                                   class="fbox-media2" data-btn='<?php  $cl['li'] = $cl['thread_data']['post']; echo cl_template('timeline/likes'); ?>' data-fancybox="gallery" data-info='<?php  $cl['li'] = $cl['thread_data']['post']; echo cl_template('timeline/right_col'); ?>'>
+                                                    <img class="lozad pt-prevent-click pt-post-view-count"
                                                          data-src="<?php echo cl_get_media(fetch_or_get($cl['thread_data']['post']['media'][0]['src'], '')); ?>"
                                                          alt="Picture">
                                                 </a>
@@ -308,7 +308,8 @@
                     							<div class="publication-og-data-inner embeded-iframe">
                     								<div class="og-image pt-prevent-click" style="background-image:url('https://img.youtube.com/vi/<?php echo $cl['thread_data']['post']['link_src']; ?>/hqdefault.jpg');">
                     									<div class="lozad-media pt-post-view-count pt-prevent-click" pt-post-id="<?php echo $cl['li']['id']; ?>">
-                    										<a href="<?php echo ($cl['thread_data']['post']['og_data']['video_embed']); ?>" class="fbox-media">
+                    										<a href="<?php echo ($cl['thread_data']['post']['og_data']['video_embed']); ?>" class="fbox-media2" data-btn='<?php $cl['li'] = $cl['thread_data']['post']; echo cl_template('timeline/likes'); ?>' data-fancybox="gallery"
+											data-info='<?php $cl['li'] = $cl['thread_data']['post']; echo cl_template('timeline/right_col'); ?>'>
                     											<img class="lozad pt-prevent-click pt-post-view-count" data-src="<?php echo ($cl['thread_data']['post']['og_data']['image']); ?>"
                     												alt="Video" pt-post-id="<?php echo $cl['thread_data']['post']['id']; ?>" style="display:none">
                     												<iframe
