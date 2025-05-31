@@ -39,6 +39,7 @@ if(isset($_GET['post_id']) && !empty($_GET['post_id'])) { ?>
 		ORDER BY posts.`id` DESC
 		LIMIT 14
 	)
+	
 	ORDER BY offset_id ASC;
 <?php } if(isset($data['thread'])) { ?>
     SELECT posts.`id` as offset_id, posts.`publication_id`, posts.`type`, posts.`user_id` FROM `<?php echo($data['t_posts']); ?>` posts
@@ -77,6 +78,7 @@ if(isset($_GET['post_id']) && !empty($_GET['post_id'])) { ?>
 
 	AND (posts.`publication_id` NOT IN (SELECT `post_id` FROM `<?php echo($data['t_reports']); ?>` WHERE `user_id` = <?php echo($data['user_id']); ?>))
 
+	
 	ORDER BY posts.`id` DESC, pubs.`likes_count` DESC, pubs.`replys_count` DESC, pubs.`reposts_count` DESC
 
 	<?php if($data['limit']): ?>

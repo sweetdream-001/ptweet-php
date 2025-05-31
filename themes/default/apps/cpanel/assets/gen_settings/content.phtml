@@ -289,6 +289,37 @@
                             </div>
 
                             <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group" data-an="random_user_post-input">
+                                        <label>
+                                        Random User Post
+                                        </label>
+                                        <div class="form-line">
+                                            <select data-size="5" name="random_user_post" class="form-select form-control-primary">
+                                                <option value="on" <?php echo (($cl['config']['random_user_post'] == 'on') ? 'selected': ''); ?>>On</option>
+                                                <option value="off" <?php echo (($cl['config']['random_user_post'] == 'off') ? 'selected': ''); ?>>Off</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group" data-an="homepage_logged_on_off-input">
+                                        <label>
+                                        Homepage Logged On and Logged Off
+                                        </label>
+                                        <div class="form-line">
+                                            <select data-size="5" name="homepage_logged_on_off" class="form-select form-control-primary">
+                                                <option value="both" <?php echo (($cl['config']['homepage_logged_on_off'] == 'both') ? 'selected': ''); ?>>Both</option>
+                                                <option value="on" <?php echo (($cl['config']['homepage_logged_on_off'] == 'on') ? 'selected': ''); ?>>On</option>
+                                                <option value="off" <?php echo (($cl['config']['homepage_logged_on_off'] == 'off') ? 'selected': ''); ?>>Off</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+
+                            <div class="row">
                             <div class="col-sm-12">
                                 <div class="form-group" data-an="google_analytics-input">
                                     <label>

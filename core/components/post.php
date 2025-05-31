@@ -359,7 +359,7 @@ function cl_update_thread_replys($id = false, $count = "plus") {
 
 function cl_post_data($post = array()) {
 
-	//echo "<pre>";print_r($post);
+// 	echo "<pre>";print_r($post);
 	
 	global $cl;
 

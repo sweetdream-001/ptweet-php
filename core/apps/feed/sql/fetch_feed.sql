@@ -37,6 +37,7 @@ if(isset($_GET['post_id']) && !empty($_GET['post_id'])) { ?>
 		AND cl_users.active = '1'
 		LIMIT 15
 	)
+-- 	ORDER BY RAND();
 	ORDER BY id ASC;
 <?php } else { ?>
 	SELECT `<?php echo($data['t_pubs']); ?>`.*, cl_categories.name as cat_name, cl_categories.id as cat_id  FROM `<?php echo($data['t_pubs']); ?>` 
@@ -52,8 +53,19 @@ if(isset($_GET['post_id']) && !empty($_GET['post_id'])) { ?>
 	AND `priv_wcs` = "everyone"
 
 	AND cl_users.active = "1"
+	
+	<?php if ($cl['config']['random_user_post'] == "on") : ?>
+	
+	<?php if (($cl['config']['homepage_logged_on_off'] == "both") || ($cl['config']['homepage_logged_on_off'] == "on")) : ?>
+	ORDER BY RAND()
+	<?php endif ?>
+	
+	<?php else: ?>
+    ORDER BY `id` ASC
+    <?php endif ?>
 
-	ORDER BY `id` ASC
+-- 	ORDER BY `id` ASC
+    -- ORDER BY RAND()
 
 	<?php if(is_posnum($data['limit'])): ?>
 		LIMIT <?php echo($data['limit']); ?>

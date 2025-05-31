@@ -14,14 +14,14 @@ $visitor_ip = $_SERVER['REMOTE_ADDR'];
 cl_check_ip_restriction($visitor_ip);
 
 require_once(cl_full_path("core/apps/thread/app_ctrl.php"));
-
+require_once(cl_full_path("core/apps/feed/app_ctrl.php"));
 $thread_id         = fetch_or_get($_GET["thread_id"], false);
 $thread_id         = cl_text_secure($thread_id);
 $cl['thread_data'] = cl_get_thread_data($thread_id);
 $catId =  (int)($cl['thread_data']['post']['category_id']);
 
 $cl['feed'] = cl_get_timeline_feed_for_thread($catId);
-
+$cl['feed_pubpage']= cl_get_pubpage_feeds($thread_id, false, 3000);
 
 if (empty($cl['thread_data']['post'])) {
 	cl_redirect("404");

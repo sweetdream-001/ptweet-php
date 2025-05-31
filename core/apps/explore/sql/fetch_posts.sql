@@ -47,9 +47,16 @@ and cl_users.active = "1"
 		AND <?php echo($data['t_pubs']); ?>.id NOT IN (<?php echo($data['post_id']); ?>)
 	<?php endif; ?>
 	
+	<?php if ($cl['config']['random_user_post'] == "on") : ?>
+	
+	<?php if (($cl['config']['homepage_logged_on_off'] == "both") || ($cl['config']['homepage_logged_on_off'] == "off")) : ?>
 	ORDER BY RAND()
-
-    -- ORDER BY `<?php echo($data['t_pubs']); ?>`.`id` ASC
+	<?php endif ?>
+	
+	<?php else: ?>
+    ORDER BY `<?php echo($data['t_pubs']); ?>`.`id` ASC
+    <?php endif ?>
+    
 -- 	ORDER BY `likes_count` DESC, `replys_count` DESC, `reposts_count` DESC
 
 <?php if(is_posnum($data['limit'])): ?>
